@@ -8,6 +8,7 @@
 
 import UIKit
 
+//FIXME: 无法通过动态包调用
 struct NavigationBarData {
     
     static let BarTintColorArray: [NavigationBarBackgroundViewColor] = [.Cyan, .Yellow, .Green, .Orange, .lightGray, .NoValue]

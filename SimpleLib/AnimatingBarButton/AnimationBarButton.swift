@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AnimatingBarButton: UIBarButtonItem, Rotatable {
+public class AnimatingBarButton: UIBarButtonItem, Rotatable {
   
   @IBInspectable var normalImageName: String = ""
   @IBInspectable var selectedImageName: String = ""
@@ -23,7 +23,7 @@ class AnimatingBarButton: UIBarButtonItem, Rotatable {
 
 extension AnimatingBarButton {
   
-  override func awakeFromNib() {
+  override public func awakeFromNib() {
     super.awakeFromNib()
     customView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
 //    customView?.backgroundColor = .redColor()
@@ -34,7 +34,7 @@ extension AnimatingBarButton {
 
 // MARK: public
 
-extension AnimatingBarButton {
+public extension AnimatingBarButton {
   
   func animationSelected(selected: Bool) {
     if selected {

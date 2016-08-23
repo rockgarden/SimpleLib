@@ -15,15 +15,18 @@ import Foundation
  
  - returns: 返回对应的值
  */
-func getDictionaryFromInfoPlist(keyName: String) -> AnyObject {
+public func getDictionaryFromInfoPlist(keyName: String) -> AnyObject {
     let plistPath = NSBundle.mainBundle().pathForResource("Info", ofType: "plist")
     let dictionary = NSDictionary(contentsOfFile: plistPath!)!
     return dictionary.objectForKey(keyName)!
 }
 
 
-func getArrayFromPlist(plistName: String) -> NSArray {
+public func getArrayFromPlist(plistName: String) -> NSArray {
     let plistPath = NSBundle.mainBundle().pathForResource(plistName, ofType: "plist")
     return NSArray(contentsOfFile: plistPath!)!
 }
+
+
+
 
