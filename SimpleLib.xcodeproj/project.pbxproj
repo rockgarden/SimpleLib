@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446885C81D940ACE004E76E7 /* Ext_UITextView.swift */; };
 		44BE95331D8A6104004FFDF4 /* Ext_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */; };
 		44BE95351D8A67F6004FFDF4 /* Ext_UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */; };
 		44BE953E1D8A6916004FFDF4 /* BlockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE95371D8A6916004FFDF4 /* BlockButton.swift */; };
@@ -91,6 +92,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
 		44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UILabel.swift; sourceTree = "<group>"; };
 		44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIImageView.swift; sourceTree = "<group>"; };
 		44BE95371D8A6916004FFDF4 /* BlockButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockButton.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				C20B84391D6BFD0A00C12286 /* Ext_UIViewController.swift */,
 				44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */,
 				44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */,
+				446885C81D940ACE004E76E7 /* Ext_UITextView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -640,6 +643,7 @@
 				C20B84571D6BFD0A00C12286 /* Ext_UINavigationController.swift in Sources */,
 				C20B84931D6BFD2600C12286 /* Box.swift in Sources */,
 				C20B84721D6BFD1F00C12286 /* RainbowDragPop.swift in Sources */,
+				446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */,
 				C20B84501D6BFD0A00C12286 /* Ext_NSDate.swift in Sources */,
 				C20B845B1D6BFD0A00C12286 /* Ext_UIView.swift in Sources */,
 				C20B845E1D6BFD0A00C12286 /* ConfigurationHelper.swift in Sources */,
