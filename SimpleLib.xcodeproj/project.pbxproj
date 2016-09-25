@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446885C81D940ACE004E76E7 /* Ext_UITextView.swift */; };
+		44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */; };
+		44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */; };
+		44A9C4771D96CF1500F09E6A /* CLTypingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4761D96CF1500F09E6A /* CLTypingLabel.swift */; };
 		44BE95331D8A6104004FFDF4 /* Ext_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */; };
 		44BE95351D8A67F6004FFDF4 /* Ext_UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */; };
 		44BE953E1D8A6916004FFDF4 /* BlockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE95371D8A6916004FFDF4 /* BlockButton.swift */; };
@@ -93,6 +96,9 @@
 
 /* Begin PBXFileReference section */
 		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
+		44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
+		44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandableLabel.swift; sourceTree = "<group>"; };
+		44A9C4761D96CF1500F09E6A /* CLTypingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTypingLabel.swift; sourceTree = "<group>"; };
 		44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UILabel.swift; sourceTree = "<group>"; };
 		44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIImageView.swift; sourceTree = "<group>"; };
 		44BE95371D8A6916004FFDF4 /* BlockButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockButton.swift; sourceTree = "<group>"; };
@@ -473,6 +479,9 @@
 				C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */,
 				C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */,
 				C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */,
+				44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */,
+				44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */,
+				44A9C4761D96CF1500F09E6A /* CLTypingLabel.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -610,10 +619,12 @@
 				C20B84961D6BFD2600C12286 /* MemoryCache.swift in Sources */,
 				C20B84521D6BFD0A00C12286 /* Ext_String.swift in Sources */,
 				C20B84971D6BFD2600C12286 /* MultiCache.swift in Sources */,
+				44A9C4771D96CF1500F09E6A /* CLTypingLabel.swift in Sources */,
 				C20B84981D6BFD2600C12286 /* Duration.swift in Sources */,
 				C20B84911D6BFD2600C12286 /* AuthcodeView.swift in Sources */,
 				C20B844A1D6BFD0A00C12286 /* PageCollectionLayout.swift in Sources */,
 				C20B84481D6BFD0A00C12286 /* ExpandingTableViewController.swift in Sources */,
+				44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */,
 				C20B844F1D6BFD0A00C12286 /* Ext_NSData.swift in Sources */,
 				44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */,
 				C20B84751D6BFD1F00C12286 /* RainbowPopAnimator.swift in Sources */,
@@ -631,6 +642,7 @@
 				C20B84741D6BFD1F00C12286 /* RainbowNavigation.swift in Sources */,
 				44BE95421D8A6916004FFDF4 /* BlockSwipe.swift in Sources */,
 				C20B84541D6BFD0A00C12286 /* Ext_UIDevice.swift in Sources */,
+				44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */,
 				44BE95351D8A67F6004FFDF4 /* Ext_UIImageView.swift in Sources */,
 				44BE95331D8A6104004FFDF4 /* Ext_UILabel.swift in Sources */,
 				44BE953E1D8A6916004FFDF4 /* BlockButton.swift in Sources */,
