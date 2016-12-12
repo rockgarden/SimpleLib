@@ -81,6 +81,7 @@
 		C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */; };
 		C20B84A31D6BFD2600C12286 /* KDInteractiveNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */; };
 		C20B84A41D6BFD2600C12286 /* NavigationBarColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */; };
+		C222FA271DFE7B3800B5A36A /* Ext_DispatchTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */; };
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
 /* End PBXBuildFile section */
 
@@ -172,6 +173,7 @@
 		C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialogItem.swift; sourceTree = "<group>"; };
 		C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDInteractiveNavigationController.swift; sourceTree = "<group>"; };
 		C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarColorSource.swift; sourceTree = "<group>"; };
+		C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_DispatchTime.swift; sourceTree = "<group>"; };
 		C22758B21D6C157D008C1F18 /* AppCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -339,6 +341,7 @@
 				44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */,
 				44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */,
 				446885C81D940ACE004E76E7 /* Ext_UITextView.swift */,
+				C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				C20B845D1D6BFD0A00C12286 /* CornerAnimatable.swift in Sources */,
 				C20B84A11D6BFD2600C12286 /* KCSelectionDialog.swift in Sources */,
 				C20B84A01D6BFD2600C12286 /* JTSplashView.swift in Sources */,
+				C222FA271DFE7B3800B5A36A /* Ext_DispatchTime.swift in Sources */,
 				44BE95411D8A6916004FFDF4 /* BlockPinch.swift in Sources */,
 				C20B84591D6BFD0A00C12286 /* Ext_UIStoryboard.swift in Sources */,
 				C20B84581D6BFD0A00C12286 /* Ext_UIScreen.swift in Sources */,
