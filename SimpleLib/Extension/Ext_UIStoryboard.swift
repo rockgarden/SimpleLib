@@ -13,8 +13,8 @@ public extension UIStoryboard {
     /// EZSE: Get the application's main storyboard
     /// Usage: let storyboard = UIStoryboard.mainStoryboard
     public static var mainStoryboard: UIStoryboard? {
-        let bundle = NSBundle.mainBundle()
-        guard let name = bundle.objectForInfoDictionaryKey("UIMainStoryboardFile") as? String else {
+        let bundle = Bundle.main
+        guard let name = bundle.object(forInfoDictionaryKey: "UIMainStoryboardFile") as? String else {
             return nil
         }
         return UIStoryboard(name: name, bundle: bundle)
@@ -23,9 +23,9 @@ public extension UIStoryboard {
     /// EZSE: Get view controller from storyboard by its class type
     /// Usage: let profileVC = storyboard!.instantiateVC(ProfileViewController) /* profileVC is of type ProfileViewController */
     /// Warning: identifier should match storyboard ID in storyboard of identifier class
-    public func instantiateVC<T>(identifier: T.Type) -> T? {
-        let storyboardID = String(identifier)
-        if let vc = instantiateViewControllerWithIdentifier(storyboardID) as? T {
+    public func instantiateVC<T>(_ identifier: T.Type) -> T? {
+        let storyboardID = String(describing: identifier)
+        if let vc = self.instantiateViewController(withIdentifier: storyboardID) as? T {
             return vc
         } else {
             return nil
@@ -40,28 +40,28 @@ extension UIStoryboard {
 		case Main
 	}
 
-	convenience init(storyboard: Storyboard, bundle: NSBundle? = nil) {
+	convenience init(storyboard: Storyboard, bundle: Bundle? = nil) {
 		self.init(name: storyboard.rawValue, bundle: bundle)
 	}
 
-	convenience init(storyboardName: String, bundle: NSBundle? = nil) {
+	convenience init(storyboardName: String, bundle: Bundle? = nil) {
 		self.init(name: storyboardName, bundle: bundle)
 	}
 
-	class func storyboard(storyboard: Storyboard, bundle: NSBundle? = nil) -> UIStoryboard {
+	class func storyboard(_ storyboard: Storyboard, bundle: Bundle? = nil) -> UIStoryboard {
 		return UIStoryboard(name: storyboard.rawValue, bundle: bundle)
 	}
 
-	func instantiateViewController<T: UIViewController where T: StoryboardIdentifiable>() -> T {
-		guard let viewController = instantiateViewControllerWithIdentifier(T.storyboardIdentifier) as? T else {
+	func instantiateViewController<T: UIViewController>() -> T where T: StoryboardIdentifiable {
+		guard let viewController = self.instantiateViewController(withIdentifier: T.storyboardIdentifier) as? T else {
 			fatalError("Couldn't instantiate view controller with identifier \(T.storyboardIdentifier) ")
 		}
 		return viewController
 	}
 
-	func getViewControllerFromStoryboard(viewController: String, storyboard: String) -> UIViewController {
+	func getViewControllerFromStoryboard(_ viewController: String, storyboard: String) -> UIViewController {
 		let sBoard = UIStoryboard(name: storyboard, bundle: nil)
-		let vController: UIViewController = sBoard.instantiateViewControllerWithIdentifier(viewController)
+		let vController: UIViewController = sBoard.instantiateViewController(withIdentifier: viewController)
 		return vController
 	}
 }
@@ -77,7 +77,7 @@ protocol StoryboardIdentifiable {
 
 extension StoryboardIdentifiable where Self: UIViewController {
 	static var storyboardIdentifier: String {
-		return String(self)
+		return String(describing: self)
 	}
 }
 

@@ -9,18 +9,18 @@
 import UIKit
 
 /// UIViewController with UICollectionView with custom transition method
-public class ExpandingViewController: UIViewController {
+open class ExpandingViewController: UIViewController {
     
     /// The default size to use for cells.
-    public var itemSize = CGSize(width: UIScreen.mainScreen().bounds.width * 3 / 5, height: UIScreen.mainScreen().bounds.height * 3 / 5)
+    open var itemSize = CGSize(width: UIScreen.main.bounds.width * 3 / 5, height: UIScreen.main.bounds.height * 3 / 5)
     
     /// The collection view object managed by this view controller.
-    public var collectionView: UICollectionView?
+    open var collectionView: UICollectionView?
     
-    private var transitionDriver: TransitionDriver?
+    fileprivate var transitionDriver: TransitionDriver?
     
     /// Index of current cell
-    public var currentIndex: Int {
+    open var currentIndex: Int {
         guard let collectionView = self.collectionView else { return 0 }
         
         let startOffset = (collectionView.bounds.size.width - itemSize.width) / 2
@@ -37,7 +37,7 @@ public class ExpandingViewController: UIViewController {
 
 extension ExpandingViewController {
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         commonInit()
     }
@@ -53,7 +53,7 @@ public extension ExpandingViewController {
      
      - parameter viewController: The table view controller to push onto the stack.
      */
-    func pushToViewController(viewController: ExpandingTableViewController) {
+    func pushToViewController(_ viewController: ExpandingTableViewController) {
         guard let collectionView = self.collectionView,
             let navigationController = self.navigationController else {
                 return
@@ -62,7 +62,7 @@ public extension ExpandingViewController {
         viewController.transitionDriver = transitionDriver
         let insets = viewController.automaticallyAdjustsScrollViewInsets
         let tabBarHeight = insets == true ? navigationController.navigationBar.frame.size.height : 0
-        let stausBarHeight = insets == true ? UIApplication.sharedApplication().statusBarFrame.size.height : 0
+        let stausBarHeight = insets == true ? UIApplication.shared.statusBarFrame.size.height : 0
         let backImage = getBackImage(viewController, headerHeight: viewController.headerHeight)
         
         transitionDriver?.pushTransitionAnimationIndex(currentIndex,
@@ -80,7 +80,7 @@ public extension ExpandingViewController {
 
 extension ExpandingViewController {
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         
         let layout = PageCollectionLayout(itemSize: itemSize)
         collectionView = PageCollectionView.createOnView(view,
@@ -97,7 +97,7 @@ extension ExpandingViewController {
 
 extension ExpandingViewController {
     
-    private func getBackImage(viewController: UIViewController, headerHeight: CGFloat) -> UIImage? {
+    fileprivate func getBackImage(_ viewController: UIViewController, headerHeight: CGFloat) -> UIImage? {
         let imageSize = CGSize(width: viewController.view.bounds.width, height: viewController.view.bounds.height - headerHeight)
         let imageFrame = CGRect(origin: CGPoint(x: 0, y: 0), size: imageSize)
         return viewController.view.takeSnapshot(imageFrame)
@@ -109,16 +109,16 @@ extension ExpandingViewController {
 
 extension ExpandingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard case let cell as BasePageCollectionCell = cell else { return }
         
         cell.configureCellViewConstraintsWithSize(itemSize)
     }
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fatalError("need emplementation in subclass")
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         fatalError("need emplementation in subclass")
     }
 }
@@ -127,9 +127,9 @@ extension ExpandingViewController: UICollectionViewDataSource, UICollectionViewD
 
 extension ExpandingViewController {
     
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        let indexPath = NSIndexPath(forRow: currentIndex, inSection: 0)
-        if case let currentCell as BasePageCollectionCell = collectionView?.cellForItemAtIndexPath(indexPath) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let indexPath = IndexPath(row: currentIndex, section: 0)
+        if case let currentCell as BasePageCollectionCell = collectionView?.cellForItem(at: indexPath) {
             currentCell.configurationCell()
         }
     }

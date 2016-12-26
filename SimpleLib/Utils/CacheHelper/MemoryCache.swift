@@ -16,7 +16,7 @@ public final class MemoryCache<T>: Cache {
 
 	// MARK: - Properties
 
-	private let cache = NSCache()
+	fileprivate let cache = NSCache<AnyObject, AnyObject>()
 
 
 	// MARK: - Initializers
@@ -26,14 +26,14 @@ public final class MemoryCache<T>: Cache {
 			cache.countLimit = countLimit ?? 0
 
 			if automaticallyRemoveAllObjects {
-				let notificationCenter = NSNotificationCenter.defaultCenter()
-				notificationCenter.addObserver(cache, selector: #selector(NSCache.removeAllObjects), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-				notificationCenter.addObserver(cache, selector: #selector(NSCache.removeAllObjects), name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+				let notificationCenter = NotificationCenter.default
+				notificationCenter.addObserver(cache, selector: #selector(NSCache<AnyObject, AnyObject>.removeAllObjects), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+				notificationCenter.addObserver(cache, selector: #selector(NSCache<AnyObject, AnyObject>.removeAllObjects), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
 			}
 		}
 
 		deinit {
-			NSNotificationCenter.defaultCenter().removeObserver(cache)
+			NotificationCenter.default.removeObserver(cache)
 		}
 	#else
 		public init(countLimit: Int? = nil) {
@@ -44,23 +44,23 @@ public final class MemoryCache<T>: Cache {
 
 	// MARK: - Cache
 
-	public func set(key key: String, value: T, completion: (() -> Void)? = nil) {
-		cache.setObject(Box(value), forKey: key)
+	public func set(key: String, value: T, completion: (() -> Void)? = nil) {
+		cache.setObject(Box(value), forKey: key as AnyObject)
 		completion?()
 	}
 
-	public func get(key key: String, completion: (T? -> Void)) {
-		let box = cache.objectForKey(key) as? Box<T>
+	public func get(key: String, completion: ((T?) -> Void)) {
+		let box = cache.object(forKey: key as AnyObject) as? Box<T>
 		let value = box.flatMap({ $0.value })
 		completion(value)
 	}
 
-	public func remove(key key: String, completion: (() -> Void)? = nil) {
-		cache.removeObjectForKey(key)
+	public func remove(key: String, completion: (() -> Void)? = nil) {
+		cache.removeObject(forKey: key as AnyObject)
 		completion?()
 	}
 
-	public func removeAll(completion completion: (() -> Void)? = nil) {
+	public func removeAll(completion: (() -> Void)? = nil) {
 		cache.removeAllObjects()
 		completion?()
 	}
@@ -70,14 +70,14 @@ public final class MemoryCache<T>: Cache {
 	
 	public subscript(key: String) -> T? {
 		get {
-			return (cache.objectForKey(key) as? Box<T>)?.value
+			return (cache.object(forKey: key as AnyObject) as? Box<T>)?.value
 		}
 		
 		set(newValue) {
 			if let newValue = newValue {
-				cache.setObject(Box(newValue), forKey: key)
+				cache.setObject(Box(newValue), forKey: key as AnyObject)
 			} else {
-				cache.removeObjectForKey(key)
+				cache.removeObject(forKey: key as AnyObject)
 			}
 		}
 	}

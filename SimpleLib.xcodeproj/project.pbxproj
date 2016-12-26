@@ -21,8 +21,6 @@
 		44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953C1D8A6916004FFDF4 /* BlockTap.swift */; };
 		44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */; };
 		C20B84051D6BFCC700C12286 /* SimpleLib.h in Headers */ = {isa = PBXBuildFile; fileRef = C20B84041D6BFCC700C12286 /* SimpleLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C20B840C1D6BFCC700C12286 /* SimpleLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20B84011D6BFCC600C12286 /* SimpleLib.framework */; };
-		C20B84111D6BFCC700C12286 /* SimpleLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84101D6BFCC700C12286 /* SimpleLibTests.swift */; };
 		C20B84461D6BFD0A00C12286 /* AnimationBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B841C1D6BFD0A00C12286 /* AnimationBarButton.swift */; };
 		C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B841E1D6BFD0A00C12286 /* Rotatable.swift */; };
 		C20B84481D6BFD0A00C12286 /* ExpandingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84201D6BFD0A00C12286 /* ExpandingTableViewController.swift */; };
@@ -83,17 +81,8 @@
 		C20B84A41D6BFD2600C12286 /* NavigationBarColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */; };
 		C222FA271DFE7B3800B5A36A /* Ext_DispatchTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */; };
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
+		C2AA3B071E10EA4900C9E438 /* CoordinateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AA3B061E10EA4900C9E438 /* CoordinateConverter.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C20B840D1D6BFCC700C12286 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C20B83F81D6BFCC600C12286 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C20B84001D6BFCC600C12286;
-			remoteInfo = SimpleLib;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
@@ -112,9 +101,6 @@
 		C20B84011D6BFCC600C12286 /* SimpleLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20B84041D6BFCC700C12286 /* SimpleLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleLib.h; sourceTree = "<group>"; };
 		C20B84061D6BFCC700C12286 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C20B840B1D6BFCC700C12286 /* SimpleLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C20B84101D6BFCC700C12286 /* SimpleLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLibTests.swift; sourceTree = "<group>"; };
-		C20B84121D6BFCC700C12286 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C20B841C1D6BFD0A00C12286 /* AnimationBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationBarButton.swift; sourceTree = "<group>"; };
 		C20B841E1D6BFD0A00C12286 /* Rotatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rotatable.swift; sourceTree = "<group>"; };
 		C20B84201D6BFD0A00C12286 /* ExpandingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandingTableViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +161,7 @@
 		C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarColorSource.swift; sourceTree = "<group>"; };
 		C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_DispatchTime.swift; sourceTree = "<group>"; };
 		C22758B21D6C157D008C1F18 /* AppCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommon.swift; sourceTree = "<group>"; };
+		C2AA3B061E10EA4900C9E438 /* CoordinateConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,14 +169,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C20B84081D6BFCC700C12286 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C20B840C1D6BFCC700C12286 /* SimpleLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				C20B84031D6BFCC700C12286 /* SimpleLib */,
-				C20B840F1D6BFCC700C12286 /* SimpleLibTests */,
 				C20B84021D6BFCC600C12286 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -223,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				C20B84011D6BFCC600C12286 /* SimpleLib.framework */,
-				C20B840B1D6BFCC700C12286 /* SimpleLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,15 +225,6 @@
 				C20B84061D6BFCC700C12286 /* Info.plist */,
 			);
 			path = SimpleLib;
-			sourceTree = "<group>";
-		};
-		C20B840F1D6BFCC700C12286 /* SimpleLibTests */ = {
-			isa = PBXGroup;
-			children = (
-				C20B84101D6BFCC700C12286 /* SimpleLibTests.swift */,
-				C20B84121D6BFCC700C12286 /* Info.plist */,
-			);
-			path = SimpleLibTests;
 			sourceTree = "<group>";
 		};
 		C20B841B1D6BFD0A00C12286 /* AnimatingBarButton */ = {
@@ -448,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				C20B847A1D6BFD2600C12286 /* AuthcodeView.swift */,
+				C2AA3B061E10EA4900C9E438 /* CoordinateConverter.swift */,
 				C20B847B1D6BFD2600C12286 /* CacheHelper */,
 				C20B84821D6BFD2600C12286 /* Duration.swift */,
 				C20B84831D6BFD2600C12286 /* ICanHas.swift */,
@@ -522,24 +491,6 @@
 			productReference = C20B84011D6BFCC600C12286 /* SimpleLib.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C20B840A1D6BFCC700C12286 /* SimpleLibTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C20B84181D6BFCC700C12286 /* Build configuration list for PBXNativeTarget "SimpleLibTests" */;
-			buildPhases = (
-				C20B84071D6BFCC700C12286 /* Sources */,
-				C20B84081D6BFCC700C12286 /* Frameworks */,
-				C20B84091D6BFCC700C12286 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C20B840E1D6BFCC700C12286 /* PBXTargetDependency */,
-			);
-			name = SimpleLibTests;
-			productName = SimpleLibTests;
-			productReference = C20B840B1D6BFCC700C12286 /* SimpleLibTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -552,9 +503,7 @@
 				TargetAttributes = {
 					C20B84001D6BFCC600C12286 = {
 						CreatedOnToolsVersion = 7.3;
-					};
-					C20B840A1D6BFCC700C12286 = {
-						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -571,20 +520,12 @@
 			projectRoot = "";
 			targets = (
 				C20B84001D6BFCC600C12286 /* SimpleLib */,
-				C20B840A1D6BFCC700C12286 /* SimpleLibTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C20B83FF1D6BFCC600C12286 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C20B84091D6BFCC700C12286 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -607,6 +548,7 @@
 				C20B84A11D6BFD2600C12286 /* KCSelectionDialog.swift in Sources */,
 				C20B84A01D6BFD2600C12286 /* JTSplashView.swift in Sources */,
 				C222FA271DFE7B3800B5A36A /* Ext_DispatchTime.swift in Sources */,
+				C2AA3B071E10EA4900C9E438 /* CoordinateConverter.swift in Sources */,
 				44BE95411D8A6916004FFDF4 /* BlockPinch.swift in Sources */,
 				C20B84591D6BFD0A00C12286 /* Ext_UIStoryboard.swift in Sources */,
 				C20B84581D6BFD0A00C12286 /* Ext_UIScreen.swift in Sources */,
@@ -673,23 +615,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C20B84071D6BFCC700C12286 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C20B84111D6BFCC700C12286 /* SimpleLibTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C20B840E1D6BFCC700C12286 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C20B84001D6BFCC600C12286 /* SimpleLib */;
-			targetProxy = C20B840D1D6BFCC700C12286 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C20B84131D6BFCC700C12286 /* Debug */ = {
@@ -797,6 +723,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -814,26 +741,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		C20B84191D6BFCC700C12286 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SimpleLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLibTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C20B841A1D6BFCC700C12286 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SimpleLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLibTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -854,15 +762,6 @@
 			buildConfigurations = (
 				C20B84161D6BFCC700C12286 /* Debug */,
 				C20B84171D6BFCC700C12286 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C20B84181D6BFCC700C12286 /* Build configuration list for PBXNativeTarget "SimpleLibTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C20B84191D6BFCC700C12286 /* Debug */,
-				C20B841A1D6BFCC700C12286 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

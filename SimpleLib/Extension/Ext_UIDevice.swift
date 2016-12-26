@@ -15,7 +15,7 @@ public extension UIDevice {
 		uname(&systemInfo)
 		let machineMirror = Mirror(reflecting: systemInfo.machine)
 		let identifier = machineMirror.children.reduce("") { identifier, element in
-			guard let value = element.value as? Int8 where value != 0 else { return identifier }
+			guard let value = element.value as? Int8, value != 0 else { return identifier }
 			return identifier + String(UnicodeScalar(UInt8(value)))
 		}
 
@@ -67,7 +67,7 @@ private let BFUserUniqueIdentifierDefaultsKey = "BFUserUniqueIdentifier"
  - returns: Get the iOS version string
  */
 public func IOS_VERSION() -> String {
-    return UIDevice.currentDevice().systemVersion
+    return UIDevice.current.systemVersion
 }
 
 /**
@@ -77,8 +77,8 @@ public func IOS_VERSION() -> String {
  
  - returns: Returns a Bool
  */
-public func SYSTEM_VERSION_EQUAL_TO(v: String) -> Bool {
-    return UIDevice.currentDevice().systemVersion.compare(v, options: .NumericSearch) == .OrderedSame
+public func SYSTEM_VERSION_EQUAL_TO(_ v: String) -> Bool {
+    return UIDevice.current.systemVersion.compare(v, options: .numeric) == .orderedSame
 }
 
 /**
@@ -88,8 +88,8 @@ public func SYSTEM_VERSION_EQUAL_TO(v: String) -> Bool {
  
  - returns: Returns a Bool
  */
-public func SYSTEM_VERSION_GREATER_THAN(v: String) -> Bool {
-    return UIDevice.currentDevice().systemVersion.compare(v, options: .NumericSearch) == .OrderedDescending
+public func SYSTEM_VERSION_GREATER_THAN(_ v: String) -> Bool {
+    return UIDevice.current.systemVersion.compare(v, options: .numeric) == .orderedDescending
 }
 
 /**
@@ -99,8 +99,8 @@ public func SYSTEM_VERSION_GREATER_THAN(v: String) -> Bool {
  
  - returns: Returns a Bool
  */
-public func SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v: String) -> Bool {
-    return UIDevice.currentDevice().systemVersion.compare(v, options: .NumericSearch) != .OrderedAscending
+public func SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(_ v: String) -> Bool {
+    return UIDevice.current.systemVersion.compare(v, options: .numeric) != .orderedAscending
 }
 
 /**
@@ -110,8 +110,8 @@ public func SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v: String) -> Bool {
  
  - returns: Returns a Bool
  */
-public func SYSTEM_VERSION_LESS_THAN(v: String) -> Bool {
-    return UIDevice.currentDevice().systemVersion.compare(v, options: .NumericSearch) == .OrderedAscending
+public func SYSTEM_VERSION_LESS_THAN(_ v: String) -> Bool {
+    return UIDevice.current.systemVersion.compare(v, options: .numeric) == .orderedAscending
 }
 
 /**
@@ -121,8 +121,8 @@ public func SYSTEM_VERSION_LESS_THAN(v: String) -> Bool {
  
  - returns: Returns a Bool
  */
-public func SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v: String) -> Bool {
-    return UIDevice.currentDevice().systemVersion.compare(v, options: .NumericSearch) != .OrderedDescending
+public func SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(_ v: String) -> Bool {
+    return UIDevice.current.systemVersion.compare(v, options: .numeric) != .orderedDescending
 }
 
 /**
@@ -131,7 +131,7 @@ public func SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v: String) -> Bool {
  - returns: Returns if the iOS version is greater or equal to choosed one
  */
 public func IS_IOS_5_OR_LATER() -> Bool {
-    return UIDevice.currentDevice().systemVersion.floatValue >= 5.0
+    return UIDevice.current.systemVersion.floatValue >= 5.0
 }
 
 /**
@@ -140,7 +140,7 @@ public func IS_IOS_5_OR_LATER() -> Bool {
  - returns: Returns if the iOS version is greater or equal to choosed one
  */
 public func IS_IOS_6_OR_LATER() -> Bool {
-    return UIDevice.currentDevice().systemVersion.floatValue >= 6.0
+    return UIDevice.current.systemVersion.floatValue >= 6.0
 }
 
 /**
@@ -149,7 +149,7 @@ public func IS_IOS_6_OR_LATER() -> Bool {
  - returns: Returns if the iOS version is greater or equal to choosed one
  */
 public func IS_IOS_7_OR_LATER() -> Bool {
-    return UIDevice.currentDevice().systemVersion.floatValue >= 7.0
+    return UIDevice.current.systemVersion.floatValue >= 7.0
 }
 
 /**
@@ -158,7 +158,7 @@ public func IS_IOS_7_OR_LATER() -> Bool {
  - returns: Returns if the iOS version is greater or equal to choosed one
  */
 public func IS_IOS_8_OR_LATER() -> Bool {
-    return UIDevice.currentDevice().systemVersion.floatValue >= 8.0
+    return UIDevice.current.systemVersion.floatValue >= 8.0
 }
 
 /**
@@ -167,7 +167,7 @@ public func IS_IOS_8_OR_LATER() -> Bool {
  - returns: Returns if the iOS version is greater or equal to choosed one
  */
 public func IS_IOS_9_OR_LATER() -> Bool {
-    return UIDevice.currentDevice().systemVersion.floatValue >= 9.0
+    return UIDevice.current.systemVersion.floatValue >= 9.0
 }
 
 /// This extesion adds some useful functions to UIDevice
@@ -184,10 +184,10 @@ public extension UIDevice {
         var name: [Int32] = [CTL_HW, HW_MACHINE]
         var size: Int = 2
         sysctl(&name, 2, nil, &size, &name, 0)
-        var hw_machine = [CChar](count: Int(size), repeatedValue: 0)
+        var hw_machine = [CChar](repeating: 0, count: Int(size))
         sysctl(&name, 2, &hw_machine, &size, &name, 0)
         
-        let hardware: String = String.fromCString(hw_machine)!
+        let hardware: String = String(cString: hw_machine)
         return hardware
     }
     
@@ -358,7 +358,7 @@ public extension UIDevice {
      
      - returns: Returns true if it has a Retina display, false if not
      */
-    @available(*, deprecated=1.4.0, message="Use isRetina() in UIScreen class")
+    @available(*, deprecated: 1.4.0, message: "Use isRetina() in UIScreen class")
     public static func isRetina() -> Bool {
         return UIScreen.isRetina()
     }
@@ -368,7 +368,7 @@ public extension UIDevice {
      
      - returns: Returns true if it has a Retina HD display, false if not
      */
-    @available(*, deprecated=1.4.0, message="Use isRetinaHD() in UIScreen class")
+    @available(*, deprecated: 1.4.0, message: "Use isRetinaHD() in UIScreen class")
     public static func isRetinaHD() -> Bool {
         return UIScreen.isRetinaHD()
     }
@@ -380,7 +380,7 @@ public extension UIDevice {
      - returns: Returns the iOS version
      */
     public static func iOSVersion() -> Int {
-        return Int(UIDevice.currentDevice().systemVersion.substringToCharacter(".")!)!
+        return Int(UIDevice.current.systemVersion.substringToCharacter(".")!)!
     }
     
     /**
@@ -390,7 +390,7 @@ public extension UIDevice {
      
      - returns: Return the sysyem info
      */
-    private static func getSysInfo(typeSpecifier: Int32) -> Int {
+    fileprivate static func getSysInfo(_ typeSpecifier: Int32) -> Int {
         var name: [Int32] = [CTL_HW, typeSpecifier]
         var size: Int = 2
         sysctl(&name, 2, nil, &size, &name, 0)
@@ -460,8 +460,8 @@ public extension UIDevice {
      - returns: Returns the current device total disk space
      */
     public static func totalDiskSpace() throws -> AnyObject {
-        let attributes: NSDictionary = try NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory())
-        return attributes.objectForKey(NSFileSystemSize)!
+        let attributes: NSDictionary = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory()) as NSDictionary
+        return attributes.object(forKey: FileAttributeKey.systemSize)! as AnyObject
     }
     
     /**
@@ -470,8 +470,8 @@ public extension UIDevice {
      - returns: Returns the current device free disk space
      */
     public static func freeDiskSpace() throws -> AnyObject {
-        let attributes: NSDictionary = try NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory())
-        return attributes.objectForKey(NSFileSystemFreeSize)!
+        let attributes: NSDictionary = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory()) as NSDictionary
+        return attributes.object(forKey: FileAttributeKey.systemFreeSize)! as AnyObject
     }
     
     /**
@@ -481,14 +481,14 @@ public extension UIDevice {
      */
     public static func uniqueIdentifier() -> String {
         var UUID: String?
-        if UIDevice.currentDevice().respondsToSelector(Selector("identifierForVendor")) {
-            UUID = UIDevice.currentDevice().identifierForVendor!.UUIDString
+        if UIDevice.current.responds(to: #selector(getter: UIDevice.identifierForVendor)) {
+            UUID = UIDevice.current.identifierForVendor!.uuidString
         } else {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            UUID = defaults.objectForKey(BFUniqueIdentifierDefaultsKey) as? String
+            let defaults = UserDefaults.standard
+            UUID = defaults.object(forKey: BFUniqueIdentifierDefaultsKey) as? String
             if UUID == nil {
                 UUID = String.generateUUID()
-                defaults.setObject(UUID, forKey: BFUniqueIdentifierDefaultsKey)
+                defaults.set(UUID, forKey: BFUniqueIdentifierDefaultsKey)
                 defaults.synchronize()
             }
         }
@@ -502,15 +502,15 @@ public extension UIDevice {
      - parameter uniqueIdentifier: The unique identifier to save or update if needed. (Must be NSData or NSString)
      - parameter block:            The execution block that know if the unique identifier is valid and has to be updated. You have to handle the case if it is valid and the update is needed or not
      */
-    public static func updateUniqueIdentifier(uniqueIdentifier: NSObject, block: (isValid: Bool, hasToUpdateUniqueIdentifier: Bool, oldUUID: String?) -> ()) {
+    public static func updateUniqueIdentifier(_ uniqueIdentifier: NSObject, block: (_ isValid: Bool, _ hasToUpdateUniqueIdentifier: Bool, _ oldUUID: String?) -> ()) {
         var userUUID: String = ""
         var savedUUID: String? = nil
         var isValid = false, hasToUpdate = false
         
-        if uniqueIdentifier.isKindOfClass(NSData) {
-            let data: NSData = uniqueIdentifier as! NSData
+        if uniqueIdentifier.isKind(of: Data as! AnyClass.self) {
+            let data: Data = uniqueIdentifier as! Data
             userUUID = data.convertToUTF8String()
-        } else if uniqueIdentifier.isKindOfClass(NSString) {
+        } else if uniqueIdentifier.isKind(of: NSString.self) {
             let string: NSString = uniqueIdentifier as! NSString
             userUUID = string.convertToAPNSUUID() as String
         }
@@ -518,16 +518,16 @@ public extension UIDevice {
         isValid = userUUID.isUUIDForAPNS()
         
         if isValid {
-            let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            savedUUID = defaults.stringForKey(BFUserUniqueIdentifierDefaultsKey)
+            let defaults: UserDefaults = UserDefaults.standard
+            savedUUID = defaults.string(forKey: BFUserUniqueIdentifierDefaultsKey)
             if savedUUID == nil || savedUUID != userUUID {
-                defaults.setObject(userUUID, forKey: BFUserUniqueIdentifierDefaultsKey)
+                defaults.set(userUUID, forKey: BFUserUniqueIdentifierDefaultsKey)
                 defaults.synchronize()
                 
                 hasToUpdate = true
             }
         }
         
-        block(isValid: isValid, hasToUpdateUniqueIdentifier: hasToUpdate, oldUUID: userUUID)
+        block(isValid, hasToUpdate, userUUID)
     }
 }

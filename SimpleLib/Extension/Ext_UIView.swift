@@ -31,26 +31,26 @@ import QuartzCore
 
 // MARK: - UIView Initilizers from Nib
 extension UIView {
-	class func loadFromNibNamed(nibNamed: String, bundle: NSBundle? = nil) -> UIView? {
+	class func loadFromNibNamed(_ nibNamed: String, bundle: Bundle? = nil) -> UIView? {
 		return UINib(
 			nibName: nibNamed,
 			bundle: bundle
-		).instantiateWithOwner(nil, options: nil)[0] as? UIView
+		).instantiate(withOwner: nil, options: nil)[0] as? UIView
 	}
-	public class func fromNib(nibNameOrNil: String? = nil) -> Self {
+	public class func fromNib(_ nibNameOrNil: String? = nil) -> Self {
 		return fromNib(nibNameOrNil, type: self)
 	}
 
 	class func fromNib<T : UIView>() -> T {
-		return NSBundle.mainBundle().loadNibNamed(String(T), owner: nil, options: nil)[0] as! T
+		return Bundle.main.loadNibNamed(String(describing: T), owner: nil, options: nil)![0] as! T
 	}
 
-	public class func fromNib<T : UIView>(nibNameOrNil: String? = nil, type: T.Type) -> T {
+	public class func fromNib<T : UIView>(_ nibNameOrNil: String? = nil, type: T.Type) -> T {
 		let v: T? = fromNib(nibNameOrNil, type: T.self)
 		return v!
 	}
 
-	public class func fromNib<T : UIView>(nibNameOrNil: String? = nil, type: T.Type) -> T? {
+	public class func fromNib<T : UIView>(_ nibNameOrNil: String? = nil, type: T.Type) -> T? {
 		var view: T?
 		let name: String
 		if let nibName = nibNameOrNil {
@@ -59,8 +59,8 @@ extension UIView {
 			// Most nibs are demangled by practice, if not, just declare string explicitly
 			name = nibName
 		}
-		let nibViews = NSBundle.mainBundle().loadNibNamed(name, owner: nil, options: nil)
-		for v in nibViews {
+		let nibViews = Bundle.main.loadNibNamed(name, owner: nil, options: nil)
+		for v in nibViews! {
 			if let tog = v as? T {
 				view = tog
 			}
@@ -69,11 +69,11 @@ extension UIView {
 	}
 
 	public class var nibName: String {
-		let name = "\(self)".componentsSeparatedByString(".").first ?? ""
+		let name = "\(self)".components(separatedBy: ".").first ?? ""
 		return name
 	}
 	public class var nib: UINib? {
-		if let _ = NSBundle.mainBundle().pathForResource(nibName, ofType: "nib") {
+		if let _ = Bundle.main.path(forResource: nibName, ofType: "nib") {
 			return UINib(nibName: nibName, bundle: nil)
 		} else {
 			return nil
@@ -88,7 +88,7 @@ extension UIViewLoading where Self: UIView {
 	static func loadFromNib() -> Self {
 		let nibName = "\(self)".characters.split { $0 == "." }.map(String.init).last!
 		let nib = UINib(nibName: nibName, bundle: nil)
-		return nib.instantiateWithOwner(self, options: nil).first as! Self
+		return nib.instantiate(withOwner: self, options: nil).first as! Self
 	}
 }
 
@@ -105,10 +105,10 @@ public extension UIView {
 	 - FromBottom: Flip animation from bottom
 	 */
 	public enum UIViewAnimationFlipDirection: Int {
-		case FromTop
-		case FromLeft
-		case FromRight
-		case FromBottom
+		case fromTop
+		case fromLeft
+		case fromRight
+		case fromBottom
 	}
 
 	/**
@@ -118,8 +118,8 @@ public extension UIView {
 	 - FromRightToLeft: Translation from right to left
 	 */
 	public enum UIViewAnimationTranslationDirection: Int {
-		case FromLeftToRight
-		case FromRightToLeft
+		case fromLeftToRight
+		case fromRightToLeft
 	}
 
 	/**
@@ -133,12 +133,12 @@ public extension UIView {
 	 - DiagonalFromRightToLeftAndDownToTop: Linear gradient from right to left and down to top
 	 */
 	public enum UIViewLinearGradientDirection: Int {
-		case Vertical
-		case Horizontal
-		case DiagonalFromLeftToRightAndTopToDown
-		case DiagonalFromLeftToRightAndDownToTop
-		case DiagonalFromRightToLeftAndTopToDown
-		case DiagonalFromRightToLeftAndDownToTop
+		case vertical
+		case horizontal
+		case diagonalFromLeftToRightAndTopToDown
+		case diagonalFromLeftToRightAndDownToTop
+		case diagonalFromRightToLeftAndTopToDown
+		case diagonalFromRightToLeftAndDownToTop
 	}
 
 	// MARK: - Size
@@ -166,37 +166,37 @@ public extension UIView {
 		return self.frame.size.height
 	}
 
-	func setX(x: CGFloat) {
+	func setX(_ x: CGFloat) {
 		var rect: CGRect = self.frame
 		rect.origin.x = x
 		self.frame = rect
 	}
 
-	func setRight(right: CGFloat) {
+	func setRight(_ right: CGFloat) {
 		var rect: CGRect = self.frame
 		rect.origin.x = right - rect.size.width
 		self.frame = rect
 	}
 
-	func setY(y: CGFloat) {
+	func setY(_ y: CGFloat) {
 		var rect: CGRect = self.frame
 		rect.origin.y = y
 		self.frame = rect
 	}
 
-	func setBottom(bottom: CGFloat) {
+	func setBottom(_ bottom: CGFloat) {
 		var rect: CGRect = self.frame
 		rect.origin.y = bottom - rect.size.height
 		self.frame = rect
 	}
 
-	func setWidth(width: CGFloat) {
+	func setWidth(_ width: CGFloat) {
 		var rect: CGRect = self.frame
 		rect.size.width = width
 		self.frame = rect
 	}
 
-	func setHeight(height: CGFloat) {
+	func setHeight(_ height: CGFloat) {
 		var rect: CGRect = self.frame
 		rect.size.height = height
 		self.frame = rect
@@ -211,7 +211,7 @@ public extension UIView {
 	 - parameter radius: Border's radius
 	 - parameter width:  Border's width
 	 */
-	public func createBordersWithColor(color: UIColor, radius: CGFloat, width: CGFloat) {
+	public func createBordersWithColor(_ color: UIColor, radius: CGFloat, width: CGFloat) {
 		self.layer.borderWidth = width
 		self.layer.cornerRadius = radius
 		self.layer.shouldRasterize = false
@@ -219,7 +219,7 @@ public extension UIView {
 		self.clipsToBounds = true
 		self.layer.masksToBounds = true
 
-		let cgColor: CGColorRef = color.CGColor
+		let cgColor: CGColor = color.cgColor
 		self.layer.borderColor = cgColor
 	}
 
@@ -236,9 +236,9 @@ public extension UIView {
 	 Remove the shadow around the UIView
 	 */
 	public func removeShadow() {
-		self.layer.shadowColor = UIColor.clearColor().CGColor
+		self.layer.shadowColor = UIColor.clear.cgColor
 		self.layer.shadowOpacity = 0.0
-		self.layer.shadowOffset = CGSizeMake(0.0, 0.0)
+		self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
 	}
 
 	/**
@@ -246,7 +246,7 @@ public extension UIView {
 
 	 - parameter radius: Radius value
 	 */
-	public func setCornerRadius(radius: CGFloat) {
+	public func setCornerRadius(_ radius: CGFloat) {
 		self.layer.cornerRadius = radius
 		self.layer.masksToBounds = true
 	}
@@ -257,11 +257,11 @@ public extension UIView {
 	 - parameter corners: Corners to apply radius
 	 - parameter radius: Radius value
 	 */
-	public func cornerRadius(corners corners: UIRectCorner, radius: CGFloat) {
+	public func cornerRadius(corners: UIRectCorner, radius: CGFloat) {
 		let rectShape = CAShapeLayer()
 		rectShape.bounds = self.frame
 		rectShape.position = self.center
-		rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius)).CGPath
+		rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius)).cgPath
 		self.layer.mask = rectShape
 	}
 
@@ -272,8 +272,8 @@ public extension UIView {
 	 - parameter opacity: Shadow's opacity
 	 - parameter radius:  Shadow's radius
 	 */
-	public func createRectShadowWithOffset(offset: CGSize, opacity: Float, radius: CGFloat) {
-		self.layer.shadowColor = UIColor.blackColor().CGColor
+	public func createRectShadowWithOffset(_ offset: CGSize, opacity: Float, radius: CGFloat) {
+		self.layer.shadowColor = UIColor.black.cgColor
 		self.layer.shadowOpacity = opacity
 		self.layer.shadowOffset = offset
 		self.layer.shadowRadius = radius
@@ -288,14 +288,14 @@ public extension UIView {
 	 - parameter opacity:      Shadow's opacity
 	 - parameter radius:       Shadow's radius
 	 */
-	public func createCornerRadiusShadowWithCornerRadius(cornerRadius: CGFloat, offset: CGSize, opacity: Float, radius: CGFloat) {
-		self.layer.shadowColor = UIColor.blackColor().CGColor
+	public func createCornerRadiusShadowWithCornerRadius(_ cornerRadius: CGFloat, offset: CGSize, opacity: Float, radius: CGFloat) {
+		self.layer.shadowColor = UIColor.black.cgColor
 		self.layer.shadowOpacity = opacity
 		self.layer.shadowOffset = offset
 		self.layer.shadowRadius = radius
 		self.layer.shouldRasterize = true
 		self.layer.cornerRadius = cornerRadius
-		self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).CGPath
+		self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
 		self.layer.masksToBounds = false
 	}
 
@@ -305,38 +305,38 @@ public extension UIView {
 	 - parameter colors:    Array of UIColor instances
 	 - parameter direction: Direction of the gradient
 	 */
-	public func createGradientWithColors(colors: Array<UIColor>, direction: UIViewLinearGradientDirection) {
+	public func createGradientWithColors(_ colors: Array<UIColor>, direction: UIViewLinearGradientDirection) {
 		let gradient: CAGradientLayer = CAGradientLayer()
 		gradient.frame = self.bounds
 
 		let mutableColors: NSMutableArray = NSMutableArray(array: colors)
 		for i in 0 ..< colors.count {
 			let currentColor: UIColor = colors[i]
-			mutableColors.replaceObjectAtIndex(i, withObject: currentColor.CGColor)
+			mutableColors.replaceObject(at: i, with: currentColor.cgColor)
 		}
 		gradient.colors = mutableColors as AnyObject as! Array<UIColor>
 
 		switch direction {
-		case .Vertical:
-			gradient.startPoint = CGPointMake(0.5, 0.0)
-			gradient.endPoint = CGPointMake(0.5, 1.0)
-		case .Horizontal:
-			gradient.startPoint = CGPointMake(0.0, 0.5)
-			gradient.endPoint = CGPointMake(1.0, 0.5)
-		case .DiagonalFromLeftToRightAndTopToDown:
-			gradient.startPoint = CGPointMake(0.0, 0.0)
-			gradient.endPoint = CGPointMake(1.0, 1.0)
-		case .DiagonalFromLeftToRightAndDownToTop:
-			gradient.startPoint = CGPointMake(0.0, 1.0)
-			gradient.endPoint = CGPointMake(1.0, 0.0)
-		case .DiagonalFromRightToLeftAndTopToDown:
-			gradient.startPoint = CGPointMake(1.0, 0.0)
-			gradient.endPoint = CGPointMake(0.0, 1.0)
-		case .DiagonalFromRightToLeftAndDownToTop:
-			gradient.startPoint = CGPointMake(1.0, 1.0)
-			gradient.endPoint = CGPointMake(0.0, 0.0)
+		case .vertical:
+			gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+			gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
+		case .horizontal:
+			gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+			gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+		case .diagonalFromLeftToRightAndTopToDown:
+			gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+			gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+		case .diagonalFromLeftToRightAndDownToTop:
+			gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+			gradient.endPoint = CGPoint(x: 1.0, y: 0.0)
+		case .diagonalFromRightToLeftAndTopToDown:
+			gradient.startPoint = CGPoint(x: 1.0, y: 0.0)
+			gradient.endPoint = CGPoint(x: 0.0, y: 1.0)
+		case .diagonalFromRightToLeftAndDownToTop:
+			gradient.startPoint = CGPoint(x: 1.0, y: 1.0)
+			gradient.endPoint = CGPoint(x: 0.0, y: 0.0)
 		}
-		self.layer.insertSublayer(gradient, atIndex: 0)
+		self.layer.insertSublayer(gradient, at: 0)
 	}
 
 	/**
@@ -344,12 +344,12 @@ public extension UIView {
 	 */
 	public func shakeView() {
 		let shake: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform")
-		shake.values = [NSValue(CATransform3D: CATransform3DMakeTranslation(-5.0, 0.0, 0.0)), NSValue(CATransform3D: CATransform3DMakeTranslation(5.0, 0.0, 0.0))]
+		shake.values = [NSValue(caTransform3D: CATransform3DMakeTranslation(-5.0, 0.0, 0.0)), NSValue(caTransform3D: CATransform3DMakeTranslation(5.0, 0.0, 0.0))]
 		shake.autoreverses = true
 		shake.repeatCount = 2.0
 		shake.duration = 0.07
 
-		self.layer.addAnimation(shake, forKey: "shake")
+		self.layer.add(shake, forKey: "shake")
 	}
 
 	/**
@@ -357,40 +357,40 @@ public extension UIView {
 
 	 - parameter duration: Seconds of animation
 	 */
-	public func pulseViewWithDuration(duration: CGFloat) {
-		UIView.animateWithDuration(NSTimeInterval(duration / 6), animations: { () -> Void in
-			self.transform = CGAffineTransformMakeScale(1.1, 1.1)
-		}) { (finished) -> Void in
+	public func pulseViewWithDuration(_ duration: CGFloat) {
+		UIView.animate(withDuration: TimeInterval(duration / 6), animations: { () -> Void in
+			self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+		}, completion: { (finished) -> Void in
 			if finished {
-				UIView.animateWithDuration(NSTimeInterval(duration / 6), animations: { () -> Void in
-					self.transform = CGAffineTransformMakeScale(0.96, 0.96)
-				}) { (finished: Bool) -> Void in
+				UIView.animate(withDuration: TimeInterval(duration / 6), animations: { () -> Void in
+					self.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+				}, completion: { (finished: Bool) -> Void in
 					if finished {
-						UIView.animateWithDuration(NSTimeInterval(duration / 6), animations: { () -> Void in
-							self.transform = CGAffineTransformMakeScale(1.03, 1.03)
-						}) { (finished: Bool) -> Void in
+						UIView.animate(withDuration: TimeInterval(duration / 6), animations: { () -> Void in
+							self.transform = CGAffineTransform(scaleX: 1.03, y: 1.03)
+						}, completion: { (finished: Bool) -> Void in
 							if finished {
-								UIView.animateWithDuration(NSTimeInterval(duration / 6), animations: { () -> Void in
-									self.transform = CGAffineTransformMakeScale(0.985, 0.985)
-								}) { (finished: Bool) -> Void in
+								UIView.animate(withDuration: TimeInterval(duration / 6), animations: { () -> Void in
+									self.transform = CGAffineTransform(scaleX: 0.985, y: 0.985)
+								}, completion: { (finished: Bool) -> Void in
 									if finished {
-										UIView.animateWithDuration(NSTimeInterval(duration / 6), animations: { () -> Void in
-											self.transform = CGAffineTransformMakeScale(1.007, 1.007)
-										}) { (finished: Bool) -> Void in
+										UIView.animate(withDuration: TimeInterval(duration / 6), animations: { () -> Void in
+											self.transform = CGAffineTransform(scaleX: 1.007, y: 1.007)
+										}, completion: { (finished: Bool) -> Void in
 											if finished {
-												UIView.animateWithDuration(NSTimeInterval(duration / 6), animations: { () -> Void in
-													self.transform = CGAffineTransformMakeScale(1, 1)
+												UIView.animate(withDuration: TimeInterval(duration / 6), animations: { () -> Void in
+													self.transform = CGAffineTransform(scaleX: 1, y: 1)
 												})
 											}
-										}
+										}) 
 									}
-								}
+								}) 
 							}
-						}
+						}) 
 					}
-				}
+				}) 
 			}
-		}
+		}) 
 	}
 
 	/**
@@ -398,7 +398,7 @@ public extension UIView {
 
 	 - parameter duration: Seconds of animation
 	 */
-	public func heartbeatViewWithDuration(duration: CGFloat) {
+	public func heartbeatViewWithDuration(_ duration: CGFloat) {
 		let maxSize: CGFloat = 1.4, durationPerBeat: CGFloat = 0.5
 
 		let animation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform")
@@ -408,18 +408,18 @@ public extension UIView {
 		let scale3: CATransform3D = CATransform3DMakeScale(maxSize - 0.3, maxSize - 0.3, 1)
 		let scale4: CATransform3D = CATransform3DMakeScale(1.0, 1.0, 1)
 
-		let frameValues: Array = [NSValue(CATransform3D: scale1), NSValue(CATransform3D: scale2), NSValue(CATransform3D: scale3), NSValue(CATransform3D: scale4)]
+		let frameValues: Array = [NSValue(caTransform3D: scale1), NSValue(caTransform3D: scale2), NSValue(caTransform3D: scale3), NSValue(caTransform3D: scale4)]
 
 		animation.values = frameValues
 
-		let frameTimes: Array = [NSNumber(float: 0.05), NSNumber(float: 0.2), NSNumber(float: 0.6), NSNumber(float: 1.0)]
+		let frameTimes: Array = [NSNumber(value: 0.05 as Float), NSNumber(value: 0.2 as Float), NSNumber(value: 0.6 as Float), NSNumber(value: 1.0 as Float)]
 		animation.keyTimes = frameTimes
 
 		animation.fillMode = kCAFillModeForwards
-		animation.duration = NSTimeInterval(durationPerBeat)
+		animation.duration = TimeInterval(durationPerBeat)
 		animation.repeatCount = Float(duration / durationPerBeat)
 
-		self.layer.addAnimation(animation, forKey: "heartbeat")
+		self.layer.add(animation, forKey: "heartbeat")
 	}
 
 	/**
@@ -428,13 +428,13 @@ public extension UIView {
 
 	 - parameter duration: Seconds of animation
 	 */
-	public func opacityAnimation(duration: CGFloat) {
+	public func opacityAnimation(_ duration: CGFloat) {
 		let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
 		opacityAnimation.duration = 1.0
 		opacityAnimation.values = [1.0, 0.6, 0.3]
 		opacityAnimation.keyTimes = [0.05, 0.55, 1.0]
-		opacityAnimation.removedOnCompletion = false // ?
-		self.layer.addAnimation(opacityAnimation, forKey: "opacity")
+		opacityAnimation.isRemovedOnCompletion = false // ?
+		self.layer.add(opacityAnimation, forKey: "opacity")
 	}
 
 	/**
@@ -443,7 +443,7 @@ public extension UIView {
 
 	 - parameter duration: Seconds of animation
 	 */
-	func twinkleViewWithDuration(duration: CGFloat) {
+	func twinkleViewWithDuration(_ duration: CGFloat) {
 		let durationPerBeat: CGFloat = 0.5
 
 		let opaqueAnimate = CABasicAnimation(keyPath: "opacity")
@@ -457,25 +457,25 @@ public extension UIView {
 		let group = CAAnimationGroup()
 		group.duration = 2.0
 		group.repeatCount = Float.infinity
-		group.removedOnCompletion = false
+		group.isRemovedOnCompletion = false
 		group.animations = [opaqueAnimate, alphaAnimation]
 
 		opaqueAnimate.autoreverses = true
 		opaqueAnimate.repeatCount = Float(duration / durationPerBeat)
-		opaqueAnimate.duration = NSTimeInterval(durationPerBeat)
+		opaqueAnimate.duration = TimeInterval(durationPerBeat)
 
 		// layer添加动画
-		self.layer.addAnimation(group, forKey: "twinkle")
+		self.layer.add(group, forKey: "twinkle")
 	}
 
 	/**
 	 Adds a motion effect to the view
 	 */
 	public func applyMotionEffects() {
-		let horizontalEffect: UIInterpolatingMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+		let horizontalEffect: UIInterpolatingMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
 		horizontalEffect.minimumRelativeValue = -10.0
 		horizontalEffect.maximumRelativeValue = 10.0
-		let verticalEffect: UIInterpolatingMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+		let verticalEffect: UIInterpolatingMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
 		verticalEffect.minimumRelativeValue = -10.0
 		verticalEffect.maximumRelativeValue = 10.0
 		let motionEffectGroup: UIMotionEffectGroup = UIMotionEffectGroup()
@@ -490,17 +490,17 @@ public extension UIView {
 	 - parameter duration:  Seconds of animation
 	 - parameter direction: Direction of the flip animation
 	 */
-	public func flipWithDuration(duration: NSTimeInterval, direction: UIViewAnimationFlipDirection) {
+	public func flipWithDuration(_ duration: TimeInterval, direction: UIViewAnimationFlipDirection) {
 		var subtype: String = ""
 
 		switch (direction) {
-		case .FromTop:
+		case .fromTop:
 			subtype = "fromTop"
-		case .FromLeft:
+		case .fromLeft:
 			subtype = "fromLeft"
-		case .FromBottom:
+		case .fromBottom:
 			subtype = "fromBottom"
-		case .FromRight:
+		case .fromRight:
 			subtype = "fromRight"
 		}
 
@@ -514,7 +514,7 @@ public extension UIView {
 		transition.repeatCount = 1
 		transition.autoreverses = true
 
-		self.layer.addAnimation(transition, forKey: "flip")
+		self.layer.add(transition, forKey: "flip")
 	}
 
 	/**
@@ -526,27 +526,27 @@ public extension UIView {
 	 - parameter repeatAnimation: If the animation must be repeat or no
 	 - parameter startFromEdge:   If the animation must start from the edge
 	 */
-	public func translateAroundTheView(topView: UIView, duration: CGFloat, direction: UIViewAnimationTranslationDirection, repeatAnimation: Bool = true, startFromEdge: Bool = true) {
+	public func translateAroundTheView(_ topView: UIView, duration: CGFloat, direction: UIViewAnimationTranslationDirection, repeatAnimation: Bool = true, startFromEdge: Bool = true) {
 		var startPosition: CGFloat = self.center.x, endPosition: CGFloat
 		switch (direction) {
-		case .FromLeftToRight:
+		case .fromLeftToRight:
 			startPosition = self.frame.size.width / 2
 			endPosition = -(self.frame.size.width / 2) + topView.frame.size.width
-		case .FromRightToLeft:
+		case .fromRightToLeft:
 			startPosition = -(self.frame.size.width / 2) + topView.frame.size.width
 			endPosition = self.frame.size.width / 2
 		}
 
 		if startFromEdge {
-			self.center = CGPointMake(startPosition, self.center.y)
+			self.center = CGPoint(x: startPosition, y: self.center.y)
 		}
 
-		UIView.animateWithDuration(NSTimeInterval(duration / 2), delay: 1, options: .CurveEaseInOut, animations: { () -> Void in
-			self.center = CGPointMake(endPosition, self.center.y)
+		UIView.animate(withDuration: TimeInterval(duration / 2), delay: 1, options: UIViewAnimationOptions(), animations: { () -> Void in
+			self.center = CGPoint(x: endPosition, y: self.center.y)
 		}) { (finished: Bool) -> Void in
 			if finished {
-				UIView.animateWithDuration(NSTimeInterval(duration / 2), delay: 1, options: .CurveEaseInOut, animations: { () -> Void in
-					self.center = CGPointMake(startPosition, self.center.y)
+				UIView.animate(withDuration: TimeInterval(duration / 2), delay: 1, options: UIViewAnimationOptions(), animations: { () -> Void in
+					self.center = CGPoint(x: startPosition, y: self.center.y)
 				}) { (finished: Bool) -> Void in
 					if finished {
 						if repeatAnimation {
@@ -564,14 +564,14 @@ public extension UIView {
 	 - returns: Returns screenshot as UIImage
 	 */
 	public func screenshot() -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.mainScreen().scale)
+		UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.main.scale)
 
-		self.drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
+		self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
 
-		var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+		var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()
 
-		let imageData: NSData = UIImagePNGRepresentation(image)!
+		let imageData: Data = UIImagePNGRepresentation(image)!
 		image = UIImage(data: imageData)!
 
 		return image
@@ -635,7 +635,7 @@ extension UIView {
 extension UIView {
 
 	/// EZSwiftExtensions, add multiple subviews
-	public func addSubviews(views: [UIView]) {
+	public func addSubviews(_ views: [UIView]) {
 		views.forEach { eachView in
 			self.addSubview(eachView)
 		}
@@ -656,7 +656,7 @@ extension UIView {
 	}
 
 	/// EZSwiftExtensions, resizes this view so it fits the largest subview
-	public func resizeToFitSubviews(tagsToIgnore: [Int]) {
+	public func resizeToFitSubviews(_ tagsToIgnore: [Int]) {
 		var width: CGFloat = 0
 		var height: CGFloat = 0
 		for someView in self.subviews {
@@ -794,35 +794,35 @@ extension UIView {
 	}
 
 	/// EZSwiftExtensions
-	public func leftOffset(offset: CGFloat) -> CGFloat {
+	public func leftOffset(_ offset: CGFloat) -> CGFloat {
 		return self.left - offset
 	}
 
 	/// EZSwiftExtensions
-	public func rightOffset(offset: CGFloat) -> CGFloat {
+	public func rightOffset(_ offset: CGFloat) -> CGFloat {
 		return self.right + offset
 	}
 
 	/// EZSwiftExtensions
-	public func topOffset(offset: CGFloat) -> CGFloat {
+	public func topOffset(_ offset: CGFloat) -> CGFloat {
 		return self.top - offset
 	}
 
 	/// EZSwiftExtensions
-	public func bottomOffset(offset: CGFloat) -> CGFloat {
+	public func bottomOffset(_ offset: CGFloat) -> CGFloat {
 		return self.bottom + offset
 	}
 
 	/// EZSwiftExtensions
-	public func alignRight(offset: CGFloat) -> CGFloat {
+	public func alignRight(_ offset: CGFloat) -> CGFloat {
 		return self.w - offset
 	}
 
 	/// EZSwiftExtensions
-	public func reorderSubViews(reorder: Bool = false, tagsToIgnore: [Int] = []) -> CGFloat {
+	public func reorderSubViews(_ reorder: Bool = false, tagsToIgnore: [Int] = []) -> CGFloat {
 		var currentHeight: CGFloat = 0
 		for someView in subviews {
-			if !tagsToIgnore.contains(someView.tag) && !(someView).hidden {
+			if !tagsToIgnore.contains(someView.tag) && !(someView).isHidden {
 				if reorder {
 					let aView = someView
 					aView.frame = CGRect(x: aView.frame.origin.x, y: currentHeight, width: aView.frame.width, height: aView.frame.height)
@@ -869,7 +869,7 @@ extension UIView {
 // MARK: - Transform Extensions
 extension UIView {
 	/// EZSwiftExtensions
-	public func setRotationX(x: CGFloat) {
+	public func setRotationX(_ x: CGFloat) {
 		var transform = CATransform3DIdentity
 		transform.m34 = 1.0 / -1000.0
 		transform = CATransform3DRotate(transform, x.degreesToRadians(), 1.0, 0.0, 0.0)
@@ -877,7 +877,7 @@ extension UIView {
 	}
 
 	/// EZSwiftExtensions
-	public func setRotationY(y: CGFloat) {
+	public func setRotationY(_ y: CGFloat) {
 		var transform = CATransform3DIdentity
 		transform.m34 = 1.0 / -1000.0
 		transform = CATransform3DRotate(transform, y.degreesToRadians(), 0.0, 1.0, 0.0)
@@ -885,7 +885,7 @@ extension UIView {
 	}
 
 	/// EZSwiftExtensions
-	public func setRotationZ(z: CGFloat) {
+	public func setRotationZ(_ z: CGFloat) {
 		var transform = CATransform3DIdentity
 		transform.m34 = 1.0 / -1000.0
 		transform = CATransform3DRotate(transform, z.degreesToRadians(), 0.0, 0.0, 1.0)
@@ -893,7 +893,7 @@ extension UIView {
 	}
 
 	/// EZSwiftExtensions
-	public func setRotation(x x: CGFloat, y: CGFloat, z: CGFloat) {
+	public func setRotation(x: CGFloat, y: CGFloat, z: CGFloat) {
 		var transform = CATransform3DIdentity
 		transform.m34 = 1.0 / -1000.0
 		transform = CATransform3DRotate(transform, x.degreesToRadians(), 1.0, 0.0, 0.0)
@@ -903,7 +903,7 @@ extension UIView {
 	}
 
 	/// EZSwiftExtensions
-	public func setScale(x x: CGFloat, y: CGFloat) {
+	public func setScale(x: CGFloat, y: CGFloat) {
 		var transform = CATransform3DIdentity
 		transform.m34 = 1.0 / -1000.0
 		transform = CATransform3DScale(transform, x, y, 1)
@@ -916,89 +916,89 @@ extension UIView {
 extension UIView {
 
 	/// EZSwiftExtensions
-	public func setCornerRadius(radius radius: CGFloat) {
+	public func setCornerRadius(radius: CGFloat) {
 		self.layer.cornerRadius = radius
 		self.layer.masksToBounds = true
 	}
 
 	/// EZSwiftExtensions
-	public func addShadow(offset offset: CGSize, radius: CGFloat, color: UIColor, opacity: Float, cornerRadius: CGFloat? = nil) {
+	public func addShadow(offset: CGSize, radius: CGFloat, color: UIColor, opacity: Float, cornerRadius: CGFloat? = nil) {
 		self.layer.shadowOffset = offset
 		self.layer.shadowRadius = radius
 		self.layer.shadowOpacity = opacity
-		self.layer.shadowColor = color.CGColor
+		self.layer.shadowColor = color.cgColor
 		if let r = cornerRadius {
-			self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: r).CGPath
+			self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: r).cgPath
 		}
 	}
 
 	/// EZSwiftExtensions
-	public func addBorder(width width: CGFloat, color: UIColor) {
+	public func addBorder(width: CGFloat, color: UIColor) {
 		layer.borderWidth = width
-		layer.borderColor = color.CGColor
+		layer.borderColor = color.cgColor
 		layer.masksToBounds = true
 	}
 
 	/// EZSwiftExtensions
-	public func addBorderTop(size size: CGFloat, color: UIColor) {
+	public func addBorderTop(size: CGFloat, color: UIColor) {
 		addBorderUtility(x: 0, y: 0, width: frame.width, height: size, color: color)
 	}
 
 	/// EZSwiftExtensions
-	public func addBorderTopWithPadding(size size: CGFloat, color: UIColor, padding: CGFloat) {
+	public func addBorderTopWithPadding(size: CGFloat, color: UIColor, padding: CGFloat) {
 		addBorderUtility(x: padding, y: 0, width: frame.width - padding * 2, height: size, color: color)
 	}
 
 	/// EZSwiftExtensions
-	public func addBorderBottom(size size: CGFloat, color: UIColor) {
+	public func addBorderBottom(size: CGFloat, color: UIColor) {
 		addBorderUtility(x: 0, y: frame.height - size, width: frame.width, height: size, color: color)
 	}
 
 	/// EZSwiftExtensions
-	public func addBorderLeft(size size: CGFloat, color: UIColor) {
+	public func addBorderLeft(size: CGFloat, color: UIColor) {
 		addBorderUtility(x: 0, y: 0, width: size, height: frame.height, color: color)
 	}
 
 	/// EZSwiftExtensions
-	public func addBorderRight(size size: CGFloat, color: UIColor) {
+	public func addBorderRight(size: CGFloat, color: UIColor) {
 		addBorderUtility(x: frame.width - size, y: 0, width: size, height: frame.height, color: color)
 	}
 
 	/// EZSwiftExtensions
-	private func addBorderUtility(x x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, color: UIColor) {
+	fileprivate func addBorderUtility(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, color: UIColor) {
 		let border = CALayer()
-		border.backgroundColor = color.CGColor
+		border.backgroundColor = color.cgColor
 		border.frame = CGRect(x: x, y: y, width: width, height: height)
 		layer.addSublayer(border)
 	}
 
 	/// EZSwiftExtensions
-	public func drawCircle(fillColor fillColor: UIColor, strokeColor: UIColor, strokeWidth: CGFloat) {
+	public func drawCircle(fillColor: UIColor, strokeColor: UIColor, strokeWidth: CGFloat) {
 		let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.w, height: self.w), cornerRadius: self.w / 2)
 		let shapeLayer = CAShapeLayer()
-		shapeLayer.path = path.CGPath
-		shapeLayer.fillColor = fillColor.CGColor
-		shapeLayer.strokeColor = strokeColor.CGColor
+		shapeLayer.path = path.cgPath
+		shapeLayer.fillColor = fillColor.cgColor
+		shapeLayer.strokeColor = strokeColor.cgColor
 		shapeLayer.lineWidth = strokeWidth
 		self.layer.addSublayer(shapeLayer)
 	}
 
 	/// EZSwiftExtensions
-	public func drawStroke(width width: CGFloat, color: UIColor) {
+	public func drawStroke(width: CGFloat, color: UIColor) {
 		let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.w, height: self.w), cornerRadius: self.w / 2)
 		let shapeLayer = CAShapeLayer ()
-		shapeLayer.path = path.CGPath
-		shapeLayer.fillColor = UIColor.clearColor().CGColor
-		shapeLayer.strokeColor = color.CGColor
+		shapeLayer.path = path.cgPath
+		shapeLayer.fillColor = UIColor.clear.cgColor
+		shapeLayer.strokeColor = color.cgColor
 		shapeLayer.lineWidth = width
 		self.layer.addSublayer(shapeLayer)
 	}
 
 	/// EZSwiftExtensions [UIRectCorner.TopLeft, UIRectCorner.TopRight]
-	public func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+	public func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
 		let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
 		let mask = CAShapeLayer()
-		mask.path = path.CGPath
+		mask.path = path.cgPath
 		self.layer.mask = mask
 	}
 
@@ -1009,37 +1009,37 @@ extension UIView {
 
 }
 
-private let UIViewAnimationDuration: NSTimeInterval = 1
+private let UIViewAnimationDuration: TimeInterval = 1
 private let UIViewAnimationSpringDamping: CGFloat = 0.5
 private let UIViewAnimationSpringVelocity: CGFloat = 0.5
 
 // MARK: - Animation Extensions
 extension UIView {
 	/// EZSwiftExtensions
-	public func spring(animations animations: (() -> Void), completion: ((Bool) -> Void)? = nil) {
+	public func spring(animations: @escaping (() -> Void), completion: ((Bool) -> Void)? = nil) {
 		spring(duration: UIViewAnimationDuration, animations: animations, completion: completion)
 	}
 
 	/// EZSwiftExtensions
-	public func spring(duration duration: NSTimeInterval, animations: (() -> Void), completion: ((Bool) -> Void)? = nil) {
-		UIView.animateWithDuration(
-			UIViewAnimationDuration,
+	public func spring(duration: TimeInterval, animations: @escaping (() -> Void), completion: ((Bool) -> Void)? = nil) {
+		UIView.animate(
+			withDuration: UIViewAnimationDuration,
 			delay: 0,
 			usingSpringWithDamping: UIViewAnimationSpringDamping,
 			initialSpringVelocity: UIViewAnimationSpringVelocity,
-			options: UIViewAnimationOptions.AllowAnimatedContent,
+			options: UIViewAnimationOptions.allowAnimatedContent,
 			animations: animations,
 			completion: completion
 		)
 	}
 
 	/// EZSwiftExtensions
-	public func animate(duration duration: NSTimeInterval, animations: (() -> Void), completion: ((Bool) -> Void)? = nil) {
-		UIView.animateWithDuration(duration, animations: animations, completion: completion)
+	public func animate(duration: TimeInterval, animations: @escaping (() -> Void), completion: ((Bool) -> Void)? = nil) {
+		UIView.animate(withDuration: duration, animations: animations, completion: completion)
 	}
 
 	/// EZSwiftExtensions
-	public func animate(animations animations: (() -> Void), completion: ((Bool) -> Void)? = nil) {
+	public func animate(animations: @escaping (() -> Void), completion: ((Bool) -> Void)? = nil) {
 		animate(duration: UIViewAnimationDuration, animations: animations, completion: completion)
 	}
 
@@ -1060,17 +1060,17 @@ extension UIView {
 	}
 
 	/// EZSE: Shakes the view for as many number of times as given in the argument.
-	public func shakeViewForTimes(times: Int) {
+	public func shakeViewForTimes(_ times: Int) {
 		let anim = CAKeyframeAnimation(keyPath: "transform")
 		anim.values = [
-			NSValue(CATransform3D: CATransform3DMakeTranslation(-5, 0, 0)),
-			NSValue(CATransform3D: CATransform3DMakeTranslation(5, 0, 0))
+			NSValue(caTransform3D: CATransform3DMakeTranslation(-5, 0, 0)),
+			NSValue(caTransform3D: CATransform3DMakeTranslation(5, 0, 0))
 		]
 		anim.autoreverses = true
 		anim.repeatCount = Float(times)
 		anim.duration = 7 / 100
 
-		self.layer.addAnimation(anim, forKey: nil)
+		self.layer.add(anim, forKey: nil)
 	}
 
 }
@@ -1079,8 +1079,8 @@ extension UIView {
 extension UIView {
 	/// EZSwiftExtensions
 	public func toImage () -> UIImage! {
-		UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, 0.0)
-		drawViewHierarchyInRect(bounds, afterScreenUpdates: false)
+		UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0.0)
+		drawHierarchy(in: bounds, afterScreenUpdates: false)
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return image
@@ -1091,22 +1091,22 @@ extension UIView {
 extension UIView {
 	/// http://stackoverflow.com/questions/4660371/how-to-add-a-touch-event-to-a-uiview/32182866#32182866
 	/// EZSwiftExtensions
-	public func addTapGesture(tapNumber tapNumber: Int = 1, target: AnyObject, action: Selector) {
+	public func addTapGesture(tapNumber: Int = 1, target: AnyObject, action: Selector) {
 		let tap = UITapGestureRecognizer(target: target, action: action)
 		tap.numberOfTapsRequired = tapNumber
 		addGestureRecognizer(tap)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	/// EZSwiftExtensions - Make sure you use  "[weak self] (gesture) in" if you are using the keyword self inside the closure or there might be a memory leak
-	public func addTapGesture(tapNumber tapNumber: Int = 1, action: ((UITapGestureRecognizer) -> ())?) {
+	public func addTapGesture(tapNumber: Int = 1, action: ((UITapGestureRecognizer) -> ())?) {
 		let tap = BlockTap(tapCount: tapNumber, fingerCount: 1, action: action)
 		addGestureRecognizer(tap)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	/// EZSwiftExtensions
-	public func addSwipeGesture(direction direction: UISwipeGestureRecognizerDirection, numberOfTouches: Int = 1, target: AnyObject, action: Selector) {
+	public func addSwipeGesture(direction: UISwipeGestureRecognizerDirection, numberOfTouches: Int = 1, target: AnyObject, action: Selector) {
 		let swipe = UISwipeGestureRecognizer(target: target, action: action)
 		swipe.direction = direction
 
@@ -1117,37 +1117,37 @@ extension UIView {
 		#endif
 
 		addGestureRecognizer(swipe)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	/// EZSwiftExtensions - Make sure you use  "[weak self] (gesture) in" if you are using the keyword self inside the closure or there might be a memory leak
-	public func addSwipeGesture(direction direction: UISwipeGestureRecognizerDirection, numberOfTouches: Int = 1, action: ((UISwipeGestureRecognizer) -> ())?) {
+	public func addSwipeGesture(direction: UISwipeGestureRecognizerDirection, numberOfTouches: Int = 1, action: ((UISwipeGestureRecognizer) -> ())?) {
 		let swipe = BlockSwipe(direction: direction, fingerCount: numberOfTouches, action: action)
 		addGestureRecognizer(swipe)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	/// EZSwiftExtensions
-	public func addPanGesture(target target: AnyObject, action: Selector) {
+	public func addPanGesture(target: AnyObject, action: Selector) {
 		let pan = UIPanGestureRecognizer(target: target, action: action)
 		addGestureRecognizer(pan)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	/// EZSwiftExtensions - Make sure you use  "[weak self] (gesture) in" if you are using the keyword self inside the closure or there might be a memory leak
-	public func addPanGesture(action action: ((UIPanGestureRecognizer) -> ())?) {
+	public func addPanGesture(action: ((UIPanGestureRecognizer) -> ())?) {
 		let pan = BlockPan(action: action)
 		addGestureRecognizer(pan)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	#if os(iOS)
 
 		/// EZSwiftExtensions
-		public func addPinchGesture(target target: AnyObject, action: Selector) {
+		public func addPinchGesture(target: AnyObject, action: Selector) {
 			let pinch = UIPinchGestureRecognizer(target: target, action: action)
 			addGestureRecognizer(pinch)
-			userInteractionEnabled = true
+			isUserInteractionEnabled = true
 		}
 
 	#endif
@@ -1155,42 +1155,42 @@ extension UIView {
 	#if os(iOS)
 
 		/// EZSwiftExtensions - Make sure you use  "[weak self] (gesture) in" if you are using the keyword self inside the closure or there might be a memory leak
-		public func addPinchGesture(action action: ((UIPinchGestureRecognizer) -> ())?) {
+		public func addPinchGesture(action: ((UIPinchGestureRecognizer) -> ())?) {
 			let pinch = BlockPinch(action: action)
 			addGestureRecognizer(pinch)
-			userInteractionEnabled = true
+			isUserInteractionEnabled = true
 		}
 
 	#endif
 
 	/// EZSwiftExtensions
-	public func addLongPressGesture(target target: AnyObject, action: Selector) {
+	public func addLongPressGesture(target: AnyObject, action: Selector) {
 		let longPress = UILongPressGestureRecognizer(target: target, action: action)
 		addGestureRecognizer(longPress)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 
 	/// EZSwiftExtensions - Make sure you use  "[weak self] (gesture) in" if you are using the keyword self inside the closure or there might be a memory leak
-	public func addLongPressGesture(action action: ((UILongPressGestureRecognizer) -> ())?) {
+	public func addLongPressGesture(action: ((UILongPressGestureRecognizer) -> ())?) {
 		let longPress = BlockLongPress(action: action)
 		addGestureRecognizer(longPress)
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 	}
 }
 
 extension UIView {
 	/// EZSE: Shakes the view for as many number of times as given in the argument.
-	public func shakeViewForTimes(times: Int) {
+	public func shakeViewForTimes(_ times: Int) {
 		let anim = CAKeyframeAnimation(keyPath: "transform")
 		anim.values = [
-			NSValue(CATransform3D: CATransform3DMakeTranslation(-5, 0, 0)),
-			NSValue(CATransform3D: CATransform3DMakeTranslation(5, 0, 0))
+			NSValue(caTransform3D: CATransform3DMakeTranslation(-5, 0, 0)),
+			NSValue(caTransform3D: CATransform3DMakeTranslation(5, 0, 0))
 		]
 		anim.autoreverses = true
 		anim.repeatCount = Float(times)
 		anim.duration = 7 / 100
 
-		self.layer.addAnimation(anim, forKey: nil)
+		self.layer.add(anim, forKey: nil)
 	}
 }
 
