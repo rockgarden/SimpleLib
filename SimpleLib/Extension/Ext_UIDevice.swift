@@ -15,7 +15,7 @@ public extension UIDevice {
 		uname(&systemInfo)
 		let machineMirror = Mirror(reflecting: systemInfo.machine)
 		let identifier = machineMirror.children.reduce("") { identifier, element in
-			guard let value = element.value as? Int8 where value != 0 else { return identifier }
+			guard let value = element.value as? Int8, value != 0 else { return identifier }
 			return identifier + String(UnicodeScalar(UInt8(value)))
 		}
 
@@ -358,7 +358,7 @@ public extension UIDevice {
      
      - returns: Returns true if it has a Retina display, false if not
      */
-    @available(*, deprecated=1.4.0, message="Use isRetina() in UIScreen class")
+    @available(*, deprecated: 1.4.0, message: "Use isRetina() in UIScreen class")
     public static func isRetina() -> Bool {
         return UIScreen.isRetina()
     }
@@ -368,7 +368,7 @@ public extension UIDevice {
      
      - returns: Returns true if it has a Retina HD display, false if not
      */
-    @available(*, deprecated=1.4.0, message="Use isRetinaHD() in UIScreen class")
+    @available(*, deprecated=1.4.0, message: "Use isRetinaHD() in UIScreen class")
     public static func isRetinaHD() -> Bool {
         return UIScreen.isRetinaHD()
     }
