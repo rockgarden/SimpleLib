@@ -368,7 +368,11 @@ public extension UIDevice {
      
      - returns: Returns true if it has a Retina HD display, false if not
      */
+<<<<<<< HEAD
     @available(*, deprecated: 1.4.0, message: "Use isRetinaHD() in UIScreen class")
+=======
+    @available(*, deprecated=1.4.0, message: "Use isRetinaHD() in UIScreen class")
+>>>>>>> master
     public static func isRetinaHD() -> Bool {
         return UIScreen.isRetinaHD()
     }
