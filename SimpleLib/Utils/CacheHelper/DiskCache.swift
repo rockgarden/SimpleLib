@@ -10,6 +10,7 @@ import Foundation
 
 /// Disk cache. All reads run concurrently. Writes wait for all other queue actions to finish and run one at a time
 /// using dispatch barriers.
+//TODO: NSCoding
 public struct DiskCache<T: NSCoding>: Cache {
     
     // MARK: - Properties
@@ -53,7 +54,7 @@ public struct DiskCache<T: NSCoding>: Cache {
     public func set(key: String, value: T, completion: (() -> Void)? = nil) {
         let path = pathForKey(key)
         let fileManager = self.fileManager
-        
+        /// barrier: 假设我们有一个并发的队列用来读写一个数据对象。如果这个队列里的操作是读的，那么可以多个同时进行。如果有写的操作，则必须保证在执行写入操作时，不会有读取操作在执行，必须等待写入完成后才能读取，否则就可能会出现读到的数据不对。
         coordinate(barrier: true) {
             if fileManager.fileExists(atPath: path) {
                 do {
@@ -106,7 +107,6 @@ public struct DiskCache<T: NSCoding>: Cache {
             queue.async(flags: .barrier, execute: block)
             return
         }
-        
         queue.async(execute: block)
     }
     
@@ -117,8 +117,7 @@ public struct DiskCache<T: NSCoding>: Cache {
     func cleanTemp() {
         var res = Array<Date>()
         do {
-            if let tmpFiles = try? fileManager.contentsOfDirectory(atPath: directory)
-            {
+            if let tmpFiles = try? fileManager.contentsOfDirectory(atPath: directory) {
                 for file in tmpFiles {
                     let fullPath = (file as NSString).appendingPathComponent(file)
                     if fileManager.fileExists(atPath: fullPath) {
