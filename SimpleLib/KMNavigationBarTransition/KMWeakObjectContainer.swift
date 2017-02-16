@@ -19,7 +19,7 @@ class KMWeakObjectContainer: NSObject {
     }
 
     func km_objc_getAssociatedWeakObject(container: AnyObject, _ key: UnsafePointer<Void> ) -> AnyObject {
-        self.object = objc_getAssociatedObject(container, key)
+        self.object = objc_getAssociatedObject(container, key) as AnyObject?
         return object!
     }
 }

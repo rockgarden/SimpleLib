@@ -19,14 +19,14 @@ extension UIColor {
         return RGBA(r, g: g, b: b, a: 1.0)
     }
     
-    public static func RGBA(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) -> UIColor {
+    public static func RGBA(_ r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) -> UIColor {
         return UIColor(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a)
     }
     
     /// EZSE: init method with hex string and alpha(default: 1)
     public convenience init?(hexString: String, alpha: CGFloat = 1.0) {
-        var formatted = hexString.stringByReplacingOccurrencesOfString("0x", withString: "")
-        formatted = formatted.stringByReplacingOccurrencesOfString("#", withString: "")
+        var formatted = hexString.replacingOccurrences(of: "0x", with: "")
+        formatted = formatted.replacingOccurrences(of: "#", with: "")
         if let hex = Int(formatted, radix: 16) {
             let red = CGFloat(CGFloat((hex & 0xFF0000) >> 16) / 255.0)
             let green = CGFloat(CGFloat((hex & 0x00FF00) >> 8) / 255.0)

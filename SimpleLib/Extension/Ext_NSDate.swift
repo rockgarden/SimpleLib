@@ -91,10 +91,10 @@ public extension NSDate {
      
      - returns: Return self as a BFDateInformation structure with a given time zone
      */
-    public func dateInformation(timeZone: NSTimeZone = NSTimeZone.systemTimeZone()) -> BFDateInformation {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        calendar.timeZone = timeZone
-        let comp = calendar.components(NSCalendarUnit(rawValue: UInt.max), fromDate: self)
+    public func dateInformation(timeZone: NSTimeZone = NSTimeZone.systemTimeZone) -> BFDateInformation {
+        var calendar = NSCalendar.autoupdatingCurrent
+        calendar.timeZone = timeZone as TimeZone
+        let comp = calendar.components(NSCalendar.Unit(rawValue: UInt.max), fromDate: self)
         
         return BFDateInformation(year: comp.year, month: comp.month, day: comp.day, weekday: comp.weekday, hour: comp.hour, minute: comp.minute, second: comp.second, nanosecond: comp.nanosecond)
     }
@@ -105,10 +105,10 @@ public extension NSDate {
      - returns: Return the month
      */
     public func month() -> NSDate {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrent
         let comp = calendar.components([.Year, .Month], fromDate: self)
         
-        if UIDevice.currentDevice().systemVersion.floatValue >= 8.0
+        if UIDevice.current.systemVersion.floatValue >= 8.0
         //if #available(iOS 8.0, *)
         {
             comp.setValue(1, forComponent: .Day)
@@ -131,7 +131,7 @@ public extension NSDate {
      - returns: Return weekday number
      */
     public func weekday() -> Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrent
         let comp = calendar.components([.Year, .Month, .Day, .Weekday], fromDate: self)
         
         return comp.weekday
@@ -176,7 +176,7 @@ public extension NSDate {
      - returns: Return the date with time informations
      */
     private func timelessDate() -> NSDate {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrent
         let comp = calendar.components([.Year, .Month, .Day], fromDate: self)
         
         return calendar.dateFromComponents(comp)!
@@ -188,7 +188,7 @@ public extension NSDate {
      - returns: Return the date with time informations
      */
     private func monthlessDate() -> NSDate {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrent
         let comp = calendar.components([.Year, .Month, .Day, .Weekday], fromDate: self)
         
         return calendar.dateFromComponents(comp)!
@@ -202,7 +202,7 @@ public extension NSDate {
      - returns: Returns true if is same day, false if not
      */
     public func isSameDay(anotherDate: NSDate) -> Bool {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrent
         let components1 = calendar.components([.Year, .Month, .Day], fromDate: self)
         let components2 = calendar.components([.Year, .Month, .Day], fromDate: anotherDate)
         
@@ -217,8 +217,8 @@ public extension NSDate {
      - returns: Returns the months between the two dates
      */
     public func monthsBetweenDate(toDate: NSDate) -> Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Month, fromDate: self.monthlessDate(), toDate: toDate.monthlessDate(), options: NSCalendarOptions.WrapComponents)
+        let calendar = NSCalendar.autoupdatingCurrent
+        let components = calendar.components(.Month, fromDate: self.monthlessDate(), toDate: toDate.monthlessDate(), options: NSCalendar.Options.WrapComponents)
         
         return abs(components.month)
     }
@@ -231,7 +231,7 @@ public extension NSDate {
      - returns: Returns the days between the two dates
      */
     public func daysBetweenDate(anotherDate: NSDate) -> Int {
-        let time: NSTimeInterval = self.timeIntervalSinceDate(anotherDate)
+        let time: TimeInterval = self.timeIntervalSince(anotherDate as Date)
         return Int(abs(time / 60 / 60 / 24))
     }
     
@@ -252,7 +252,7 @@ public extension NSDate {
      - returns: Returns self by adding the gived days number
      */
     public func dateByAddingDays(days: Int) -> NSDate {
-        return self.dateByAddingTimeInterval(NSTimeInterval(days * 24 * 60 * 60))
+        return self.addingTimeInterval(TimeInterval(days * 24 * 60 * 60))
     }
     
     /**
@@ -261,10 +261,10 @@ public extension NSDate {
      - returns: Returns the month string
      */
     public func monthString() -> String {
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         
-        return dateFormatter.stringFromDate(self)
+        return dateFormatter.string(from: self as Date)
     }
     
     /**
@@ -273,10 +273,10 @@ public extension NSDate {
      - returns: Returns the year string
      */
     public func yearString() -> String {
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         
-        return dateFormatter.stringFromDate(self)
+        return dateFormatter.string(from: self as Date)
     }
     
     /**
@@ -285,7 +285,7 @@ public extension NSDate {
      - returns: Date after removing all components but not year, month and day
      */
     public func shortData() -> NSDate {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrent
         let comp = calendar.components([.Year, .Month, .Day], fromDate:self)
         
         return calendar.dateFromComponents(comp)!
@@ -303,7 +303,7 @@ public extension NSDate {
         var isGreater = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending {
+        if self.compare(dateToCompare as Date) == ComparisonResult.orderedDescending {
             isGreater = true
         }
         
@@ -323,7 +323,7 @@ public extension NSDate {
         var isLess = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedAscending {
+        if self.compare(dateToCompare as Date) == ComparisonResult.orderedAscending {
             isLess = true
         }
         
@@ -361,11 +361,11 @@ public extension NSDate {
      
      - returns: Returns a NSDate from a given BFDateInformation structure with a given time zone
      */
-    public static func dateFromDateInformation(info: BFDateInformation, timeZone: NSTimeZone = NSTimeZone.systemTimeZone()) -> NSDate {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+    public static func dateFromDateInformation(info: BFDateInformation, timeZone: NSTimeZone = NSTimeZone.systemTimeZone) -> NSDate {
+        let calendar = NSCalendar.autoupdatingCurrent
         let comp = calendar.components([.Year, .Month], fromDate:NSDate())
         
-        if UIDevice.currentDevice().systemVersion.floatValue >= 8.0
+        if UIDevice.current.systemVersion.floatValue >= 8.0
         //if #available(iOS 8.0, *)
         {
             comp.setValue(info.day, forComponent:.Day)
@@ -396,12 +396,12 @@ public extension NSDate {
      - returns: Returns the created NSDate
      */
     public static func dateWithDatePart(date: NSDate, andTimePart time: NSDate) -> NSDate {
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        let datePortion: String = dateFormatter.stringFromDate(date)
+        let datePortion: String = dateFormatter.string(from: date as Date)
         
         dateFormatter.dateFormat = "HH:mm"
-        let timePortion: String = dateFormatter.stringFromDate(time)
+        let timePortion: String = dateFormatter.string(from: time as Date)
         
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
         let dateTime = String(format: "%@ %@", datePortion, timePortion)

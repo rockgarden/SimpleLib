@@ -54,9 +54,9 @@ public extension NSString {
      */
     public func hasString(string: NSString, caseSensitive: Bool = true) -> Bool {
         if caseSensitive {
-            return !(self.rangeOfString(string as String).location == NSNotFound)
+            return !(self.range(of: string as String).location == NSNotFound)
         } else {
-            return !(self.rangeOfString(string.lowercaseString as String).location == NSNotFound)
+            return !(self.range(of: string.lowercased as String).location == NSNotFound)
         }
     }
     
@@ -106,10 +106,10 @@ public extension NSString {
         if self.length == 0 {
             return ""
         }
-        let uppercase: NSString = self.substringToIndex(1).uppercaseString
-        let lowercase: NSString = self.substringFromIndex(1).lowercaseString
+        let uppercase: NSString = self.substring(to: 1).uppercased() as NSString
+        let lowercase: NSString = self.substring(from: 1).lowercased() as NSString
         
-        return uppercase.stringByAppendingString(lowercase as String)
+        return uppercase.appending(lowercase as String) as NSString
     }
     
     /**
@@ -118,17 +118,17 @@ public extension NSString {
      - returns: Returns a human legible string from a timestamp
      */
     public func dateFromTimestamp() -> NSString {
-        let year: NSString = self.substringToIndex(4)
-        var month: NSString = self.substringFromIndex(5)
-        month = month.substringToIndex(4)
-        var day: NSString = self.substringFromIndex(8)
-        day = day.substringToIndex(2)
-        var hours: NSString = self.substringFromIndex(11)
-        hours = hours.substringToIndex(2)
-        var minutes: NSString = self.substringFromIndex(14)
-        minutes = minutes.substringToIndex(2)
+        let year: NSString = self.substring(to: 4) as NSString
+        var month: NSString = self.substring(from: 5) as NSString
+        month = month.substring(to: 4) as NSString
+        var day: NSString = self.substring(from: 8) as NSString
+        day = day.substring(to: 2) as NSString
+        var hours: NSString = self.substring(from: 11) as NSString
+        hours = hours.substring(to: 2) as NSString
+        var minutes: NSString = self.substring(from: 14) as NSString
+        minutes = minutes.substring(to: 2) as NSString
         
-        return "\(day)/\(month)/\(year) \(hours):\(minutes)"
+        return "\(day)/\(month)/\(year) \(hours):\(minutes)" as NSString
     }
     
     /**
@@ -137,7 +137,7 @@ public extension NSString {
      - returns: Returns the encoded NSString
      */
     public func URLEncode() -> NSString {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlHostAllowed)! as NSString
     }
     
     /**
@@ -149,8 +149,8 @@ public extension NSString {
      - returns: Returns a new string containing matching regular expressions replaced with the template string
      */
     public func stringByReplacingWithRegex(regexString: NSString, withString replacement: NSString) throws -> NSString {
-        let regex: NSRegularExpression = try NSRegularExpression(pattern: regexString as String, options: .CaseInsensitive)
-        return regex.stringByReplacingMatchesInString(self as String, options: NSMatchingOptions(rawValue: 0), range:NSMakeRange(0, self.length), withTemplate: "")
+        let regex: NSRegularExpression = try NSRegularExpression(pattern: regexString as String, options: .caseInsensitive)
+        return regex.stringByReplacingMatches(in: self as String, options: NSRegularExpression.MatchingOptions(rawValue: 0), range:NSMakeRange(0, self.length), withTemplate: "") as NSString
     }
     
     /**
@@ -160,8 +160,8 @@ public extension NSString {
      */
     public func isUUID() -> Bool {
         do {
-            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", options: .CaseInsensitive)
-            let matches: Int = regex.numberOfMatchesInString(self as String, options: .ReportCompletion, range: NSMakeRange(0, self.length))
+            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", options: .caseInsensitive)
+            let matches: Int = regex.numberOfMatches(in: self as String, options: .reportCompletion, range: NSMakeRange(0, self.length))
             return matches == 1
         } catch {
             return false
@@ -175,8 +175,8 @@ public extension NSString {
      */
     public func isUUIDForAPNS() -> Bool {
         do {
-            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{32}$", options: .CaseInsensitive)
-            let matches: Int = regex.numberOfMatchesInString(self as String, options: .ReportCompletion, range: NSMakeRange(0, self.length))
+            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{32}$", options: .caseInsensitive)
+            let matches: Int = regex.numberOfMatches(in: self as String, options: .reportCompletion, range: NSMakeRange(0, self.length))
             return matches == 1
         } catch {
             return false
@@ -189,7 +189,7 @@ public extension NSString {
      - returns: Converts self to an UUID APNS valid (No "<>" or "-" or spaces)
      */
     public func convertToAPNSUUID() -> NSString {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>")).stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("-", withString: "") as NSString
+        return self.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>") as CharacterSet).stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("-", withString: "") as NSString
     }
     
     /**
@@ -203,7 +203,7 @@ public extension NSString {
     public func heightForWidth(width: CGFloat, font: UIFont) -> CGFloat {
         var size: CGSize = CGSizeZero
         if self.length > 0 {
-            let frame: CGRect = self.boundingRectWithSize(CGSizeMake(width, 999999), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
+            let frame: CGRect = self.boundingRect(with: CGSizeMake(width, 999999), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
             size = CGSizeMake(frame.size.width, frame.size.height + 1)
         }
         return size.height
@@ -221,16 +221,16 @@ public extension NSString {
      
      - returns: Returns the substring
      */
-    public static func searchInString(string: NSString, charStart: NSString, charEnd: NSString) -> NSString {
+    public static func searchInString(_ string: NSString, charStart: NSString, charEnd: NSString) -> NSString {
         var start = 0, end = 0
         
         for var i in 0 ..< string.length {
-            if string.characterAtIndex(i) == charStart.characterAtIndex(0) {
+            if string.character(at: i) == charStart.character(at: 0) {
                 start = i+1
                 i += 1
                 continue
             }
-            if string.characterAtIndex(i) == charEnd.characterAtIndex(0) {
+            if string.character(at: i) == charEnd.character(at: 0) {
                 end = i
                 break
             }
@@ -252,11 +252,11 @@ public extension NSString {
      
      - returns: Returns true if it's an email, false if not
      */
-    public static func isEmail(email: NSString) -> Bool {
+    public static func isEmail(_ email: NSString) -> Bool {
         let emailRegEx: NSString = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let regExPredicate: NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return regExPredicate.evaluateWithObject(email.lowercaseString)
+        return regExPredicate.evaluate(with: email.lowercased)
     }
     
     /**
@@ -311,9 +311,9 @@ public extension NSString {
      
      - returns: Returns the encoded string
      */
-    public static func encodeToBase64(string: NSString) -> NSString {
+    public static func encodeToBase64(_ string: NSString) -> NSString {
         let data: NSData = string.convertToNSData()
-        return data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        return data.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)) as NSString
     }
     
     /**
@@ -323,9 +323,9 @@ public extension NSString {
      
      - returns: Returns the decoded string
      */
-    public static func decodeBase64(string: NSString) -> NSString {
-        let data: NSData = NSData(base64EncodedString: string as String, options: NSDataBase64DecodingOptions(rawValue: 0))!
-        return data.convertToUTF8String()
+    public static func decodeBase64(_ string: NSString) -> NSString {
+        let data: NSData = NSData(base64Encoded: string as String, options: NSData.Base64DecodingOptions(rawValue: 0))!
+        return data.convertToUTF8String() as NSString
     }
     
     /**
@@ -336,7 +336,7 @@ public extension NSString {
      - returns: Returns the converted NSString as NSData
      */
     public static func convertToNSData(string: NSString) -> NSData {
-        return string.dataUsingEncoding(NSUTF8StringEncoding)!
+        return string.dataUsingEncoding(NSUTF8StringEncoding.rawValue)!
     }
     
     /**
@@ -359,8 +359,8 @@ public extension NSString {
      */
     public func stringByReplacingWithRegex(regexString: NSString, replacement: NSString) -> NSString? {
         do {
-            let regex: NSRegularExpression = try NSRegularExpression(pattern: regexString as String, options: .CaseInsensitive)
-            return regex.stringByReplacingMatchesInString(self as String, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, self.length), withTemplate: "")
+            let regex: NSRegularExpression = try NSRegularExpression(pattern: regexString as String, options: .caseInsensitive)
+            return regex.stringByReplacingMatches(in: self as String, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.length), withTemplate: "") as NSString?
         } catch {
             
         }
@@ -382,10 +382,10 @@ public extension NSString {
             let c: String = hex.substringToIndex(hex.startIndex.advancedBy(2))
             hex = hex.substringFromIndex(hex.startIndex.advancedBy(2))
             var ch: UInt32 = 0
-            NSScanner(string: c).scanHexInt(&ch)
+            Scanner(string: c).scanHexInt32(&ch)
             s = s.stringByAppendingString(String(format: "%c", ch))
         }
-        return s
+        return s as NSString
     }
     
     /**
@@ -415,8 +415,8 @@ public extension NSString {
      - returns: Returns the created UUID string
      */
     public static func generateUUID() -> NSString {
-        let theUUID: CFUUIDRef? = CFUUIDCreate(kCFAllocatorDefault)
-        let string: CFStringRef? = CFUUIDCreateString(kCFAllocatorDefault, theUUID)
+        let theUUID: CFUUID? = CFUUIDCreate(kCFAllocatorDefault)
+        let string: CFString? = CFUUIDCreateString(kCFAllocatorDefault, theUUID)
         return string!
     }
 }

@@ -46,7 +46,7 @@ extension TransitionDriver {
                                     backImage: UIImage?,
                                     headerHeight: CGFloat,
                                     insets: CGFloat,
-                                    completion: UIView -> Void) {
+                                    completion: @escaping (@escaping UIView) -> Void) {
     
     guard case let cell as BasePageCollectionCell = collecitionView.cellForItemAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0)),
       let copyView = cell.copyCell() else { return }
@@ -130,7 +130,7 @@ extension TransitionDriver {
     view.addSubview(cell)
     
     // add constraints
-    [(NSLayoutAttribute.Width, cell.bounds.size.width), (NSLayoutAttribute.Height, cell.bounds.size.height)].forEach { info in
+    [(NSLayoutAttribute.width, cell.bounds.size.width), (NSLayoutAttribute.height, cell.bounds.size.height)].forEach { info in
       cell >>>- {
         $0.attribute = info.0
         $0.constant  = info.1

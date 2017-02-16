@@ -15,7 +15,7 @@ class AuthcodeView: UIView {
 
 	let kLineCount = 8
 	let kCharCount = 6
-	let kFontSize = UIFont.systemFontOfSize(CGFloat(arc4random() % 15) + 15)
+	let kFontSize = UIFont.systemFont(ofSize: CGFloat(arc4random() % 15) + 15)
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -30,14 +30,14 @@ class AuthcodeView: UIView {
 		getAuthcode() // 获得随机验证码
 	}
 
-	override func drawRect(rect: CGRect) {
-		super.drawRect(rect)
+	override func draw(_ rect: CGRect) {
+		super.draw(rect)
 
 		// 设置随机背景颜色
 		self.backgroundColor = kRandomColor();
 
 		// 根据要显示的验证码字符串，根据长度，计算每个字符串显示的位置
-		let cSize: CGSize = "A".sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(20)])
+		let cSize: CGSize = "A".size(attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 20)])
 
 		let leg = CGFloat((self.authCodeStr?.length)!)
 		let width = rect.size.width / leg - cSize.width
@@ -50,35 +50,40 @@ class AuthcodeView: UIView {
 		var pY: CGFloat
 		let authCodeStrLength = authCodeStr?.length
         //FIXME: 替换i in 0..<authCodeStrLength,编译不通过
-		for var i = 0; i < authCodeStrLength; i += 1
+		for i in 0 ..< authCodeStrLength!
 		{
-			pX = CGFloat(arc4random()) % width + rect.size.width / leg * CGFloat(i)
-			pY = CGFloat(arc4random()) % height
-			point = CGPointMake(pX, pY)
-			let c: unichar = (self.authCodeStr?.characterAtIndex(i))!
-			let textC: String = String(UnicodeScalar(c))
-			textC.drawAtPoint(point, withAttributes: [NSFontAttributeName: kFontSize])
+            pX = CGFloat(arc4random()).truncatingRemainder(dividingBy: width + rect.size.width) / leg * CGFloat(i)
+            /* 可先转成Int再用%
+             let a = Int(CGFloat(arc4random())), b = Int(width + rect.size.width), c = Int(leg * CGFloat(i)) // Truncate to integer
+             也可用 lrint(Double(CGFloat(arc4random()))), 来获取 Round to nearest integer
+             pX = a % b / c
+             */
+			pY = CGFloat(arc4random()).truncatingRemainder(dividingBy: height)
+			point = CGPoint(x: pX, y: pY)
+			let c: unichar = (self.authCodeStr?.character(at: i))!
+			let textC: String = String(describing: UnicodeScalar(c))
+			textC.draw(at: point, withAttributes: [NSFontAttributeName: kFontSize])
 		}
 
 		// 调用drawRect：之前，系统会向栈中压入一个CGContextRef，调用UIGraphicsGetCurrentContext()会取栈顶的CGContextRef
-		let context: CGContextRef = UIGraphicsGetCurrentContext()!
+		let context: CGContext = UIGraphicsGetCurrentContext()!
 		// 设置线条宽度
-		CGContextSetLineWidth(context, 1.0)
+		context.setLineWidth(1.0)
 		// 绘制干扰线
 		for _ in 0..<kLineCount // var i = 0; i < kLineCount; i++
 		{
 			let color: UIColor = kRandomColor()
-			CGContextSetStrokeColorWithColor(context, color.CGColor) // 设置线条填充色
+			context.setStrokeColor(color.cgColor) // 设置线条填充色
 			// 设置线的起点
-			pX = CGFloat(arc4random()) % rect.size.width
-			pY = CGFloat(arc4random()) % rect.size.height
-			CGContextMoveToPoint(context, pX, pY)
+			pX = CGFloat(arc4random()) %% rect.size.width
+			pY = CGFloat(arc4random()) %% rect.size.height
+            context.move(to: CGPoint(x: pX, y: pY)) //swift2: CGContextMoveToPoint(context, pX, pY)
 			// 设置线终点
-			pX = CGFloat(arc4random()) % rect.size.width
-			pY = CGFloat(arc4random()) % rect.size.height
-			CGContextAddLineToPoint(context, pX, pY)
+			pX = CGFloat(arc4random()) %% rect.size.width
+			pY = CGFloat(arc4random()) %% rect.size.height
+            context.addLine(to: CGPoint(x: pX, y: pY)) //swift2: context.addAddLineToPoint(context, pX, pY)
 			// 画线
-			CGContextStrokePath(context)
+			context.strokePath()
 		}
 	}
 
@@ -92,14 +97,14 @@ class AuthcodeView: UIView {
 			let index = Int(arc4random()) % (dataArray.count - 1)
 
 			let tempStr = dataArray[index]
-			self.authCodeStr?.appendString(tempStr)
+			self.authCodeStr?.append(tempStr)
 		}
 	}
 
 	/**
 	 *  点击界面切换验证码
 	 */
-	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		getAuthcode()
 		// setNeedsDisplay调用drawRect方法来实现view的绘制
 		setNeedsDisplay()
@@ -109,4 +114,20 @@ class AuthcodeView: UIView {
 		return UIColor(red: CGFloat(arc4random() % 255) / 255.0, green: CGFloat(arc4random() % 255) / 255.0, blue: CGFloat(arc4random() % 255) / 255.0, alpha: 1)
 	}
 
+}
+
+//TODO: make private infix
+infix operator %% /*<--infix operator is required for custom infix char combos*/
+/**
+ * Brings back simple modulo syntax (was removed in swift 3)
+ * Calculates the remainder of expression1 divided by expression2
+ * The sign of the modulo result matches the sign of the dividend (the first number). For example, -4 % 3 and -4 % -3 both evaluate to -1
+ * EXAMPLE:
+ * print(12 %% 5)    // 2
+ * print(4.3 %% 2.1) // 0.0999999999999996
+ * print(4 %% 4)     // 0
+ * NOTE: The first print returns 2, rather than 12/5 or 2.4, because the modulo (%) operator returns only the remainder. The second trace returns 0.0999999999999996 instead of the expected 0.1 because of the limitations of floating-point accuracy in binary computing.
+ */
+public func %% (left:CGFloat, right:CGFloat) -> CGFloat {
+    return left.truncatingRemainder(dividingBy: right)
 }

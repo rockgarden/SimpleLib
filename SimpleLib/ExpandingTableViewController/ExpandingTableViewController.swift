@@ -36,7 +36,7 @@ extension ExpandingTableViewController {
     
     let insets = automaticallyAdjustsScrollViewInsets
     let tabBarHeight =  insets == true ? navigationController.navigationBar.frame.size.height : 0
-    let stausBarHeight = insets == true ? UIApplication.sharedApplication().statusBarFrame.size.height : 0
+    let stausBarHeight = insets == true ? UIApplication.shared.statusBarFrame.size.height : 0
     return tabBarHeight + stausBarHeight
   }
 
@@ -60,7 +60,7 @@ extension ExpandingTableViewController {
     offset += getTabBarHeight()
  
     transitionDriver.popTransitionAnimationContantOffset(offset, backImage: backImage)
-    self.navigationController?.popViewControllerAnimated(false)
+    self.navigationController?.popViewController(animated: false)
   }
 
 }

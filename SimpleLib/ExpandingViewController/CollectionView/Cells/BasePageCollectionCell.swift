@@ -125,7 +125,7 @@ extension BasePageCollectionCell {
             let shadowHeight = itemSize.height - (open_front_yOffset + open_front_hOffset) * 2
             shadowView?.getConstraint(.Width)?.constant = openWidth
             shadowView?.getConstraint(.Height)?.constant = shadowHeight
-            shadowView?.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: openWidth, height: shadowHeight), cornerRadius: 0).CGPath
+            shadowView?.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: openWidth, height: shadowHeight), cornerRadius: 0).cgPath
             return
         }
         frontConstraintY.constant = isOpen == true ? -open_front_yOffset: 0
@@ -136,7 +136,7 @@ extension BasePageCollectionCell {
         configurationCell()
         
         if animated == true {
-            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
                 self.contentView.layoutIfNeeded()
                 }, completion: nil)
         } else {
@@ -182,7 +182,7 @@ extension BasePageCollectionCell {
         contentView.insertSubview(shadow, belowSubview: view)
         
         // create constraints
-        for info: (attribute: NSLayoutAttribute, scale: CGFloat) in [(NSLayoutAttribute.Width, 0.8), (NSLayoutAttribute.Height, 0.9)] {
+        for info: (attribute: NSLayoutAttribute, scale: CGFloat) in [(NSLayoutAttribute.width, 0.8), (NSLayoutAttribute.height, 0.9)] {
             if let frontViewConstraint = view.getConstraint(info.attribute) {
                 shadow >>>- {
                     $0.attribute = info.attribute
@@ -190,7 +190,7 @@ extension BasePageCollectionCell {
                 }
             }
         }
-        for info: (attribute: NSLayoutAttribute, offset: CGFloat) in [(NSLayoutAttribute.CenterX, 0), (NSLayoutAttribute.CenterY, 30)] {
+        for info: (attribute: NSLayoutAttribute, offset: CGFloat) in [(NSLayoutAttribute.centerX, 0), (NSLayoutAttribute.centerY, 30)] {
             (contentView, shadow, view) >>>- {
                 $0.attribute = info.attribute
                 $0.constant = info.offset
@@ -225,9 +225,9 @@ extension BasePageCollectionCell {
         
         // Opened = true 时重置 frontContainerView = backContainerView = size
         [frontContainerView, backContainerView].forEach {
-            let constraintWidth = $0.getConstraint(.Width)
+            let constraintWidth = $0?.getConstraint(.Width)
             constraintWidth?.constant = size.width
-            let constraintHeight = $0.getConstraint(.Height)
+            let constraintHeight = $0?.getConstraint(.Height)
             constraintHeight?.constant = size.height
         }
     }
@@ -240,7 +240,7 @@ extension BasePageCollectionCell {
     private func highlightedImageFalseOnView(view: UIView) {
         for item in view.subviews {
             if case let imageView as UIImageView = item {
-                imageView.highlighted = false
+                imageView.isHighlighted = false
             }
             if item.subviews.count > 0 {
                 highlightedImageFalseOnView(item)
@@ -260,8 +260,8 @@ extension BasePageCollectionCell {
     func copyCell() -> BasePageCollectionCell? {
         highlightedImageFalseOnView(contentView)
         
-        let data = NSKeyedArchiver.archivedDataWithRootObject(self)
-        guard case let copyView as BasePageCollectionCell = NSKeyedUnarchiver.unarchiveObjectWithData(data),
+        let data = NSKeyedArchiver.archivedData(withRootObject: self)
+        guard case let copyView as BasePageCollectionCell = NSKeyedUnarchiver.unarchiveObject(with: data),
             let shadowView = self.shadowView else {
                 return nil
         }
@@ -289,11 +289,11 @@ extension BasePageCollectionCell {
      */
     public override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        coder.encodeObject(backContainerView, forKey: Constants.backContainer)
-        coder.encodeObject(frontContainerView, forKey: Constants.frontContainer)
-        coder.encodeObject(frontConstraintY, forKey: Constants.frontContainerY)
-        coder.encodeObject(backConstraintY, forKey: Constants.backContainerY)
-        coder.encodeObject(shadowView, forKey: Constants.shadowView)
+        coder.encode(backContainerView, forKey: Constants.backContainer)
+        coder.encode(frontContainerView, forKey: Constants.frontContainer)
+        coder.encode(frontConstraintY, forKey: Constants.frontContainerY)
+        coder.encode(backConstraintY, forKey: Constants.backContainerY)
+        coder.encode(shadowView, forKey: Constants.shadowView)
     }
     
     /**
@@ -303,19 +303,19 @@ extension BasePageCollectionCell {
      - parameter coder: NSCoder
      */
     private func configureOutletFromDecoder(coder: NSCoder) {
-        if case let shadowView as UIView = coder.decodeObjectForKey(Constants.shadowView) {
+        if case let shadowView as UIView = coder.decodeObject(forKey: Constants.shadowView) {
             self.shadowView = shadowView
         }
-        if case let backView as UIView = coder.decodeObjectForKey(Constants.backContainer) {
+        if case let backView as UIView = coder.decodeObject(forKey: Constants.backContainer) {
             backContainerView = backView
         }
-        if case let frontView as UIView = coder.decodeObjectForKey(Constants.frontContainer) {
+        if case let frontView as UIView = coder.decodeObject(forKey: Constants.frontContainer) {
             frontContainerView = frontView
         }
-        if case let constraint as NSLayoutConstraint = coder.decodeObjectForKey(Constants.frontContainerY) {
+        if case let constraint as NSLayoutConstraint = coder.decodeObject(forKey: Constants.frontContainerY) {
             frontConstraintY = constraint
         }
-        if case let constraint as NSLayoutConstraint = coder.decodeObjectForKey(Constants.backContainerY) {
+        if case let constraint as NSLayoutConstraint = coder.decodeObject(forKey: Constants.backContainerY) {
             backConstraintY = constraint
         }
     }

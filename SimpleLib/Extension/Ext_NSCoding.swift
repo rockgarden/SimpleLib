@@ -19,7 +19,7 @@ extension NSCoding {
 	 - parameter key:       <#key description#>
 	 - parameter value:     <#value description#>
 	 */
-	func objc_setAssociatedWeakObject(container: AnyObject, _ key: UnsafePointer<Void>, _ value: AnyObject) {
+	func objc_setAssociatedWeakObject(container: AnyObject, _ key: UnsafeRawPointer, _ value: AnyObject) {
 		objc_setAssociatedObject(container, key, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 	}
 
@@ -31,8 +31,8 @@ extension NSCoding {
 
 	 - returns: <#return value description#>
 	 */
-	func objc_getAssociatedWeakObject(container: AnyObject, _ key: UnsafePointer<Void>) -> AnyObject {
-		let object: AnyObject? = objc_getAssociatedObject(container, key)
+	func objc_getAssociatedWeakObject(container: AnyObject, _ key: UnsafeRawPointer) -> AnyObject {
+		let object: AnyObject? = objc_getAssociatedObject(container, key) as AnyObject?
 		return object!
 	}
 

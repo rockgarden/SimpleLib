@@ -88,8 +88,8 @@ public extension String {
      - returns: Returns the string between the range
      */
     public func substringWithRange(range: Range<Int>) -> String {
-        let start = self.startIndex.advancedBy(range.startIndex)
-        let end = self.startIndex.advancedBy(range.endIndex)
+        let start = self.startIndex.advancedBy(range.lowerBound)
+        let end = self.startIndex.advancedBy(range.upperBound)
         
         return self.substringWithRange(start..<end)
     }
@@ -130,7 +130,7 @@ public extension String {
      - returns: Returns the index of the given character, -1 if not found
      */
     public func indexOfCharacter(character: Character) -> Int {
-        if let index = self.characters.indexOf(character) {
+        if let index = self.characters.index(of: character) {
             return self.startIndex.distanceTo(index)
         }
         return -1
@@ -245,8 +245,8 @@ public extension String {
      - returns: Returns a new string containing matching regular expressions replaced with the template string
      */
     public func stringByReplacingWithRegex(regexString: NSString, withString replacement: NSString) throws -> NSString {
-        let regex: NSRegularExpression = try NSRegularExpression(pattern: regexString as String, options: .CaseInsensitive)
-        return regex.stringByReplacingMatchesInString(self, options: NSMatchingOptions(rawValue: 0), range:NSMakeRange(0, self.length), withTemplate: "")
+        let regex: NSRegularExpression = try NSRegularExpression(pattern: regexString as String, options: .caseInsensitive)
+        return regex.stringByReplacingMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range:NSMakeRange(0, self.length), withTemplate: "") as NSString
     }
     
     /**
@@ -275,14 +275,14 @@ public extension String {
     /// Delete the last path component
     public var stringByDeletingLastPathComponent: String {
         get {
-            return (self as NSString).stringByDeletingLastPathComponent
+            return (self as NSString).deletingLastPathComponent
         }
     }
     
     /// Delete the path extension
     public var stringByDeletingPathExtension: String {
         get {
-            return (self as NSString).stringByDeletingPathExtension
+            return (self as NSString).deletingPathExtension
         }
     }
     
@@ -303,7 +303,7 @@ public extension String {
     public func stringByAppendingPathComponent(path: String) -> String {
         let string = self as NSString
         
-        return string.stringByAppendingPathComponent(path)
+        return string.appendingPathComponent(path)
     }
     
     /**
@@ -316,7 +316,7 @@ public extension String {
     public func stringByAppendingPathExtension(ext: String) -> String? {
         let nsSt = self as NSString
         
-        return nsSt.stringByAppendingPathExtension(ext)
+        return nsSt.appendingPathExtension(ext)
     }
     
     /// Converts self to a NSString
@@ -331,8 +331,8 @@ public extension String {
      */
     public func isUUID() -> Bool {
         do {
-            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", options: .CaseInsensitive)
-            let matches: Int = regex.numberOfMatchesInString(self as String, options: .ReportCompletion, range: NSMakeRange(0, self.length))
+            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", options: .caseInsensitive)
+            let matches: Int = regex.numberOfMatches(in: self as String, options: .reportCompletion, range: NSMakeRange(0, self.length))
             return matches == 1
         } catch {
             return false
@@ -346,8 +346,8 @@ public extension String {
      */
     public func isUUIDForAPNS() -> Bool {
         do {
-            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{32}$", options: .CaseInsensitive)
-            let matches: Int = regex.numberOfMatchesInString(self as String, options: .ReportCompletion, range: NSMakeRange(0, self.length))
+            let regex: NSRegularExpression = try NSRegularExpression(pattern: "^[0-9a-f]{32}$", options: .caseInsensitive)
+            let matches: Int = regex.numberOfMatches(in: self as String, options: .reportCompletion, range: NSMakeRange(0, self.length))
             return matches == 1
         } catch {
             return false
@@ -374,7 +374,7 @@ public extension String {
     public func heightForWidth(width: CGFloat, font: UIFont) -> CGFloat {
         var size: CGSize = CGSizeZero
         if self.length > 0 {
-            let frame: CGRect = self.boundingRectWithSize(CGSizeMake(width, 999999), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
+            let frame: CGRect = self.boundingRect(with: CGSizeMake(width, 999999), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
             size = CGSizeMake(frame.size.width, frame.size.height + 1)
         }
         return size.height
@@ -469,7 +469,7 @@ public extension String {
         let emailRegEx: String = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let regExPredicate: NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return regExPredicate.evaluateWithObject(email.lowercaseString)
+        return regExPredicate.evaluate(with: email.lowercased())
     }
     
     /**
@@ -526,7 +526,7 @@ public extension String {
      */
     public static func encodeToBase64(string: String) -> String {
         let data: NSData = string.dataUsingEncoding(NSUTF8StringEncoding)!
-        return data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        return data.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }
     
     /**
@@ -537,8 +537,8 @@ public extension String {
      - returns: Returns the decoded string
      */
     public static func decodeBase64(string: String) -> String {
-        let data: NSData = NSData(base64EncodedString: string as String, options: NSDataBase64DecodingOptions(rawValue: 0))!
-        return NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+        let data: NSData = NSData(base64Encoded: string as String, options: NSData.Base64DecodingOptions(rawValue: 0))!
+        return NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)! as String
     }
     
     /**
@@ -588,8 +588,8 @@ public extension String {
      - returns: Returns the created UUID string
      */
     public static func generateUUID() -> String {
-        let theUUID: CFUUIDRef? = CFUUIDCreate(kCFAllocatorDefault)
-        let string: CFStringRef? = CFUUIDCreateString(kCFAllocatorDefault, theUUID)
+        let theUUID: CFUUID? = CFUUIDCreate(kCFAllocatorDefault)
+        let string: CFString? = CFUUIDCreateString(kCFAllocatorDefault, theUUID)
         return string! as String
     }
 }

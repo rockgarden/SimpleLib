@@ -10,14 +10,15 @@ import UIKit
 
 public extension UIImage {
 
-	convenience init(color: UIColor, size: CGSize = CGSizeMake(1, 1)) {
+	convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
 		let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 		UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
 		color.setFill()
 		UIRectFill(rect)
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		self.init(CGImage: image.CGImage!)
+        self.init(cgImage: (image?.cgImage)!)
+		//self(cgImage: (image?.cgImage!)!)
 	}
 
 	convenience init(color: UIColor, rect: CGRect) {
@@ -26,17 +27,17 @@ public extension UIImage {
 		UIRectFill(rect)
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		self.init(CGImage: image.CGImage!)
+		self.init(cgImage: (image?.cgImage!)!)
 	}
 
 	/// EZSE: Returns compressed image to rate from 0 to 1
-	public func compressImage(rate rate: CGFloat) -> NSData? {
-		return UIImageJPEGRepresentation(self, rate)
+	public func compressImage(rate: CGFloat) -> NSData? {
+		return UIImageJPEGRepresentation(self, rate) as NSData?
 	}
 
 	/// EZSE: Returns Image size in Bytes
 	public func getSizeAsBytes() -> Int {
-		return UIImageJPEGRepresentation(self, 1)?.length ?? 0
+		return UIImageJPEGRepresentation(self, 1)?.count ?? 0
 	}
 
 	/// EZSE: Returns Image size in Kylobites
@@ -46,11 +47,11 @@ public extension UIImage {
 	}
 
 	/// EZSE: scales image
-	public class func scaleTo(image image: UIImage, w: CGFloat, h: CGFloat) -> UIImage {
+	public class func scaleTo(image: UIImage, w: CGFloat, h: CGFloat) -> UIImage {
 		let newSize = CGSize(width: w, height: h)
 		UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-		image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-		let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+		image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+		let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()
 		return newImage
 	}
@@ -60,11 +61,11 @@ public extension UIImage {
 		let aspectSize = CGSize (width: width, height: aspectHeightForWidth(width))
 
 		UIGraphicsBeginImageContext(aspectSize)
-		self.drawInRect(CGRect(origin: CGPoint.zero, size: aspectSize))
+		self.draw(in: CGRect(origin: CGPoint.zero, size: aspectSize))
 		let img = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
-		return img
+		return img!
 	}
 
 	/// EZSE Returns resized image with height. Might return low quality
@@ -72,20 +73,20 @@ public extension UIImage {
 		let aspectSize = CGSize (width: aspectWidthForHeight(height), height: height)
 
 		UIGraphicsBeginImageContext(aspectSize)
-		self.drawInRect(CGRect(origin: CGPoint.zero, size: aspectSize))
+		self.draw(in: CGRect(origin: CGPoint.zero, size: aspectSize))
 		let img = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
-		return img
+		return img!
 	}
 
 	/// EZSE:
-	public func aspectHeightForWidth(width: CGFloat) -> CGFloat {
+	public func aspectHeightForWidth(_ width: CGFloat) -> CGFloat {
 		return (width * self.size.height) / self.size.width
 	}
 
 	/// EZSE:
-	public func aspectWidthForHeight(height: CGFloat) -> CGFloat {
+	public func aspectWidthForHeight(_ height: CGFloat) -> CGFloat {
 		return (height * self.size.width) / self.size.height
 	}
 
@@ -100,8 +101,8 @@ public extension UIImage {
 			return nil
 		}
 		let scaledBounds: CGRect = CGRect(x: bound.maxX * self.scale, y: bound.maxY * self.scale, width: bound.width * self.scale, height: bound.height * self.scale)
-		let imageRef = CGImageCreateWithImageInRect(self.CGImage, scaledBounds)
-		let croppedImage: UIImage = UIImage(CGImage: imageRef!, scale: self.scale, orientation: UIImageOrientation.Up)
+		let imageRef = self.cgImage!.cropping(to: scaledBounds)
+		let croppedImage: UIImage = UIImage(cgImage: imageRef!, scale: self.scale, orientation: UIImageOrientation.up)
 		return croppedImage
 	}
 
@@ -110,16 +111,16 @@ public extension UIImage {
 		UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
 
 		let context = UIGraphicsGetCurrentContext()
-		CGContextTranslateCTM(context, 0, self.size.height)
-		CGContextScaleCTM(context, 1.0, -1.0);
-		CGContextSetBlendMode(context, CGBlendMode.Normal)
+		context!.translateBy(x: 0, y: self.size.height)
+		context!.scaleBy(x: 1.0, y: -1.0);
+		context!.setBlendMode(CGBlendMode.normal)
 
-		let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
-		CGContextClipToMask(context, rect, self.CGImage)
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height) as CGRect
+		context!.clip(to: rect, mask: self.cgImage!)
 		tintColor.setFill()
-		CGContextFillRect(context, rect)
+		context!.fill(rect)
 
-		let newImage = UIGraphicsGetImageFromCurrentImageContext() as UIImage
+		let newImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
 		UIGraphicsEndImageContext()
 
 		return newImage
@@ -128,15 +129,15 @@ public extension UIImage {
 	/// EZSE: Returns the image associated with the URL
 	public convenience init?(urlString: String) {
 		guard let url = NSURL(string: urlString) else {
-			self.init(data: NSData())
+			self.init(data: NSData() as Data)
 			return
 		}
-		guard let data = NSData(contentsOfURL: url) else {
+		guard let data = NSData(contentsOf: url as URL) else {
 			print("EZSE: No image in URL \(urlString)")
-			self.init(data: NSData())
+			self.init(data: NSData() as Data)
 			return
 		}
-		self.init(data: data)
+		self.init(data: data as Data)
 	}
 
 	/// EZSE: Returns an empty image //TODO: Add to readme
@@ -144,21 +145,21 @@ public extension UIImage {
 		UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0.0)
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		return image
+		return image!
 	}
 
-	class func createImageWithColor(color: UIColor) -> UIImage {
-		let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+	class func createImageWithColor(_ color: UIColor) -> UIImage {
+		let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
 		UIGraphicsBeginImageContext(rect.size);
 		let context = UIGraphicsGetCurrentContext()
 
-		CGContextSetFillColorWithColor(context, color.CGColor)
-		CGContextFillRect(context, rect)
+		context!.setFillColor(color.cgColor)
+		context!.fill(rect)
 
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
-		return image
+		return image!
 	}
 
 //	func maskInCircle() {

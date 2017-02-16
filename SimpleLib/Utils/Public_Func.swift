@@ -11,7 +11,7 @@ import UIKit
 //TODO: 实现传入self
 public func getBarHeight(viewController: AnyObject) -> CGFloat {
 	//let heightNavBar = self.navigationController!.navigationBar.frame.height ?? 0
-	let heightStatusBar = UIApplication.sharedApplication().statusBarFrame.height ?? 0
+	let heightStatusBar = UIApplication.shared.statusBarFrame.height 
 	//return heightNavBar + heightStatusBar
     return heightStatusBar
 }

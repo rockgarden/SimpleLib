@@ -16,14 +16,14 @@ protocol CornerAnimatable {
 extension CornerAnimatable where Self: UIView {
   
   func animationCornerRadius(radius: CGFloat, duration: Double) {
-    let animation = Init(CABasicAnimation(keyPath: "cornerRadius")) {
+    let animation = Init(value: CABasicAnimation(keyPath: "cornerRadius")) {
       $0.duration            = duration
       $0.toValue             = radius
       $0.fillMode            = kCAFillModeForwards
-      $0.removedOnCompletion = false;
+      $0.isRemovedOnCompletion = false;
     }
     
-    layer.addAnimation(animation, forKey: nil)
+    layer.add(animation, forKey: nil)
   }
 }
 

@@ -12,7 +12,7 @@ import UIKit
 public class ExpandingViewController: UIViewController {
     
     /// The default size to use for cells.
-    public var itemSize = CGSize(width: UIScreen.mainScreen().bounds.width * 3 / 5, height: UIScreen.mainScreen().bounds.height * 3 / 5)
+    public var itemSize = CGSize(width: UIScreen.main.bounds.width * 3 / 5, height: UIScreen.main.bounds.height * 3 / 5)
     
     /// The collection view object managed by this view controller.
     public var collectionView: UICollectionView?
@@ -62,7 +62,7 @@ public extension ExpandingViewController {
         viewController.transitionDriver = transitionDriver
         let insets = viewController.automaticallyAdjustsScrollViewInsets
         let tabBarHeight = insets == true ? navigationController.navigationBar.frame.size.height : 0
-        let stausBarHeight = insets == true ? UIApplication.sharedApplication().statusBarFrame.size.height : 0
+        let stausBarHeight = insets == true ? UIApplication.shared.statusBarFrame.size.height : 0
         let backImage = getBackImage(viewController, headerHeight: viewController.headerHeight)
         
         transitionDriver?.pushTransitionAnimationIndex(currentIndex,

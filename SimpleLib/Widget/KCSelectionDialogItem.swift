@@ -22,12 +22,12 @@ public class KCSelectionDialogItem: NSObject {
         self.icon = icon
     }
     
-    public init(item itemTitle: String, didTapHandler: (() -> Void)) {
+    public init(item itemTitle: String, didTapHandler: @escaping (() -> Void)) {
         self.itemTitle = itemTitle
         self.handler = didTapHandler
     }
     
-    public init(item itemTitle: String, icon: UIImage, didTapHandler: (() -> Void)) {
+    public init(item itemTitle: String, icon: UIImage, didTapHandler: @escaping (() -> Void)) {
         self.itemTitle = itemTitle
         self.icon = icon
         self.handler = didTapHandler

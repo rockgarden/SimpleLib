@@ -55,7 +55,7 @@ extension UIViewController {
 
 	 - returns: <#return value description#>
 	 */
-	override public class func initialize() { // 也可用 override public static func initialize()
+	override open class func initialize() { // 也可用 override public static func initialize()
 
 		struct Static {
 			static var token: dispatch_once_t = 0
@@ -86,7 +86,7 @@ extension UIViewController {
 	}
 
 	func km_containerViewBackgroundColor() -> UIColor {
-		return UIColor.whiteColor()
+		return UIColor.white
 	}
 
 }

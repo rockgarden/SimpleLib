@@ -31,13 +31,13 @@ extension UINavigationBar {
      */
     public func setTransparent(transparent: Bool, translucent: Bool = true) {
         if transparent {
-            self.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.setBackgroundImage(UIImage(), for: .default)
             self.shadowImage = UIImage()
-            self.translucent = translucent
+            self.isTranslucent = translucent
         } else {
-            self.setBackgroundImage(nil, forBarMetrics: .Default)
+            self.setBackgroundImage(nil, for: .default)
             self.shadowImage = nil
-            self.translucent = translucent
+            self.isTranslucent = translucent
         }
     }
     
@@ -52,12 +52,12 @@ extension UINavigationBar {
     @objc
     public func mSetStatusBarMaskColor(color: UIColor) {
         if statusBarMask == nil {
-            statusBarMask = UIView(frame: CGRect(x: 0, y: -20, width: UIScreen.mainScreen().bounds.width, height: 20))
-            statusBarMask?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            statusBarMask = UIView(frame: CGRect(x: 0, y: -20, width: UIScreen.main.bounds.width, height: 20))
+            statusBarMask?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             if let tempBackgroundView = backgroundView {
                 insertSubview(statusBarMask!, aboveSubview: tempBackgroundView)
             } else {
-                insertSubview(statusBarMask!, atIndex: 0)
+                insertSubview(statusBarMask!, at: 0)
             }
         }
         statusBarMask?.backgroundColor = color
@@ -72,18 +72,18 @@ extension UINavigationBar {
     @objc
     public func mSetBackgroundColor(color: UIColor) {
         if backgroundView == nil {
-            setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            setBackgroundImage(UIImage(), for: .default)
             shadowImage = UIImage()
-            backgroundView = UIView(frame: CGRect(x: 0, y: -20, width: UIScreen.mainScreen().bounds.width, height: 64))
-            backgroundView?.userInteractionEnabled = false
-            backgroundView?.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-            insertSubview(backgroundView!, atIndex: 0)
+            backgroundView = UIView(frame: CGRect(x: 0, y: -20, width: UIScreen.main.bounds.width, height: 64))
+            backgroundView?.isUserInteractionEnabled = false
+            backgroundView?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            insertSubview(backgroundView!, at: 0)
         }
         backgroundView?.backgroundColor = color
     }
     
     public func resetBackgroundColor() {
-        setBackgroundImage(nil, forBarMetrics: .Default)
+        setBackgroundImage(nil, for: .default)
         shadowImage = nil
         backgroundView?.removeFromSuperview()
         backgroundView = nil

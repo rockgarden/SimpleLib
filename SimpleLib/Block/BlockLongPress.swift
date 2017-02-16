@@ -23,7 +23,7 @@ public class BlockLongPress: UILongPressGestureRecognizer {
     }
 
     public func didLongPressed(longPress: UILongPressGestureRecognizer) {
-        if longPress.state == UIGestureRecognizerState.Began {
+        if longPress.state == UIGestureRecognizerState.began {
             longPressAction?(longPress)
         }
     }

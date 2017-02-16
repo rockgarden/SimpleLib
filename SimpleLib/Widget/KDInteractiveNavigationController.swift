@@ -25,14 +25,14 @@ public class KDInteractiveNavigationController: UINavigationController {
         // Dispose of any resources that can be recreated.
     }
     
-    override public func pushViewController(viewController: UIViewController, animated: Bool) {
+    override public func pushViewController(_ viewController: UIViewController, animated: Bool) {
         controlClearBackTitle()
         super.pushViewController(viewController, animated: animated)
     }
     
-    override public func showViewController(vc: UIViewController, sender: AnyObject?) {
+    override public func show(_ vc: UIViewController, sender: Any?) {
         controlClearBackTitle()
-        super.showViewController(vc, sender: sender)
+        super.show(vc, sender: sender)
     }
     
 }
@@ -49,7 +49,7 @@ extension KDInteractiveNavigationController {
     
     func controlClearBackTitle() {
         if clearBackTitle {
-            topViewController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+            topViewController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
     }
     

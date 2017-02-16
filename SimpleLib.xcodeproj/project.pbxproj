@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4430D56C1E55EC6E00D21897 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4430D5641E55EC6E00D21897 /* Info.plist */; };
+		4430D56D1E55EC6E00D21897 /* RainbowColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5651E55EC6E00D21897 /* RainbowColorSource.swift */; };
+		4430D56E1E55EC6E00D21897 /* RainbowDragPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5661E55EC6E00D21897 /* RainbowDragPop.swift */; };
+		4430D56F1E55EC6E00D21897 /* RainbowNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4430D5671E55EC6E00D21897 /* RainbowNavigation.h */; };
+		4430D5701E55EC6E00D21897 /* RainbowNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5681E55EC6E00D21897 /* RainbowNavigation.swift */; };
+		4430D5711E55EC6E00D21897 /* RainbowPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5691E55EC6E00D21897 /* RainbowPopAnimator.swift */; };
+		4430D5721E55EC6E00D21897 /* RainbowPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D56A1E55EC6E00D21897 /* RainbowPushAnimator.swift */; };
+		4430D5731E55EC6E00D21897 /* UINavigationBar+Rainbow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D56B1E55EC6E00D21897 /* UINavigationBar+Rainbow.swift */; };
 		446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446885C81D940ACE004E76E7 /* Ext_UITextView.swift */; };
 		44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */; };
 		44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */; };
@@ -21,8 +29,6 @@
 		44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953C1D8A6916004FFDF4 /* BlockTap.swift */; };
 		44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */; };
 		C20B84051D6BFCC700C12286 /* SimpleLib.h in Headers */ = {isa = PBXBuildFile; fileRef = C20B84041D6BFCC700C12286 /* SimpleLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C20B840C1D6BFCC700C12286 /* SimpleLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20B84011D6BFCC600C12286 /* SimpleLib.framework */; };
-		C20B84111D6BFCC700C12286 /* SimpleLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84101D6BFCC700C12286 /* SimpleLibTests.swift */; };
 		C20B84461D6BFD0A00C12286 /* AnimationBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B841C1D6BFD0A00C12286 /* AnimationBarButton.swift */; };
 		C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B841E1D6BFD0A00C12286 /* Rotatable.swift */; };
 		C20B84481D6BFD0A00C12286 /* ExpandingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84201D6BFD0A00C12286 /* ExpandingTableViewController.swift */; };
@@ -54,12 +60,6 @@
 		C20B846E1D6BFD1F00C12286 /* KMWeakObjectContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */; };
 		C20B846F1D6BFD1F00C12286 /* MethodSwizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */; };
 		C20B84701D6BFD1F00C12286 /* NavigationBarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84661D6BFD1E00C12286 /* NavigationBarData.swift */; };
-		C20B84711D6BFD1F00C12286 /* RainbowColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84681D6BFD1F00C12286 /* RainbowColorSource.swift */; };
-		C20B84721D6BFD1F00C12286 /* RainbowDragPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84691D6BFD1F00C12286 /* RainbowDragPop.swift */; };
-		C20B84731D6BFD1F00C12286 /* RainbowNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = C20B846A1D6BFD1F00C12286 /* RainbowNavigation.h */; };
-		C20B84741D6BFD1F00C12286 /* RainbowNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B846B1D6BFD1F00C12286 /* RainbowNavigation.swift */; };
-		C20B84751D6BFD1F00C12286 /* RainbowPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B846C1D6BFD1F00C12286 /* RainbowPopAnimator.swift */; };
-		C20B84761D6BFD1F00C12286 /* RainbowPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B846D1D6BFD1F00C12286 /* RainbowPushAnimator.swift */; };
 		C20B84901D6BFD2600C12286 /* TransitionDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84781D6BFD2600C12286 /* TransitionDriver.swift */; };
 		C20B84911D6BFD2600C12286 /* AuthcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B847A1D6BFD2600C12286 /* AuthcodeView.swift */; };
 		C20B84921D6BFD2600C12286 /* AnyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B847C1D6BFD2600C12286 /* AnyCache.swift */; };
@@ -84,17 +84,15 @@
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C20B840D1D6BFCC700C12286 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C20B83F81D6BFCC600C12286 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C20B84001D6BFCC600C12286;
-			remoteInfo = SimpleLib;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		4430D5641E55EC6E00D21897 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4430D5651E55EC6E00D21897 /* RainbowColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowColorSource.swift; sourceTree = "<group>"; };
+		4430D5661E55EC6E00D21897 /* RainbowDragPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowDragPop.swift; sourceTree = "<group>"; };
+		4430D5671E55EC6E00D21897 /* RainbowNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RainbowNavigation.h; sourceTree = "<group>"; };
+		4430D5681E55EC6E00D21897 /* RainbowNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowNavigation.swift; sourceTree = "<group>"; };
+		4430D5691E55EC6E00D21897 /* RainbowPopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowPopAnimator.swift; sourceTree = "<group>"; };
+		4430D56A1E55EC6E00D21897 /* RainbowPushAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowPushAnimator.swift; sourceTree = "<group>"; };
+		4430D56B1E55EC6E00D21897 /* UINavigationBar+Rainbow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Rainbow.swift"; sourceTree = "<group>"; };
 		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
 		44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
 		44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandableLabel.swift; sourceTree = "<group>"; };
@@ -111,9 +109,6 @@
 		C20B84011D6BFCC600C12286 /* SimpleLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20B84041D6BFCC700C12286 /* SimpleLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleLib.h; sourceTree = "<group>"; };
 		C20B84061D6BFCC700C12286 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C20B840B1D6BFCC700C12286 /* SimpleLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C20B84101D6BFCC700C12286 /* SimpleLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLibTests.swift; sourceTree = "<group>"; };
-		C20B84121D6BFCC700C12286 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C20B841C1D6BFD0A00C12286 /* AnimationBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationBarButton.swift; sourceTree = "<group>"; };
 		C20B841E1D6BFD0A00C12286 /* Rotatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rotatable.swift; sourceTree = "<group>"; };
 		C20B84201D6BFD0A00C12286 /* ExpandingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandingTableViewController.swift; sourceTree = "<group>"; };
@@ -145,12 +140,6 @@
 		C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMWeakObjectContainer.swift; sourceTree = "<group>"; };
 		C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSwizzling.swift; sourceTree = "<group>"; };
 		C20B84661D6BFD1E00C12286 /* NavigationBarData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarData.swift; sourceTree = "<group>"; };
-		C20B84681D6BFD1F00C12286 /* RainbowColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowColorSource.swift; sourceTree = "<group>"; };
-		C20B84691D6BFD1F00C12286 /* RainbowDragPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowDragPop.swift; sourceTree = "<group>"; };
-		C20B846A1D6BFD1F00C12286 /* RainbowNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RainbowNavigation.h; sourceTree = "<group>"; };
-		C20B846B1D6BFD1F00C12286 /* RainbowNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowNavigation.swift; sourceTree = "<group>"; };
-		C20B846C1D6BFD1F00C12286 /* RainbowPopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowPopAnimator.swift; sourceTree = "<group>"; };
-		C20B846D1D6BFD1F00C12286 /* RainbowPushAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowPushAnimator.swift; sourceTree = "<group>"; };
 		C20B84781D6BFD2600C12286 /* TransitionDriver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionDriver.swift; sourceTree = "<group>"; };
 		C20B847A1D6BFD2600C12286 /* AuthcodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthcodeView.swift; sourceTree = "<group>"; };
 		C20B847C1D6BFD2600C12286 /* AnyCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCache.swift; sourceTree = "<group>"; };
@@ -183,17 +172,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C20B84081D6BFCC700C12286 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C20B840C1D6BFCC700C12286 /* SimpleLib.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4430D5631E55EC6E00D21897 /* RainbowNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				4430D5641E55EC6E00D21897 /* Info.plist */,
+				4430D5651E55EC6E00D21897 /* RainbowColorSource.swift */,
+				4430D5661E55EC6E00D21897 /* RainbowDragPop.swift */,
+				4430D5671E55EC6E00D21897 /* RainbowNavigation.h */,
+				4430D5681E55EC6E00D21897 /* RainbowNavigation.swift */,
+				4430D5691E55EC6E00D21897 /* RainbowPopAnimator.swift */,
+				4430D56A1E55EC6E00D21897 /* RainbowPushAnimator.swift */,
+				4430D56B1E55EC6E00D21897 /* UINavigationBar+Rainbow.swift */,
+			);
+			path = RainbowNavigation;
+			sourceTree = "<group>";
+		};
 		44BE95361D8A6916004FFDF4 /* Block */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				C20B84031D6BFCC700C12286 /* SimpleLib */,
-				C20B840F1D6BFCC700C12286 /* SimpleLibTests */,
 				C20B84021D6BFCC600C12286 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -221,7 +216,6 @@
 			isa = PBXGroup;
 			children = (
 				C20B84011D6BFCC600C12286 /* SimpleLib.framework */,
-				C20B840B1D6BFCC700C12286 /* SimpleLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -229,6 +223,7 @@
 		C20B84031D6BFCC700C12286 /* SimpleLib */ = {
 			isa = PBXGroup;
 			children = (
+				4430D5631E55EC6E00D21897 /* RainbowNavigation */,
 				44BE95361D8A6916004FFDF4 /* Block */,
 				C22758B21D6C157D008C1F18 /* AppCommon.swift */,
 				C20B84771D6BFD2600C12286 /* TransitionDriver */,
@@ -236,7 +231,6 @@
 				C20B84881D6BFD2600C12286 /* Widget */,
 				C20B84621D6BFD1E00C12286 /* KMNavigationBarTransition */,
 				C20B84651D6BFD1E00C12286 /* Model */,
-				C20B84671D6BFD1F00C12286 /* RainbowNavigation */,
 				C20B841B1D6BFD0A00C12286 /* AnimatingBarButton */,
 				C20B841F1D6BFD0A00C12286 /* ExpandingTableViewController */,
 				C20B84211D6BFD0A00C12286 /* ExpandingViewController */,
@@ -246,15 +240,6 @@
 				C20B84061D6BFCC700C12286 /* Info.plist */,
 			);
 			path = SimpleLib;
-			sourceTree = "<group>";
-		};
-		C20B840F1D6BFCC700C12286 /* SimpleLibTests */ = {
-			isa = PBXGroup;
-			children = (
-				C20B84101D6BFCC700C12286 /* SimpleLibTests.swift */,
-				C20B84121D6BFCC700C12286 /* Info.plist */,
-			);
-			path = SimpleLibTests;
 			sourceTree = "<group>";
 		};
 		C20B841B1D6BFD0A00C12286 /* AnimatingBarButton */ = {
@@ -420,19 +405,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		C20B84671D6BFD1F00C12286 /* RainbowNavigation */ = {
-			isa = PBXGroup;
-			children = (
-				C20B84681D6BFD1F00C12286 /* RainbowColorSource.swift */,
-				C20B84691D6BFD1F00C12286 /* RainbowDragPop.swift */,
-				C20B846A1D6BFD1F00C12286 /* RainbowNavigation.h */,
-				C20B846B1D6BFD1F00C12286 /* RainbowNavigation.swift */,
-				C20B846C1D6BFD1F00C12286 /* RainbowPopAnimator.swift */,
-				C20B846D1D6BFD1F00C12286 /* RainbowPushAnimator.swift */,
-			);
-			path = RainbowNavigation;
-			sourceTree = "<group>";
-		};
 		C20B84771D6BFD2600C12286 /* TransitionDriver */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,7 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C20B84051D6BFCC700C12286 /* SimpleLib.h in Headers */,
-				C20B84731D6BFD1F00C12286 /* RainbowNavigation.h in Headers */,
+				4430D56F1E55EC6E00D21897 /* RainbowNavigation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,24 +491,6 @@
 			productReference = C20B84011D6BFCC600C12286 /* SimpleLib.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C20B840A1D6BFCC700C12286 /* SimpleLibTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C20B84181D6BFCC700C12286 /* Build configuration list for PBXNativeTarget "SimpleLibTests" */;
-			buildPhases = (
-				C20B84071D6BFCC700C12286 /* Sources */,
-				C20B84081D6BFCC700C12286 /* Frameworks */,
-				C20B84091D6BFCC700C12286 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C20B840E1D6BFCC700C12286 /* PBXTargetDependency */,
-			);
-			name = SimpleLibTests;
-			productName = SimpleLibTests;
-			productReference = C20B840B1D6BFCC700C12286 /* SimpleLibTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -549,9 +503,7 @@
 				TargetAttributes = {
 					C20B84001D6BFCC600C12286 = {
 						CreatedOnToolsVersion = 7.3;
-					};
-					C20B840A1D6BFCC700C12286 = {
-						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -568,7 +520,6 @@
 			projectRoot = "";
 			targets = (
 				C20B84001D6BFCC600C12286 /* SimpleLib */,
-				C20B840A1D6BFCC700C12286 /* SimpleLibTests */,
 			);
 		};
 /* End PBXProject section */
@@ -578,13 +529,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C20B84091D6BFCC700C12286 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				4430D56C1E55EC6E00D21897 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,13 +553,14 @@
 				C20B84581D6BFD0A00C12286 /* Ext_UIScreen.swift in Sources */,
 				C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */,
 				C20B84951D6BFD2600C12286 /* DiskCache.swift in Sources */,
+				4430D5711E55EC6E00D21897 /* RainbowPopAnimator.swift in Sources */,
 				C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */,
 				C20B84601D6BFD0A00C12286 /* ScreenShotHelper.swift in Sources */,
+				4430D5721E55EC6E00D21897 /* RainbowPushAnimator.swift in Sources */,
 				C20B84511D6BFD0A00C12286 /* Ext_NSString.swift in Sources */,
 				C20B84461D6BFD0A00C12286 /* AnimationBarButton.swift in Sources */,
 				C20B84531D6BFD0A00C12286 /* Ext_UIColor.swift in Sources */,
 				C20B84991D6BFD2600C12286 /* ICanHas.swift in Sources */,
-				C20B84761D6BFD1F00C12286 /* RainbowPushAnimator.swift in Sources */,
 				44BE95401D8A6916004FFDF4 /* BlockPan.swift in Sources */,
 				C20B84961D6BFD2600C12286 /* MemoryCache.swift in Sources */,
 				C20B84521D6BFD0A00C12286 /* Ext_String.swift in Sources */,
@@ -626,20 +572,21 @@
 				C20B84481D6BFD0A00C12286 /* ExpandingTableViewController.swift in Sources */,
 				44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */,
 				C20B844F1D6BFD0A00C12286 /* Ext_NSData.swift in Sources */,
+				4430D56D1E55EC6E00D21897 /* RainbowColorSource.swift in Sources */,
 				44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */,
-				C20B84751D6BFD1F00C12286 /* RainbowPopAnimator.swift in Sources */,
 				C20B84561D6BFD0A00C12286 /* Ext_UINavigationBar.swift in Sources */,
 				C20B849C1D6BFD2600C12286 /* PlistUtil.swift in Sources */,
+				4430D56E1E55EC6E00D21897 /* RainbowDragPop.swift in Sources */,
 				C20B84941D6BFD2600C12286 /* Cache.swift in Sources */,
 				C20B849F1D6BFD2600C12286 /* FoldingCell.swift in Sources */,
 				C20B845C1D6BFD0A00C12286 /* Ext_UIViewController.swift in Sources */,
+				4430D5731E55EC6E00D21897 /* UINavigationBar+Rainbow.swift in Sources */,
 				44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */,
 				C20B84701D6BFD1F00C12286 /* NavigationBarData.swift in Sources */,
 				C20B849E1D6BFD2600C12286 /* AnimatedSegmentSwitch.swift in Sources */,
 				C20B84491D6BFD0A00C12286 /* BasePageCollectionCell.swift in Sources */,
 				C20B845F1D6BFD0A00C12286 /* ConstraintsHelper.swift in Sources */,
 				C20B84A31D6BFD2600C12286 /* KDInteractiveNavigationController.swift in Sources */,
-				C20B84741D6BFD1F00C12286 /* RainbowNavigation.swift in Sources */,
 				44BE95421D8A6916004FFDF4 /* BlockSwipe.swift in Sources */,
 				C20B84541D6BFD0A00C12286 /* Ext_UIDevice.swift in Sources */,
 				44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */,
@@ -649,13 +596,12 @@
 				C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */,
 				C20B844B1D6BFD0A00C12286 /* PageCollectionView.swift in Sources */,
 				C20B846E1D6BFD1F00C12286 /* KMWeakObjectContainer.swift in Sources */,
-				C20B84711D6BFD1F00C12286 /* RainbowColorSource.swift in Sources */,
 				C20B849B1D6BFD2600C12286 /* Location_Func.swift in Sources */,
 				C20B84901D6BFD2600C12286 /* TransitionDriver.swift in Sources */,
 				C20B84571D6BFD0A00C12286 /* Ext_UINavigationController.swift in Sources */,
 				C20B84931D6BFD2600C12286 /* Box.swift in Sources */,
-				C20B84721D6BFD1F00C12286 /* RainbowDragPop.swift in Sources */,
 				446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */,
+				4430D5701E55EC6E00D21897 /* RainbowNavigation.swift in Sources */,
 				C20B84501D6BFD0A00C12286 /* Ext_NSDate.swift in Sources */,
 				C20B845B1D6BFD0A00C12286 /* Ext_UIView.swift in Sources */,
 				C20B845E1D6BFD0A00C12286 /* ConfigurationHelper.swift in Sources */,
@@ -669,23 +615,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C20B84071D6BFCC700C12286 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C20B84111D6BFCC700C12286 /* SimpleLibTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C20B840E1D6BFCC700C12286 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C20B84001D6BFCC600C12286 /* SimpleLib */;
-			targetProxy = C20B840D1D6BFCC700C12286 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C20B84131D6BFCC700C12286 /* Debug */ = {
@@ -799,6 +729,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -817,26 +748,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		C20B84191D6BFCC700C12286 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SimpleLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLibTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C20B841A1D6BFCC700C12286 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SimpleLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLibTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -857,15 +769,6 @@
 			buildConfigurations = (
 				C20B84161D6BFCC700C12286 /* Debug */,
 				C20B84171D6BFCC700C12286 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C20B84181D6BFCC700C12286 /* Build configuration list for PBXNativeTarget "SimpleLibTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C20B84191D6BFCC700C12286 /* Debug */,
-				C20B841A1D6BFCC700C12286 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

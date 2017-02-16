@@ -10,10 +10,10 @@ import UIKit
 import MapKit
 
 public func showSimpleAlertWithTitle(title: String!, message: String, viewController: UIViewController) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-    let action = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
     alert.addAction(action)
-    viewController.presentViewController(alert, animated: true, completion: nil)
+    viewController.present(alert, animated: true, completion: nil)
 }
 
 public func zoomToUserLocationInMapView(mapView: MKMapView) {
