@@ -11,7 +11,7 @@ import ObjectiveC.runtime
 
 public class MethodSwizzling: NSObject {
 
-     public func SwizzlingMethod(cls: AnyClass, _ originalSelector: Selector, _ swizzledSelector: Selector) {
+     public func SwizzlingMethod(_ cls: AnyClass, _ originalSelector: Selector, _ swizzledSelector: Selector) {
 		let originalMethod = class_getInstanceMethod(cls, originalSelector)
 		let swizzledMethod = class_getInstanceMethod(cls, swizzledSelector)
 		let didAddMethod = class_addMethod(cls, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))

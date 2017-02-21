@@ -57,24 +57,28 @@ extension UIViewController {
 	 */
 	override open class func initialize() { // 也可用 override public static func initialize()
 
+        // make sure this isn't a subclass
+        if self !== UIViewController.self {
+            return
+        }
+
 		struct Static {
-			static var token: dispatch_once_t = 0
+            static var _token: Int?
 		}
 
-		// make sure this isn't a subclass
-		if self !== UIViewController.self {
-			return
-		}
+        objc_sync_enter(self)
+        if Static._token == nil {
+            Static._token = 0
+            if !didKDVCInitialized {
+                SwizzleMethod(cls: self, #selector(UIViewController.viewWillAppear(_:)), #selector(UIViewController.interactiveViewWillAppear(_:)))
+                didKDVCInitialized = true
+            }
+        }
 
-		dispatch_once(&Static.token) {
-			if !didKDVCInitialized {
-				SwizzleMethod(self, #selector(UIViewController.viewWillAppear(_:)), #selector(UIViewController.interactiveViewWillAppear(_:)))
-				didKDVCInitialized = true
-			}
-		}
+        objc_sync_exit(self)
 	}
 
-	func interactiveViewWillAppear(animated: Bool) {
+	func interactiveViewWillAppear(_ animated: Bool) {
 		interactiveViewWillAppear(animated)
 		if let name = self.descriptiveName {
 			debugPrint("viewWillAppear: \(name)")

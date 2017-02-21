@@ -7,14 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4430D56C1E55EC6E00D21897 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4430D5641E55EC6E00D21897 /* Info.plist */; };
-		4430D56D1E55EC6E00D21897 /* RainbowColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5651E55EC6E00D21897 /* RainbowColorSource.swift */; };
-		4430D56E1E55EC6E00D21897 /* RainbowDragPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5661E55EC6E00D21897 /* RainbowDragPop.swift */; };
-		4430D56F1E55EC6E00D21897 /* RainbowNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4430D5671E55EC6E00D21897 /* RainbowNavigation.h */; };
-		4430D5701E55EC6E00D21897 /* RainbowNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5681E55EC6E00D21897 /* RainbowNavigation.swift */; };
-		4430D5711E55EC6E00D21897 /* RainbowPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D5691E55EC6E00D21897 /* RainbowPopAnimator.swift */; };
-		4430D5721E55EC6E00D21897 /* RainbowPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D56A1E55EC6E00D21897 /* RainbowPushAnimator.swift */; };
-		4430D5731E55EC6E00D21897 /* UINavigationBar+Rainbow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430D56B1E55EC6E00D21897 /* UINavigationBar+Rainbow.swift */; };
 		446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446885C81D940ACE004E76E7 /* Ext_UITextView.swift */; };
 		44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */; };
 		44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */; };
@@ -28,6 +20,9 @@
 		44BE95421D8A6916004FFDF4 /* BlockSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953B1D8A6916004FFDF4 /* BlockSwipe.swift */; };
 		44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953C1D8A6916004FFDF4 /* BlockTap.swift */; };
 		44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */; };
+		44F030F11E5C6C150059B587 /* Ext_UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */; };
+		44F030F51E5C6C250059B587 /* Ext_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F41E5C6C250059B587 /* Ext_UIButton.swift */; };
+		44F030F71E5C6D130059B587 /* Ext_DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */; };
 		C20B84051D6BFCC700C12286 /* SimpleLib.h in Headers */ = {isa = PBXBuildFile; fileRef = C20B84041D6BFCC700C12286 /* SimpleLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C20B84461D6BFD0A00C12286 /* AnimationBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B841C1D6BFD0A00C12286 /* AnimationBarButton.swift */; };
 		C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B841E1D6BFD0A00C12286 /* Rotatable.swift */; };
@@ -85,14 +80,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4430D5641E55EC6E00D21897 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4430D5651E55EC6E00D21897 /* RainbowColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowColorSource.swift; sourceTree = "<group>"; };
-		4430D5661E55EC6E00D21897 /* RainbowDragPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowDragPop.swift; sourceTree = "<group>"; };
-		4430D5671E55EC6E00D21897 /* RainbowNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RainbowNavigation.h; sourceTree = "<group>"; };
-		4430D5681E55EC6E00D21897 /* RainbowNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowNavigation.swift; sourceTree = "<group>"; };
-		4430D5691E55EC6E00D21897 /* RainbowPopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowPopAnimator.swift; sourceTree = "<group>"; };
-		4430D56A1E55EC6E00D21897 /* RainbowPushAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RainbowPushAnimator.swift; sourceTree = "<group>"; };
-		4430D56B1E55EC6E00D21897 /* UINavigationBar+Rainbow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Rainbow.swift"; sourceTree = "<group>"; };
 		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
 		44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
 		44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandableLabel.swift; sourceTree = "<group>"; };
@@ -106,6 +93,9 @@
 		44BE953B1D8A6916004FFDF4 /* BlockSwipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSwipe.swift; sourceTree = "<group>"; };
 		44BE953C1D8A6916004FFDF4 /* BlockTap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockTap.swift; sourceTree = "<group>"; };
 		44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockWebView.swift; sourceTree = "<group>"; };
+		44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIApplication.swift; sourceTree = "<group>"; };
+		44F030F41E5C6C250059B587 /* Ext_UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIButton.swift; sourceTree = "<group>"; };
+		44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_DispatchQueue.swift; sourceTree = "<group>"; };
 		C20B84011D6BFCC600C12286 /* SimpleLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20B84041D6BFCC700C12286 /* SimpleLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleLib.h; sourceTree = "<group>"; };
 		C20B84061D6BFCC700C12286 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,21 +165,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4430D5631E55EC6E00D21897 /* RainbowNavigation */ = {
-			isa = PBXGroup;
-			children = (
-				4430D5641E55EC6E00D21897 /* Info.plist */,
-				4430D5651E55EC6E00D21897 /* RainbowColorSource.swift */,
-				4430D5661E55EC6E00D21897 /* RainbowDragPop.swift */,
-				4430D5671E55EC6E00D21897 /* RainbowNavigation.h */,
-				4430D5681E55EC6E00D21897 /* RainbowNavigation.swift */,
-				4430D5691E55EC6E00D21897 /* RainbowPopAnimator.swift */,
-				4430D56A1E55EC6E00D21897 /* RainbowPushAnimator.swift */,
-				4430D56B1E55EC6E00D21897 /* UINavigationBar+Rainbow.swift */,
-			);
-			path = RainbowNavigation;
-			sourceTree = "<group>";
-		};
 		44BE95361D8A6916004FFDF4 /* Block */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,7 +198,6 @@
 		C20B84031D6BFCC700C12286 /* SimpleLib */ = {
 			isa = PBXGroup;
 			children = (
-				4430D5631E55EC6E00D21897 /* RainbowNavigation */,
 				44BE95361D8A6916004FFDF4 /* Block */,
 				C22758B21D6C157D008C1F18 /* AppCommon.swift */,
 				C20B84771D6BFD2600C12286 /* TransitionDriver */,
@@ -305,6 +279,8 @@
 		C20B84291D6BFD0A00C12286 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				44F030F41E5C6C250059B587 /* Ext_UIButton.swift */,
+				44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */,
 				C20B842A1D6BFD0A00C12286 /* Ext_CCLocation.swift */,
 				C20B842B1D6BFD0A00C12286 /* Ext_NSCoding.swift */,
 				C20B842C1D6BFD0A00C12286 /* Ext_NSData.swift */,
@@ -324,6 +300,7 @@
 				44BE95321D8A6104004FFDF4 /* Ext_UILabel.swift */,
 				44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */,
 				446885C81D940ACE004E76E7 /* Ext_UITextView.swift */,
+				44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -466,7 +443,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C20B84051D6BFCC700C12286 /* SimpleLib.h in Headers */,
-				4430D56F1E55EC6E00D21897 /* RainbowNavigation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,7 +505,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4430D56C1E55EC6E00D21897 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,10 +528,8 @@
 				C20B84581D6BFD0A00C12286 /* Ext_UIScreen.swift in Sources */,
 				C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */,
 				C20B84951D6BFD2600C12286 /* DiskCache.swift in Sources */,
-				4430D5711E55EC6E00D21897 /* RainbowPopAnimator.swift in Sources */,
 				C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */,
 				C20B84601D6BFD0A00C12286 /* ScreenShotHelper.swift in Sources */,
-				4430D5721E55EC6E00D21897 /* RainbowPushAnimator.swift in Sources */,
 				C20B84511D6BFD0A00C12286 /* Ext_NSString.swift in Sources */,
 				C20B84461D6BFD0A00C12286 /* AnimationBarButton.swift in Sources */,
 				C20B84531D6BFD0A00C12286 /* Ext_UIColor.swift in Sources */,
@@ -564,6 +537,7 @@
 				44BE95401D8A6916004FFDF4 /* BlockPan.swift in Sources */,
 				C20B84961D6BFD2600C12286 /* MemoryCache.swift in Sources */,
 				C20B84521D6BFD0A00C12286 /* Ext_String.swift in Sources */,
+				44F030F11E5C6C150059B587 /* Ext_UIApplication.swift in Sources */,
 				C20B84971D6BFD2600C12286 /* MultiCache.swift in Sources */,
 				44A9C4771D96CF1500F09E6A /* CLTypingLabel.swift in Sources */,
 				C20B84981D6BFD2600C12286 /* Duration.swift in Sources */,
@@ -572,15 +546,12 @@
 				C20B84481D6BFD0A00C12286 /* ExpandingTableViewController.swift in Sources */,
 				44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */,
 				C20B844F1D6BFD0A00C12286 /* Ext_NSData.swift in Sources */,
-				4430D56D1E55EC6E00D21897 /* RainbowColorSource.swift in Sources */,
 				44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */,
 				C20B84561D6BFD0A00C12286 /* Ext_UINavigationBar.swift in Sources */,
 				C20B849C1D6BFD2600C12286 /* PlistUtil.swift in Sources */,
-				4430D56E1E55EC6E00D21897 /* RainbowDragPop.swift in Sources */,
 				C20B84941D6BFD2600C12286 /* Cache.swift in Sources */,
 				C20B849F1D6BFD2600C12286 /* FoldingCell.swift in Sources */,
 				C20B845C1D6BFD0A00C12286 /* Ext_UIViewController.swift in Sources */,
-				4430D5731E55EC6E00D21897 /* UINavigationBar+Rainbow.swift in Sources */,
 				44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */,
 				C20B84701D6BFD1F00C12286 /* NavigationBarData.swift in Sources */,
 				C20B849E1D6BFD2600C12286 /* AnimatedSegmentSwitch.swift in Sources */,
@@ -591,6 +562,7 @@
 				C20B84541D6BFD0A00C12286 /* Ext_UIDevice.swift in Sources */,
 				44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */,
 				44BE95351D8A67F6004FFDF4 /* Ext_UIImageView.swift in Sources */,
+				44F030F51E5C6C250059B587 /* Ext_UIButton.swift in Sources */,
 				44BE95331D8A6104004FFDF4 /* Ext_UILabel.swift in Sources */,
 				44BE953E1D8A6916004FFDF4 /* BlockButton.swift in Sources */,
 				C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */,
@@ -601,12 +573,12 @@
 				C20B84571D6BFD0A00C12286 /* Ext_UINavigationController.swift in Sources */,
 				C20B84931D6BFD2600C12286 /* Box.swift in Sources */,
 				446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */,
-				4430D5701E55EC6E00D21897 /* RainbowNavigation.swift in Sources */,
 				C20B84501D6BFD0A00C12286 /* Ext_NSDate.swift in Sources */,
 				C20B845B1D6BFD0A00C12286 /* Ext_UIView.swift in Sources */,
 				C20B845E1D6BFD0A00C12286 /* ConfigurationHelper.swift in Sources */,
 				C20B844D1D6BFD0A00C12286 /* Ext_CCLocation.swift in Sources */,
 				C20B84551D6BFD0A00C12286 /* Ext_UIImage.swift in Sources */,
+				44F030F71E5C6D130059B587 /* Ext_DispatchQueue.swift in Sources */,
 				44BE953F1D8A6916004FFDF4 /* BlockLongPress.swift in Sources */,
 				C20B844E1D6BFD0A00C12286 /* Ext_NSCoding.swift in Sources */,
 				C20B844C1D6BFD0A00C12286 /* ExpandingViewController.swift in Sources */,
