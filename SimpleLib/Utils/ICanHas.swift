@@ -74,9 +74,9 @@ public class ICanHas {
                     ICanHas.isHasingCalendar[type] = false
                 }
                 
-                store.requestAccessToEntityType(type, completion: { (authorized:Bool, error:NSError?) -> Void in
+                store.requestAccess(to: type, completion: { (authorized, error) -> Void in
                     ICanHas.onMain {
-                        done(authorized)
+                        done(authorized, error)
                     }
                 } as! EKEventStoreRequestAccessCompletionHandler)
             }
@@ -120,7 +120,7 @@ public class ICanHas {
                 case .authorized:
                     done(true,currentStatus,nil)
                 case .notDetermined:
-                    ABAddressBookRequestAccessWithCompletion(addressBook, { (authorized:Bool, error:CFError!) -> Void in
+                    ABAddressBookRequestAccessWithCompletion(addressBook, { (authorized, error) -> Void in
                         
                         ICanHas.onMain {
                             done(authorized,ABAddressBookGetAuthorizationStatus(),error)
@@ -310,18 +310,18 @@ public class ICanHas {
                 }else {
                     ICanHas.didTryToRegisterForPush = true
                     
-                    application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: types, categories: nil))
+                    application.registerUserNotificationSettings(UIUserNotificationSettings(types: types, categories: nil))
                     
                     var bgNoteObject:NSObjectProtocol? = nil
                     var fgNoteObject:NSObjectProtocol? = nil
                     
                     var hasTimedOut = false
-                    
+
                     var hasGoneToBG = false
                     
                     var shouldWaitForFG = false
                     
-                    bgNoteObject = bgNoteObject ?? NotificationCenter.default.addObserverForName(NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: OperationQueue.mainQueue) { (note:NSNotification) -> Void in
+                    bgNoteObject = bgNoteObject ?? NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: OperationQueue.main) { (note) -> Void in
                         
                         hasGoneToBG = true
                         
@@ -332,20 +332,22 @@ public class ICanHas {
                         bgNoteObject = nil
                     }
                     
-                    fgNoteObject = fgNoteObject ?? NotificationCenter.default.addObserverForName(NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.mainQueue) { (note:NSNotification) -> Void in
-                        
+                    fgNoteObject = fgNoteObject ?? NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main) { (note) -> Void in
+
                         if shouldWaitForFG {
-                            done(application.isRegisteredForRemoteNotifications())
+                            done(application.isRegisteredForRemoteNotifications)
                         }
                         
                         fgNoteObject = nil
                     }
-                    
-                    dispatch_after(DispatchTime.now(dispatch_time_t(DispatchTime.now()),Int64(1 * Double(NSEC_PER_SEC))),DispatchQueue.main, {
-                        hasTimedOut = true
-                        if !hasGoneToBG {
-                            done(application.isRegisteredForRemoteNotifications())
-                        }
+                    //asyncAfter(deadline: DispatchTime, qos: DispatchQoS = default, flags: DispatchWorkItemFlags = default, execute work: @escaping @convention(block) () -> Swift.Void)
+
+                    DispatchQueue.main.asyncAfter(
+                        deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
+                            hasTimedOut = true
+                            if !hasGoneToBG {
+                                done(application.isRegisteredForRemoteNotifications)
+                            }
                     })
                     application.registerForRemoteNotifications()
                 }
@@ -477,16 +479,17 @@ public class ICanHas {
                             }
                         }
                     }
-                    
-                    dispatch_after(DispatchTime.now(dispatch_time_t(DispatchTime.now()),Int64(1 * Double(NSEC_PER_SEC))),DispatchQueue.main, {
-                        if canTimeOut {
-                            hasTimedOut = true
-                            if let object = backgroundObject {
-                                NSNotificationCenter.defaultCenter().removeObserver(object)
-                                backgroundObject = nil
-                                complete(false)
+
+                    DispatchQueue.main.asyncAfter(
+                        deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
+                            if canTimeOut {
+                                hasTimedOut = true
+                                if let object = backgroundObject {
+                                    NotificationCenter.default.removeObserver(object)
+                                    backgroundObject = nil
+                                    complete(false)
+                                }
                             }
-                        }
                     })
                     
                     backgroundObject = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) {

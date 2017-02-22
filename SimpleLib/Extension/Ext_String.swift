@@ -76,10 +76,19 @@ public extension String {
      
      - returns: Returns the substring to index
      */
-    public func substringToIndex(index: Int) -> String {
-        return self.substringToIndex(self.startIndex.advancedBy(index))
+    public func substringToIndex(_ index: Int) -> String {
+        return self.substring(to: self.characters.index(startIndex, offsetBy: index))
+        //self.substringToIndex(self.startIndex.advancedBy(index))
     }
-    
+
+    ///
+    public func splitByCharacter(_ character: Character) -> (String, String)? {
+        guard let cIndex = self.characters.index(of: character) else {return nil}
+        let index = self.index(after: cIndex)
+        let key = substring(to: index), value = substring(from: index)
+        return (key, value)
+    }
+
     /**
      Creates a substring with a given range
      

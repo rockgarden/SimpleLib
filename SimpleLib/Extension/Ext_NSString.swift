@@ -1,6 +1,7 @@
 //
-//  NSString+BFKit.swift
-//  BFKit
+//  Ext_NSString.swift
+//
+//  Modified by rockgarden 2016/2/22
 //
 //  The MIT License (MIT)
 //
@@ -189,9 +190,9 @@ public extension NSString {
      - returns: Converts self to an UUID APNS valid (No "<>" or "-" or spaces)
      */
     public func convertToAPNSUUID() -> NSString {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>") as CharacterSet).stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("-", withString: "") as NSString
+        return self.trimmingCharacters(in: CharacterSet(charactersIn: "<>")).replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "") as NSString
     }
-    
+
     /**
      Used to calculate text height for max width and font
      
@@ -201,10 +202,10 @@ public extension NSString {
      - returns: Returns the calculated height of string within width using given font
      */
     public func heightForWidth(width: CGFloat, font: UIFont) -> CGFloat {
-        var size: CGSize = CGSizeZero
+        var size = CGSize.zero
         if self.length > 0 {
-            let frame: CGRect = self.boundingRect(with: CGSizeMake(width, 999999), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
-            size = CGSizeMake(frame.size.width, frame.size.height + 1)
+            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
+            size = CGSize(width:frame.size.width, height:frame.size.height + 1)
         }
         return size.height
     }
@@ -241,8 +242,8 @@ public extension NSString {
         if end < 0 {
             end = 0
         }
-        
-        return string.substringFromIndex(start).substringToIndex(end)
+
+        return string.substring(from: start).substringToIndex(end) as NSString
     }
     
     /**
@@ -267,41 +268,40 @@ public extension NSString {
      - returns: Returns the converted string
      */
     public static func convertToUTF8Entities(string: NSString) -> NSString {
-        return string
-            .stringByReplacingOccurrencesOfString("%27", withString: "'")
-            .stringByReplacingOccurrencesOfString("%e2%80%99".capitalizedString, withString: "’")
-            .stringByReplacingOccurrencesOfString("%2d".capitalizedString, withString: "-")
-            .stringByReplacingOccurrencesOfString("%c2%ab".capitalizedString, withString: "«")
-            .stringByReplacingOccurrencesOfString("%c2%bb".capitalizedString, withString: "»")
-            .stringByReplacingOccurrencesOfString("%c3%80".capitalizedString, withString: "À")
-            .stringByReplacingOccurrencesOfString("%c3%82".capitalizedString, withString: "Â")
-            .stringByReplacingOccurrencesOfString("%c3%84".capitalizedString, withString: "Ä")
-            .stringByReplacingOccurrencesOfString("%c3%86".capitalizedString, withString: "Æ")
-            .stringByReplacingOccurrencesOfString("%c3%87".capitalizedString, withString: "Ç")
-            .stringByReplacingOccurrencesOfString("%c3%88".capitalizedString, withString: "È")
-            .stringByReplacingOccurrencesOfString("%c3%89".capitalizedString, withString: "É")
-            .stringByReplacingOccurrencesOfString("%c3%8a".capitalizedString, withString: "Ê")
-            .stringByReplacingOccurrencesOfString("%c3%8b".capitalizedString, withString: "Ë")
-            .stringByReplacingOccurrencesOfString("%c3%8f".capitalizedString, withString: "Ï")
-            .stringByReplacingOccurrencesOfString("%c3%91".capitalizedString, withString: "Ñ")
-            .stringByReplacingOccurrencesOfString("%c3%94".capitalizedString, withString: "Ô")
-            .stringByReplacingOccurrencesOfString("%c3%96".capitalizedString, withString: "Ö")
-            .stringByReplacingOccurrencesOfString("%c3%9b".capitalizedString, withString: "Û")
-            .stringByReplacingOccurrencesOfString("%c3%9c".capitalizedString, withString: "Ü")
-            .stringByReplacingOccurrencesOfString("%c3%a0".capitalizedString, withString: "à")
-            .stringByReplacingOccurrencesOfString("%c3%a2".capitalizedString, withString: "â")
-            .stringByReplacingOccurrencesOfString("%c3%a4".capitalizedString, withString: "ä")
-            .stringByReplacingOccurrencesOfString("%c3%a6".capitalizedString, withString: "æ")
-            .stringByReplacingOccurrencesOfString("%c3%a7".capitalizedString, withString: "ç")
-            .stringByReplacingOccurrencesOfString("%c3%a8".capitalizedString, withString: "è")
-            .stringByReplacingOccurrencesOfString("%c3%a9".capitalizedString, withString: "é")
-            .stringByReplacingOccurrencesOfString("%c3%af".capitalizedString, withString: "ï")
-            .stringByReplacingOccurrencesOfString("%c3%b4".capitalizedString, withString: "ô")
-            .stringByReplacingOccurrencesOfString("%c3%b6".capitalizedString, withString: "ö")
-            .stringByReplacingOccurrencesOfString("%c3%bb".capitalizedString, withString: "û")
-            .stringByReplacingOccurrencesOfString("%c3%bc".capitalizedString, withString: "ü")
-            .stringByReplacingOccurrencesOfString("%c3%bf".capitalizedString, withString: "ÿ")
-            .stringByReplacingOccurrencesOfString("%20", withString: " ")
+        return string.replacingOccurrences(of: "%27", with: "'")
+            .replacingOccurrences(of: "%e2%80%99".capitalized, with: "’")
+            .replacingOccurrences(of: "%2d".capitalized, with: "-")
+            .replacingOccurrences(of: "%c2%ab".capitalized, with: "«")
+            .replacingOccurrences(of: "%c2%bb".capitalized, with: "»")
+            .replacingOccurrences(of:"%c3%80".capitalized, with: "À")
+            .replacingOccurrences(of:"%c3%82".capitalized, with: "Â")
+            .replacingOccurrences(of:"%c3%84".capitalized, with: "Ä")
+            .replacingOccurrences(of:"%c3%86".capitalized, with: "Æ")
+            .replacingOccurrences(of:"%c3%87".capitalized, with: "Ç")
+            .replacingOccurrences(of:"%c3%88".capitalized, with: "È")
+            .replacingOccurrences(of:"%c3%89".capitalized, with: "É")
+            .replacingOccurrences(of:"%c3%8a".capitalized, with: "Ê")
+            .replacingOccurrences(of:"%c3%8b".capitalized, with: "Ë")
+            .replacingOccurrences(of:"%c3%8f".capitalized, with: "Ï")
+            .replacingOccurrences(of:"%c3%91".capitalized, with: "Ñ")
+            .replacingOccurrences(of:"%c3%94".capitalized, with: "Ô")
+            .replacingOccurrences(of:"%c3%96".capitalized, with: "Ö")
+            .replacingOccurrences(of:"%c3%9b".capitalized, with: "Û")
+            .replacingOccurrences(of:"%c3%9c".capitalized, with: "Ü")
+            .replacingOccurrences(of:"%c3%a0".capitalized, with: "à")
+            .replacingOccurrences(of:"%c3%a2".capitalized, with: "â")
+            .replacingOccurrences(of:"%c3%a4".capitalized, with: "ä")
+            .replacingOccurrences(of:"%c3%a6".capitalized, with: "æ")
+            .replacingOccurrences(of:"%c3%a7".capitalized, with: "ç")
+            .replacingOccurrences(of:"%c3%a8".capitalized, with: "è")
+            .replacingOccurrences(of:"%c3%a9".capitalized, with: "é")
+            .replacingOccurrences(of:"%c3%af".capitalized, with: "ï")
+            .replacingOccurrences(of:"%c3%b4".capitalized, with: "ô")
+            .replacingOccurrences(of:"%c3%b6".capitalized, with: "ö")
+            .replacingOccurrences(of:"%c3%bb".capitalized, with: "û")
+            .replacingOccurrences(of:"%c3%bc".capitalized, with: "ü")
+            .replacingOccurrences(of:"%c3%bf".capitalized, with: "ÿ")
+            .replacingOccurrences(of:"%20", with: " ") as NSString
     }
     
     /**
@@ -335,8 +335,8 @@ public extension NSString {
      
      - returns: Returns the converted NSString as NSData
      */
-    public static func convertToNSData(string: NSString) -> NSData {
-        return string.dataUsingEncoding(NSUTF8StringEncoding.rawValue)!
+    public static func convertToNSData(_ string: NSString) -> NSData {
+        return string.data(using: String.Encoding.utf8.rawValue)! as NSData
     }
     
     /**
@@ -345,8 +345,9 @@ public extension NSString {
      - returns: String without additional spaces
      */
     public func removeExtraSpaces() -> NSString {
-        let squashed = self.stringByReplacingOccurrencesOfString("[ ]+", withString: " ", options: .RegularExpressionSearch, range: NSMakeRange(0, self.length))
-        return squashed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let squashed = self.replacingOccurrences(of: "[ ]+", with: " ", options: NSString.CompareOptions.regularExpression, range: NSMakeRange(0, self.length))
+        //stringByReplacingOccurrencesOfString("[ ]+", withString: " ", options: .RegularExpressionSearch, range: NSMakeRange(0, self.length))
+        return squashed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as NSString
     }
     
     /**
@@ -376,14 +377,16 @@ public extension NSString {
      */
     public func HEXToString() -> NSString {
         var hex = self as String
-        hex = hex.stringByReplacingOccurrencesOfString(" ", withString: "")
+        hex = hex.replacingOccurrences(of: " ", with: "")
         var s: String = ""
         while hex.characters.count > 0 {
-            let c: String = hex.substringToIndex(hex.startIndex.advancedBy(2))
-            hex = hex.substringFromIndex(hex.startIndex.advancedBy(2))
+            //hex.characters.index(hex.startIndex, offsetBy: 2)
+            let c: String = hex.substring(to: hex.index(hex.startIndex, offsetBy: 2))
+            /// old code:substringToIndex(hex.startIndex.advancedBy(2))
+            hex = hex.substring(from: hex.index(hex.startIndex, offsetBy: 2))
             var ch: UInt32 = 0
             Scanner(string: c).scanHexInt32(&ch)
-            s = s.stringByAppendingString(String(format: "%c", ch))
+            s = s.appending(String(format: "%c", ch)) //.stringByAppendingString(String(format: "%c", ch))
         }
         return s as NSString
     }
@@ -396,10 +399,12 @@ public extension NSString {
      */
     public func stringToHEX() -> NSString {
         let len: Int = self.length
-        let chars: UnsafeMutablePointer<unichar> = UnsafeMutablePointer<unichar>(malloc(len * sizeof(unichar)));
+        _ = unsafeBitCast(malloc(len * MemoryLayout<unichar>.size), to: UnsafeMutablePointer<unichar>.self)
+        let chars = UnsafeMutablePointer<unichar>.allocate(capacity: len * MemoryLayout<unichar>.size)
+        /// old code: UnsafeMutablePointer<unichar>(malloc(len * sizeof(unichar)))
         self.getCharacters(UnsafeMutablePointer<unichar>(chars))
-        
-        let hexString: NSMutableString = NSMutableString()
+
+        let hexString = NSMutableString()
         
         for i in 0 ..< len {
             hexString.appendFormat("%02x", chars[i])
