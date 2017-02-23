@@ -33,7 +33,7 @@ public typealias MeasuredBlock = () -> Void
 private var depth = 0
 
 private var depthIndent: String {
-    return String(count: depth, repeatedValue: "\t" as Character)
+    return String(repeating: "\t", count: depth)
 }
 
 private var now: Double {
@@ -85,8 +85,6 @@ public class Duration {
                     let containingMeasurement = timingStack[stackPointer]
                     
                     if !containingMeasurement.reported {
-                        print(String(count: stackPointer, repeatedValue: "\t" as Character) + "Measuring \(containingMeasurement.name):")
-                        
                         timingStack[stackPointer] = (containingMeasurement.startTime, containingMeasurement.name, true)
                     }
                     
@@ -98,7 +96,7 @@ public class Duration {
     /// Start a measurement, call `stopMeasurement` when you have completed your
     /// desired operations. The `name` will be used to identify this specific
     /// measurement. Multiple calls will nest measurements within each other.
-    public static func startMeasurement(name: String) {
+    public static func startMeasurement(_ name: String) {
         if logStyle == .None {
             return
         }
@@ -142,7 +140,7 @@ public class Duration {
     }
     
     /// Stop measuring operations and generate log entry.
-    public static func stopMeasurement(executionDetails: String?) -> Double {
+    public static func stopMeasurement(_ executionDetails: String?) -> Double {
         if logStyle == .None {
             return 0
         }
@@ -196,7 +194,7 @@ public class Duration {
         }
         
         for i in 0..<iterations {
-            let took = measure("Iteration \(i+1)", block: block)
+            let took = measure(name: "Iteration \(i+1)", block: block)
             
             samples.append(took)
             

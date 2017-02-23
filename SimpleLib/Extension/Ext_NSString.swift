@@ -66,7 +66,7 @@ public extension NSString {
      
      - returns: Returns true if it's an email, false if not
      */
-    public func isEmail() -> Bool {
+    public func nsIsEmail() -> Bool {
         return NSString.isEmail(self)
     }
     

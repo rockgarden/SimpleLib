@@ -24,7 +24,7 @@ import UIKit
     
     public private(set) var selectedIndex: Int = 0
     
-    public func setSelectedIndex(index: Int, animated: Bool) {
+    public func setSelectedIndex(_ index: Int, animated: Bool) {
         selectedIndex = index
         displayNewSelectedIndex(animated: animated)
     }
@@ -85,11 +85,11 @@ import UIKit
     
     // MARK: - Private Properties
     
-    private var labels = [UILabel]()
-    private var thumbView = UIView()
-    private var selectedThumbViewFrame: CGRect?
-    private var panGesture: UIPanGestureRecognizer!
-    private var tapGesture: UITapGestureRecognizer!
+    fileprivate var labels = [UILabel]()
+    fileprivate var thumbView = UIView()
+    fileprivate var selectedThumbViewFrame: CGRect?
+    fileprivate var panGesture: UIPanGestureRecognizer!
+    fileprivate var tapGesture: UITapGestureRecognizer!
     
     // MARK: - Lifecycle
     
@@ -130,7 +130,7 @@ import UIKit
         labels.removeAll(keepingCapacity: true)
         
         for index in 1...items.count {
-            let label = UILabel(frame: CGRectMake(0, 0, 70, 40))
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 70, height: 40))
             label.text = items[index - 1]
             label.backgroundColor = .clear
             label.textAlignment = .center
@@ -173,7 +173,7 @@ import UIKit
         }
     }
     
-    func pan(gesture: UIPanGestureRecognizer!) {
+    func pan(_ gesture: UIPanGestureRecognizer!) {
         if gesture.state == .began {
             selectedThumbViewFrame = thumbView.frame
         } else if gesture.state == .changed {
@@ -189,7 +189,7 @@ import UIKit
         }
     }
     
-    func tap(gesture: UIPanGestureRecognizer!) {
+    func tap(_ gesture: UIPanGestureRecognizer!) {
         sendActions(for: .touchDown)
     }
     
@@ -255,7 +255,7 @@ import UIKit
         }
     }
     
-    private func indexAtLocation(location: CGPoint) -> Int? {
+    private func indexAtLocation(_ location: CGPoint) -> Int? {
         var calculatedIndex: Int?
         for (index, item) in labels.enumerated() {
             if item.frame.contains(location) {
@@ -266,7 +266,7 @@ import UIKit
         return calculatedIndex
     }
     
-    private func nearestIndexAtLocation(location: CGPoint) -> Int {
+    private func nearestIndexAtLocation(_ location: CGPoint) -> Int {
         var calculatedDistances: [CGFloat] = []
         for (index, item) in labels.enumerated() {
             let distance = sqrt(pow(location.x - item.center.x, 2) + pow(location.y - item.center.y, 2))
@@ -275,7 +275,7 @@ import UIKit
         return calculatedDistances.index(of: calculatedDistances.min()!)!
     }
     
-    private func addIndividualItemConstraints(items: [UIView], mainView: UIView, padding: CGFloat) {
+    private func addIndividualItemConstraints(_ items: [UIView], mainView: UIView, padding: CGFloat) {
         for (index, button) in items.enumerated() {
             let topConstraint = NSLayoutConstraint(item: button,
                                                    attribute: NSLayoutAttribute.top,
@@ -358,13 +358,18 @@ extension AnimatedSegmentSwitch: UIGestureRecognizerDelegate {
      -如果返回YES　则继续识别触摸序列,如传给super
      
      - parameter gestureRecognizer: 传入的手势
-     
+
      - returns: 手势判断的结果
      */
-    override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == panGesture || gestureRecognizer == tapGesture {
-            return thumbView.frame.contains(gestureRecognizer.locationInView(self))
+            return thumbView.frame.contains(gestureRecognizer.location(in: self))
         }
         return super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
 }
