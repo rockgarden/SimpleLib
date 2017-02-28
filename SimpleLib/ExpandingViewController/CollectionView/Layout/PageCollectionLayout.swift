@@ -10,7 +10,7 @@ import UIKit
 
 class PageCollectionLayout: UICollectionViewFlowLayout {
 
-	private var lastCollectionViewSize: CGSize = CGSizeZero
+    var lastCollectionViewSize: CGSize = .zero
 
 	var scalingOffset: CGFloat = 200
 	var minimumScaleFactor: CGFloat = 0.9
@@ -31,7 +31,7 @@ class PageCollectionLayout: UICollectionViewFlowLayout {
 
 extension PageCollectionLayout {
 
-	private func commonInit(itemSize: CGSize) {
+    func commonInit(_ itemSize: CGSize) {
 		scrollDirection = .horizontal
         // 用来保证每一屏显示一个Cell
 		minimumLineSpacing = 25
@@ -59,7 +59,7 @@ extension PageCollectionLayout {
 			return proposedContentOffset
 		}
 
-		let proposedRect = CGRectMake(proposedContentOffset.x, 0, collectionView.bounds.width, collectionView.bounds.height)
+		let proposedRect = CGRect(x: proposedContentOffset.x, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height)
 		guard let layoutAttributes = self.layoutAttributesForElements(in: proposedRect) else {
 			return proposedContentOffset
 		}
@@ -94,7 +94,7 @@ extension PageCollectionLayout {
 			newOffsetX += velocity.x > 0 ? pageWidth : -pageWidth
 		}
 
-		return CGPointMake(newOffsetX, proposedContentOffset.y)
+		return CGPoint(x: newOffsetX, y: proposedContentOffset.y)
 	}
 
 	override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
@@ -113,7 +113,7 @@ extension PageCollectionLayout {
 		let contentOffset = collectionView.contentOffset
 		let size = collectionView.bounds.size
 
-		let visibleRect = CGRectMake(contentOffset.x, contentOffset.y, size.width, size.height)
+        let visibleRect = CGRect(x:contentOffset.x, y:contentOffset.y, width:size.width, height:size.height)
 		let visibleCenterX = visibleRect.midX
 
 		guard case let newAttributesArray as [UICollectionViewLayoutAttributes] = NSArray(array: superAttributes, copyItems: true) else {
@@ -140,10 +140,10 @@ extension PageCollectionLayout {
 	/**
 	 设置UICollectionViewLayout的contentOffset,用来保证每一屏居中显示一个Cell
 	 */
-	private func configureInset() -> Void {
+    func configureInset() -> Void {
 		guard let collectionView = self.collectionView else { return }
 		let inset = (collectionView.bounds.size.width - itemSize.width) / 2
 		collectionView.contentInset = UIEdgeInsetsMake(0, inset, 0, inset)
-		collectionView.contentOffset = CGPointMake(-inset, 0)
+        collectionView.contentOffset = CGPoint(x:-inset, y:0)
 	}
 }

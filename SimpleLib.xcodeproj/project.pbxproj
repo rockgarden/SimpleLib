@@ -22,6 +22,8 @@
 		44BE95421D8A6916004FFDF4 /* BlockSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953B1D8A6916004FFDF4 /* BlockSwipe.swift */; };
 		44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953C1D8A6916004FFDF4 /* BlockTap.swift */; };
 		44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */; };
+		44E665501E65B9A000B6A02F /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 44E6654F1E65B9A000B6A02F /* readme.rtf */; };
+		44E665521E65BDB600B6A02F /* Ext_example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E665511E65BDB600B6A02F /* Ext_example.swift */; };
 		44F030F11E5C6C150059B587 /* Ext_UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */; };
 		44F030F51E5C6C250059B587 /* Ext_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F41E5C6C250059B587 /* Ext_UIButton.swift */; };
 		44F030F71E5C6D130059B587 /* Ext_DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */; };
@@ -108,6 +110,8 @@
 		44BE953B1D8A6916004FFDF4 /* BlockSwipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSwipe.swift; sourceTree = "<group>"; };
 		44BE953C1D8A6916004FFDF4 /* BlockTap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockTap.swift; sourceTree = "<group>"; };
 		44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockWebView.swift; sourceTree = "<group>"; };
+		44E6654F1E65B9A000B6A02F /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = readme.rtf; sourceTree = "<group>"; };
+		44E665511E65BDB600B6A02F /* Ext_example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_example.swift; sourceTree = "<group>"; };
 		44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIApplication.swift; sourceTree = "<group>"; };
 		44F030F41E5C6C250059B587 /* Ext_UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIButton.swift; sourceTree = "<group>"; };
 		44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_DispatchQueue.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 		C20B83F71D6BFCC600C12286 = {
 			isa = PBXGroup;
 			children = (
+				44E6654F1E65B9A000B6A02F /* readme.rtf */,
 				C20B84031D6BFCC700C12286 /* SimpleLib */,
 				442254C21E5EE0CD00A62376 /* SimpleLibTests */,
 				C20B84021D6BFCC600C12286 /* Products */,
@@ -335,6 +340,7 @@
 				44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */,
 				446885C81D940ACE004E76E7 /* Ext_UITextView.swift */,
 				44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */,
+				44E665511E65BDB600B6A02F /* Ext_example.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -570,6 +576,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E665501E65B9A000B6A02F /* readme.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +635,7 @@
 				44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */,
 				C20B84701D6BFD1F00C12286 /* NavigationBarData.swift in Sources */,
 				C20B849E1D6BFD2600C12286 /* AnimatedSegmentSwitch.swift in Sources */,
+				44E665521E65BDB600B6A02F /* Ext_example.swift in Sources */,
 				C20B84491D6BFD0A00C12286 /* BasePageCollectionCell.swift in Sources */,
 				C20B845F1D6BFD0A00C12286 /* ConstraintsHelper.swift in Sources */,
 				C20B84A31D6BFD2600C12286 /* KDInteractiveNavigationController.swift in Sources */,
@@ -844,6 +852,7 @@
 				442254CA1E5EE0CD00A62376 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C20B83FB1D6BFCC600C12286 /* Build configuration list for PBXProject "SimpleLib" */ = {
 			isa = XCConfigurationList;

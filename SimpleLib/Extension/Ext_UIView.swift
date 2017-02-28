@@ -1,5 +1,5 @@
 //
-//  UIView+BFKit.swift
+//  Ext_UIView.swift
 //  BFKit
 //
 //  The MIT License (MIT)
@@ -81,10 +81,15 @@ extension UIView {
 	}
 }
 
+
+// MARK: - protocol UIViewLoading
 protocol UIViewLoading { }
 extension UIView: UIViewLoading { }
 extension UIViewLoading where Self: UIView {
-	// note that this method returns an instance of type `Self`, rather than UIView
+
+	/// loadFromNib from main bundle
+	///
+	/// - Returns: note that this method returns an instance of type `Self`, rather than UIView
 	static func loadFromNib() -> Self {
 		let nibName = "\(self)".characters.split { $0 == "." }.map(String.init).last!
 		let nib = UINib(nibName: nibName, bundle: nil)
@@ -92,7 +97,8 @@ extension UIViewLoading where Self: UIView {
 	}
 }
 
-/// This extesion adds some useful functions to UIView
+
+// MARK: - useful functions
 public extension UIView {
 	// MARK: - Enums
 
@@ -202,7 +208,22 @@ public extension UIView {
 		self.frame = rect
 	}
 
-	// MARK: - Instance functions
+    // MARK: Instance function
+
+    /// Get Constraint
+    ///
+    /// - Parameter attributes: <#attributes description#>
+    /// - Returns: <#return value description#>
+    func getConstraint(attributes: NSLayoutAttribute) -> NSLayoutConstraint? {
+        return constraints.filter {
+            if $0.firstAttribute == attributes && $0.secondItem == nil {
+                return true
+            }
+            return false
+            }.first
+    }
+
+	// MARK: Instance functions
 
 	/**
 	 Create a border around the UIView
@@ -1178,21 +1199,6 @@ extension UIView {
 	}
 }
 
-extension UIView {
-	/// EZSE: Shakes the view for as many number of times as given in the argument.
-	public func shakeViewForTimes(times: Int) {
-		let anim = CAKeyframeAnimation(keyPath: "transform")
-		anim.values = [
-			NSValue(caTransform3D: CATransform3DMakeTranslation(-5, 0, 0)),
-			NSValue(caTransform3D: CATransform3DMakeTranslation(5, 0, 0))
-		]
-		anim.autoreverses = true
-		anim.repeatCount = Float(times)
-		anim.duration = 7 / 100
-
-		self.layer.add(anim, forKey: nil)
-	}
-}
 
 extension UIView {
 	/// EZSE: Loops until it finds the top root view. //TODO: Add to readme
@@ -1202,5 +1208,38 @@ extension UIView {
 		}
 		return parentView.rootView()
 	}
+
+    /// Find VC
+    ///
+    /// - Returns: view 所在的 UIViewController
+    func responderViewController() -> UIViewController {
+        var responder: UIResponder! = nil
+        var next = self.superview
+        while next != nil {
+            responder = next?.next
+            if (responder!.isKind(of: UIViewController.self)){
+                return (responder as! UIViewController)
+            }
+            next = next?.superview
+        }
+        return (responder as! UIViewController)
+    }
+
+    /// View中的第一响应者
+    ///
+    /// - Returns: which view is FirstResponder
+    func findFirstResponder() -> UIView?{
+        if self.isFirstResponder {
+            return self
+        }
+        for subView in self.subviews{
+            let view = subView.findFirstResponder()
+            if view != nil {
+                return view
+            }
+        }
+        return nil
+    }
+
 }
 

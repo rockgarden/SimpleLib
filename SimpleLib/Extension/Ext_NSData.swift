@@ -55,9 +55,9 @@ public extension NSData {
      - returns: Returns self as String from UUID
      */
     public func convertUUIDToString() -> String {
-        return self.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>")).stringByReplacingOccurrencesOfString(" ", withString: "")
+        return self.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>")).replacingOccurrences(of: " ", with: "")
     }
-    
+
     // MARK: - Class functions -
     
     /**

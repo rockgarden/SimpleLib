@@ -94,3 +94,18 @@ extension UIViewController {
 	}
 
 }
+
+// MARK: - protocol UIViewLoading
+protocol VCfromNib { }
+extension UIViewController: VCfromNib { }
+extension VCfromNib where Self: UIViewController {
+
+    /// VC loadFromNib from main bundle
+    ///
+    /// - Returns: note that this method returns an instance of type `Self`, rather than UIViewController
+    static func loadFromNib() -> Self {
+        let nibName = "\(self)".characters.split { $0 == "." }.map(String.init).last!
+        let nib = UINib(nibName: nibName, bundle: nil)
+        return nib.instantiate(withOwner: self, options: nil).first as! Self
+    }
+}
