@@ -81,6 +81,8 @@
 		C20B84A41D6BFD2600C12286 /* NavigationBarColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */; };
 		C222FA271DFE7B3800B5A36A /* Ext_DispatchTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */; };
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
+		C27E81A81E669A4D00308DCB /* Ext_Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E81A71E669A4D00308DCB /* Ext_Array.swift */; };
+		C27E81AA1E669B9D00308DCB /* Ext_Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E81A91E669B9D00308DCB /* Ext_Dictionary.swift */; };
 		C2AA3B071E10EA4900C9E438 /* CoordinateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AA3B061E10EA4900C9E438 /* CoordinateConverter.swift */; };
 /* End PBXBuildFile section */
 
@@ -161,6 +163,8 @@
 		C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarColorSource.swift; sourceTree = "<group>"; };
 		C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_DispatchTime.swift; sourceTree = "<group>"; };
 		C22758B21D6C157D008C1F18 /* AppCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommon.swift; sourceTree = "<group>"; };
+		C27E81A71E669A4D00308DCB /* Ext_Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_Array.swift; sourceTree = "<group>"; };
+		C27E81A91E669B9D00308DCB /* Ext_Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_Dictionary.swift; sourceTree = "<group>"; };
 		C2AA3B061E10EA4900C9E438 /* CoordinateConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -310,6 +314,8 @@
 				44BE95341D8A67F6004FFDF4 /* Ext_UIImageView.swift */,
 				446885C81D940ACE004E76E7 /* Ext_UITextView.swift */,
 				C222FA261DFE7B3800B5A36A /* Ext_DispatchTime.swift */,
+				C27E81A71E669A4D00308DCB /* Ext_Array.swift */,
+				C27E81A91E669B9D00308DCB /* Ext_Dictionary.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -554,6 +560,8 @@
 				C20B84581D6BFD0A00C12286 /* Ext_UIScreen.swift in Sources */,
 				C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */,
 				C20B84951D6BFD2600C12286 /* DiskCache.swift in Sources */,
+				C27E81AA1E669B9D00308DCB /* Ext_Dictionary.swift in Sources */,
+				C27E81A81E669A4D00308DCB /* Ext_Array.swift in Sources */,
 				C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */,
 				C20B84601D6BFD0A00C12286 /* ScreenShotHelper.swift in Sources */,
 				C20B84511D6BFD0A00C12286 /* Ext_NSString.swift in Sources */,

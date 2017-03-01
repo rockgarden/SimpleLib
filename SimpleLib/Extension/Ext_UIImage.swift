@@ -28,6 +28,20 @@ public extension UIImage {
 		UIGraphicsEndImageContext()
 		self.init(cgImage: (image?.cgImage!)!)
 	}
+    
+    /// EZSE: Returns the image associated with the URL
+    convenience init?(urlString: String) {
+        guard let url = URL(string: urlString) else {
+            self.init(data: Data())
+            return
+        }
+        guard let data = try? Data(contentsOf: url) else {
+            debugPrint("EZSE: No image in URL \(urlString)")
+            self.init(data: Data())
+            return
+        }
+        self.init(data: data)
+    }
 
 	/// EZSE: Returns compressed image to rate from 0 to 1
 	public func compressImage(rate: CGFloat) -> Data? {
@@ -105,61 +119,48 @@ public extension UIImage {
 		return croppedImage
 	}
 
-	/// EZSE: Use current image for pattern of color
-	public func withColor(_ tintColor: UIColor) -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+    /// EZSE: Use current image for pattern of color
+    public func withColor(_ tintColor: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        
+        let context = UIGraphicsGetCurrentContext()
+        context?.translateBy(x: 0, y: self.size.height)
+        context?.scaleBy(x: 1.0, y: -1.0)
+        context?.setBlendMode(CGBlendMode.normal)
+        
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height) as CGRect
+        context?.clip(to: rect, mask: self.cgImage!)
+        tintColor.setFill()
+        context?.fill(rect)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
+    public class func createImageWithColor(_ color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+        UIGraphicsBeginImageContext(rect.size);
+        let context = UIGraphicsGetCurrentContext()
+        
+        context?.setFillColor(color.cgColor)
+        context?.fill(rect)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+    }
 
-		let context = UIGraphicsGetCurrentContext()
-		context?.translateBy(x: 0, y: self.size.height)
-		context?.scaleBy(x: 1.0, y: -1.0);
-		context?.setBlendMode(CGBlendMode.normal)
+    ///EZSE: Returns an empty image
+    public class func blankImage() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0.0)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
 
-		let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height) as CGRect
-		context?.clip(to: rect, mask: self.cgImage!)
-		tintColor.setFill()
-		context?.fill(rect)
-
-		let newImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
-		UIGraphicsEndImageContext()
-
-		return newImage
-	}
-
-	/// EZSE: Returns the image associated with the URL
-	public convenience init?(urlString: String) {
-		guard let url = URL(string: urlString) else {
-			self.init(data: Data())
-			return
-		}
-		guard let data = try? Data(contentsOf: url) else {
-			print("EZSE: No image in URL \(urlString)")
-			self.init(data: Data())
-			return
-		}
-		self.init(data: data)
-	}
-
-	/// EZSE: Returns an empty image //TODO: Add to readme
-	public class func blankImage() -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0.0)
-		let image = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-		return image!
-	}
-
-	class func createImageWithColor(_ color: UIColor) -> UIImage {
-		let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
-		UIGraphicsBeginImageContext(rect.size);
-		let context = UIGraphicsGetCurrentContext()
-
-		context?.setFillColor(color.cgColor)
-		context?.fill(rect)
-
-		let image = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-
-		return image!
-	}
 
 //	func maskInCircle() {
 //		let circle: UIBezierPath = UIBezierPath(ovalInRect: self.bounds)
