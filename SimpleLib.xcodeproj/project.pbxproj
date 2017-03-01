@@ -24,6 +24,7 @@
 		44BE95441D8A6916004FFDF4 /* BlockWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */; };
 		44E665501E65B9A000B6A02F /* readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 44E6654F1E65B9A000B6A02F /* readme.rtf */; };
 		44E665521E65BDB600B6A02F /* Ext_example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E665511E65BDB600B6A02F /* Ext_example.swift */; };
+		44E665541E6706EA00B6A02F /* EZSwiftFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E665531E6706EA00B6A02F /* EZSwiftFunctions.swift */; };
 		44F030F11E5C6C150059B587 /* Ext_UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */; };
 		44F030F51E5C6C250059B587 /* Ext_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F41E5C6C250059B587 /* Ext_UIButton.swift */; };
 		44F030F71E5C6D130059B587 /* Ext_DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */; };
@@ -112,6 +113,7 @@
 		44BE953D1D8A6916004FFDF4 /* BlockWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockWebView.swift; sourceTree = "<group>"; };
 		44E6654F1E65B9A000B6A02F /* readme.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = readme.rtf; sourceTree = "<group>"; };
 		44E665511E65BDB600B6A02F /* Ext_example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_example.swift; sourceTree = "<group>"; };
+		44E665531E6706EA00B6A02F /* EZSwiftFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZSwiftFunctions.swift; sourceTree = "<group>"; };
 		44F030F01E5C6C150059B587 /* Ext_UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIApplication.swift; sourceTree = "<group>"; };
 		44F030F41E5C6C250059B587 /* Ext_UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIButton.swift; sourceTree = "<group>"; };
 		44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_DispatchQueue.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				446885C81D940ACE004E76E7 /* Ext_UITextView.swift */,
 				44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */,
 				44E665511E65BDB600B6A02F /* Ext_example.swift */,
+				44E665531E6706EA00B6A02F /* EZSwiftFunctions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				44BE95411D8A6916004FFDF4 /* BlockPinch.swift in Sources */,
 				C20B84591D6BFD0A00C12286 /* Ext_UIStoryboard.swift in Sources */,
 				C20B84581D6BFD0A00C12286 /* Ext_UIScreen.swift in Sources */,
+				44E665541E6706EA00B6A02F /* EZSwiftFunctions.swift in Sources */,
 				C20B84471D6BFD0A00C12286 /* Rotatable.swift in Sources */,
 				C20B84951D6BFD2600C12286 /* DiskCache.swift in Sources */,
 				C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */,
