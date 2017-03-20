@@ -47,7 +47,6 @@
 		C20B845D1D6BFD0A00C12286 /* CornerAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B843D1D6BFD0A00C12286 /* CornerAnimatable.swift */; };
 		C20B845E1D6BFD0A00C12286 /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B843F1D6BFD0A00C12286 /* ConfigurationHelper.swift */; };
 		C20B845F1D6BFD0A00C12286 /* ConstraintsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84411D6BFD0A00C12286 /* ConstraintsHelper.swift */; };
-		C20B84601D6BFD0A00C12286 /* ScreenShotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84431D6BFD0A00C12286 /* ScreenShotHelper.swift */; };
 		C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84451D6BFD0A00C12286 /* SubviewsForEach.swift */; };
 		C20B846E1D6BFD1F00C12286 /* KMWeakObjectContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */; };
 		C20B846F1D6BFD1F00C12286 /* MethodSwizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */; };
@@ -129,7 +128,6 @@
 		C20B843D1D6BFD0A00C12286 /* CornerAnimatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerAnimatable.swift; sourceTree = "<group>"; };
 		C20B843F1D6BFD0A00C12286 /* ConfigurationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationHelper.swift; sourceTree = "<group>"; };
 		C20B84411D6BFD0A00C12286 /* ConstraintsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsHelper.swift; sourceTree = "<group>"; };
-		C20B84431D6BFD0A00C12286 /* ScreenShotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenShotHelper.swift; sourceTree = "<group>"; };
 		C20B84451D6BFD0A00C12286 /* SubviewsForEach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubviewsForEach.swift; sourceTree = "<group>"; };
 		C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMWeakObjectContainer.swift; sourceTree = "<group>"; };
 		C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSwizzling.swift; sourceTree = "<group>"; };
@@ -326,7 +324,6 @@
 				C20B843B1D6BFD0A00C12286 /* Animations */,
 				C20B843E1D6BFD0A00C12286 /* ConfigurationHelper */,
 				C20B84401D6BFD0A00C12286 /* Constraints Helpers */,
-				C20B84421D6BFD0A00C12286 /* ScreenShot */,
 				C20B84441D6BFD0A00C12286 /* SubviewsForEach */,
 			);
 			path = Helpers;
@@ -362,14 +359,6 @@
 				C20B84411D6BFD0A00C12286 /* ConstraintsHelper.swift */,
 			);
 			path = "Constraints Helpers";
-			sourceTree = "<group>";
-		};
-		C20B84421D6BFD0A00C12286 /* ScreenShot */ = {
-			isa = PBXGroup;
-			children = (
-				C20B84431D6BFD0A00C12286 /* ScreenShotHelper.swift */,
-			);
-			path = ScreenShot;
 			sourceTree = "<group>";
 		};
 		C20B84441D6BFD0A00C12286 /* SubviewsForEach */ = {
@@ -563,7 +552,6 @@
 				C27E81AA1E669B9D00308DCB /* Ext_Dictionary.swift in Sources */,
 				C27E81A81E669A4D00308DCB /* Ext_Array.swift in Sources */,
 				C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */,
-				C20B84601D6BFD0A00C12286 /* ScreenShotHelper.swift in Sources */,
 				C20B84511D6BFD0A00C12286 /* Ext_NSString.swift in Sources */,
 				C20B84461D6BFD0A00C12286 /* AnimationBarButton.swift in Sources */,
 				C20B84531D6BFD0A00C12286 /* Ext_UIColor.swift in Sources */,
