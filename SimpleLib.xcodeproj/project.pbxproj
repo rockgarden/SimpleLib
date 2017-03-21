@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		442254C41E5EE0CD00A62376 /* SimpleLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442254C31E5EE0CD00A62376 /* SimpleLibTests.swift */; };
 		442254C61E5EE0CD00A62376 /* SimpleLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20B84011D6BFCC600C12286 /* SimpleLib.framework */; };
+		443EB7441E80D00600C76EBF /* Ext_UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443EB7431E80D00600C76EBF /* Ext_UserDefaults.swift */; };
 		446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446885C81D940ACE004E76E7 /* Ext_UITextView.swift */; };
 		44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */; };
 		44A9C4751D96CD9400F09E6A /* ExpandableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */; };
@@ -98,6 +99,7 @@
 		442254C11E5EE0CD00A62376 /* SimpleLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		442254C31E5EE0CD00A62376 /* SimpleLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLibTests.swift; sourceTree = "<group>"; };
 		442254C51E5EE0CD00A62376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		443EB7431E80D00600C76EBF /* Ext_UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UserDefaults.swift; sourceTree = "<group>"; };
 		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
 		44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
 		44A9C4741D96CD9400F09E6A /* ExpandableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandableLabel.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				44F030F61E5C6D130059B587 /* Ext_DispatchQueue.swift */,
 				44E665511E65BDB600B6A02F /* Ext_example.swift */,
 				44E665531E6706EA00B6A02F /* EZSwiftFunctions.swift */,
+				443EB7431E80D00600C76EBF /* Ext_UserDefaults.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443EB7441E80D00600C76EBF /* Ext_UserDefaults.swift in Sources */,
 				C20B84A41D6BFD2600C12286 /* NavigationBarColorSource.swift in Sources */,
 				C20B849D1D6BFD2600C12286 /* Public_Func.swift in Sources */,
 				C20B84921D6BFD2600C12286 /* AnyCache.swift in Sources */,
