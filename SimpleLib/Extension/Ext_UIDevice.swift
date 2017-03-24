@@ -187,7 +187,7 @@ public extension UIDevice {
         var hw_machine = [CChar](repeating: 0, count: Int(size))
         sysctl(&name, 2, &hw_machine, &size, &name, 0)
         
-        let hardware: String = String.fromCString(hw_machine)!
+        let hardware = String(cString: hw_machine)
         return hardware
     }
     
