@@ -331,8 +331,7 @@ public struct ez {
         guard let requestURL = URL(string: url) else {
             assertionFailure("EZSwiftExtensions Error: Invalid URL")
             return
-        }
-        
+        }        
         URLSession.shared.dataTask(
             with: URLRequest(url: requestURL),
             completionHandler: { data, response, err in

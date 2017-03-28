@@ -71,7 +71,6 @@ extension UIImageView {
 
     /// EZSE: Initializes an UIImage from URL and adds into current ImageView
     public func image(url: String) {
-        
         ez.requestImage(url, success: { (image) -> Void in
             if let img = image {
                 DispatchQueue.main.async {
