@@ -80,14 +80,25 @@ let APP_DELEGATE: UIApplicationDelegate? = UIApplication.shared.delegate
 open class AppCommon {
     // MARK: - Class functions -
     
-    /**
-     Executes a block only if in DEBUG mode
-     
-     - parameter block: The block to be executed
-     */
+    /// Executes a block only if in DEBUG mode
+    ///
+    /// - Parameter block: The block to be executed
     open static func debugBlock(_ block: () -> ()) {
         #if DEBUG
             block()
+        #endif
+    }
+    
+    /// 打印DEBUG日志
+    ///
+    /// - Parameters:
+    ///   - message: T
+    ///   - file: 类名
+    ///   - method: 方法名
+    ///   - line: 行号
+    open func debugLog<T>(message: T, file: String = #file, method: String = #function, line: Int = #line) {
+        #if DEBUG
+            print("<\((file as NSString).lastPathComponent) : \(line)>, \(method)  \(message)")
         #endif
     }
     
