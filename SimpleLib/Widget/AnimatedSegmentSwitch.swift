@@ -173,7 +173,7 @@ import UIKit
         }
     }
     
-    func pan(_ gesture: UIPanGestureRecognizer!) {
+    @objc func pan(_ gesture: UIPanGestureRecognizer!) {
         if gesture.state == .began {
             selectedThumbViewFrame = thumbView.frame
         } else if gesture.state == .changed {
@@ -189,7 +189,7 @@ import UIKit
         }
     }
     
-    func tap(_ gesture: UIPanGestureRecognizer!) {
+    @objc func tap(_ gesture: UIPanGestureRecognizer!) {
         sendActions(for: .touchDown)
     }
     

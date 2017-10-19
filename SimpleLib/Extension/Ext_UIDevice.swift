@@ -390,7 +390,7 @@ public extension UIDevice {
      
      - returns: Return the sysyem info
      */
-    private static func getSysInfo(typeSpecifier: Int32) -> Int {
+    private static func getSysInfo(_ typeSpecifier: Int32) -> Int {
         var name: [Int32] = [CTL_HW, typeSpecifier]
         var size: Int = 2
         sysctl(&name, 2, nil, &size, &name, 0)

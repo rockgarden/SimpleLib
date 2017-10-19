@@ -123,8 +123,8 @@ extension BasePageCollectionCell {
         if isOpen == isOpened {
             /// 根据frontView大小设置shadowView的shadowPath
             let shadowHeight = itemSize.height - (open_front_yOffset + open_front_hOffset) * 2
-            shadowView?.getConstraint(.Width)?.constant = openWidth
-            shadowView?.getConstraint(.Height)?.constant = shadowHeight
+            shadowView?.getConstraint(.width)?.constant = openWidth
+            shadowView?.getConstraint(.height)?.constant = shadowHeight
             shadowView?.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: openWidth, height: shadowHeight), cornerRadius: 0).cgPath
             return
         }
@@ -167,14 +167,14 @@ extension BasePageCollectionCell {
      
      - returns: <#return value description#>
      */
-    private func createShadowViewOnView(view: UIView?) -> UIView? {
+    private func createShadowViewOnView(_ view: UIView?) -> UIView? {
         guard let view = view else { return nil }
         
         let shadow = Init(UIView(frame: .zero)) {
-            $0.backgroundColor = .clearColor()
+            $0.backgroundColor = .clear
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.layer.masksToBounds = false;
-            $0.layer.shadowColor = UIColor.blackColor().CGColor
+            $0.layer.shadowColor = UIColor.black.cgColor
             $0.layer.shadowRadius = 10
             $0.layer.shadowOpacity = 0.3
             $0.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -225,9 +225,9 @@ extension BasePageCollectionCell {
         
         // Opened = true 时重置 frontContainerView = backContainerView = size
         [frontContainerView, backContainerView].forEach {
-            let constraintWidth = $0?.getConstraint(.Width)
+            let constraintWidth = $0?.getConstraint(.width)
             constraintWidth?.constant = size.width
-            let constraintHeight = $0?.getConstraint(.Height)
+            let constraintHeight = $0?.getConstraint(.height)
             constraintHeight?.constant = size.height
         }
     }
@@ -237,7 +237,7 @@ extension BasePageCollectionCell {
 
 extension BasePageCollectionCell {
     
-    private func highlightedImageFalseOnView(view: UIView) {
+    private func highlightedImageFalseOnView(_ view: UIView) {
         for item in view.subviews {
             if case let imageView as UIImageView = item {
                 imageView.isHighlighted = false
@@ -302,7 +302,7 @@ extension BasePageCollectionCell {
      
      - parameter coder: NSCoder
      */
-    private func configureOutletFromDecoder(coder: NSCoder) {
+    private func configureOutletFromDecoder(_ coder: NSCoder) {
         if case let shadowView as UIView = coder.decodeObject(forKey: Constants.shadowView) {
             self.shadowView = shadowView
         }

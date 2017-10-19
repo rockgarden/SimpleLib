@@ -204,7 +204,7 @@ public extension NSString {
     public func heightForWidth(width: CGFloat, font: UIFont) -> CGFloat {
         var size = CGSize.zero
         if self.length > 0 {
-            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
+            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil)
             size = CGSize(width:frame.size.width, height:frame.size.height + 1)
         }
         return size.height

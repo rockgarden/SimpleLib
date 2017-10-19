@@ -41,14 +41,14 @@ public class ICanHas {
     
     static var isHasingPush = false
     static var isHasingLocation = false
-    static var isHasingCapture:[String:Bool] = [AVMediaTypeAudio:false,AVMediaTypeClosedCaption:false,AVMediaTypeMetadata:false,AVMediaTypeMuxed:false,AVMediaTypeSubtitle:false,AVMediaTypeText:false,AVMediaTypeTimecode:false,AVMediaTypeVideo:false]
+    static var isHasingCapture:[String:Bool] = [AVMediaType.audio.rawValue:false,AVMediaType.closedCaption.rawValue:false,AVMediaType.metadata.rawValue:false,AVMediaType.muxed.rawValue:false,AVMediaType.subtitle.rawValue:false,AVMediaType.text.rawValue:false,AVMediaType.timecode.rawValue:false,AVMediaType.video.rawValue:false]
     static var isHasingPhotos = false
     static var isHasingContacts = false
     static var isHasingCalendar:[EKEntityType:Bool] = [EKEntityType.event:false,EKEntityType.reminder:false]
     
     static var hasPushClosures:[(_ authorized:Bool)->Void] = []
     static var hasLocationClosures:[(_ authorized:Bool, _ status:CLAuthorizationStatus, _ denied:Bool)->Void] = []
-    static var hasCaptureClosures:[String:[(_ authorized:Bool,_ status:AVAuthorizationStatus)->Void]] = [AVMediaTypeAudio:[],AVMediaTypeClosedCaption:[],AVMediaTypeMetadata:[],AVMediaTypeMuxed:[],AVMediaTypeSubtitle:[],AVMediaTypeText:[],AVMediaTypeTimecode:[],AVMediaTypeVideo:[]]
+    static var hasCaptureClosures:[String:[(_ authorized:Bool,_ status:AVAuthorizationStatus)->Void]] = [AVMediaType.audio.rawValue:[],AVMediaType.closedCaption.rawValue:[],AVMediaType.metadata.rawValue:[],AVMediaType.muxed.rawValue:[],AVMediaType.subtitle.rawValue:[],AVMediaType.text.rawValue:[],AVMediaType.timecode.rawValue:[],AVMediaType.video.rawValue:[]]
     static var hasPhotosClosures:[(_ authorized:Bool,_ status:PHAuthorizationStatus)->Void] = []
     static var hasContactsClosures:[(_ authorized:Bool,_ status:ABAuthorizationStatus,_ error:CFError?)->Void] = []
     static var hasCalendarClosures:[EKEntityType:[(_ authorized:Bool,_ error:NSError?)->Void]] = [EKEntityType.event:[],EKEntityType.reminder:[]]
@@ -192,15 +192,15 @@ public class ICanHas {
         
     }
     
-    public class func CaptureAuthorizationStatus(type:String = AVMediaTypeVideo)->AVAuthorizationStatus {
-        return AVCaptureDevice.authorizationStatus(forMediaType: type)
+    public class func CaptureAuthorizationStatus(type:String = AVMediaType.video)->AVAuthorizationStatus {
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type))
     }
     
-    public class func CaptureAuthorization(type:String = AVMediaTypeVideo)->Bool {
-        return AVCaptureDevice.authorizationStatus(forMediaType: type) == .authorized
+    public class func CaptureAuthorization(type:String = AVMediaType.video)->Bool {
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type)) == .authorized
     }
     
-    public class func Capture(type:String = AVMediaTypeVideo,closure:@escaping (_ authorized:Bool,_ status:AVAuthorizationStatus)->Void) {
+    public class func Capture(type:String = AVMediaType.video,closure:@escaping (_ authorized:Bool,_ status:AVAuthorizationStatus)->Void) {
         onMain {
             
             ICanHas.hasCaptureClosures[type]!.append(closure)
@@ -219,7 +219,7 @@ public class ICanHas {
                     ICanHas.isHasingCapture[type] = false
                 }
                 
-                let currentStatus = AVCaptureDevice.authorizationStatus(forMediaType: type)
+                let currentStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type))
                 
                 switch currentStatus {
                 case .denied:
@@ -229,10 +229,10 @@ public class ICanHas {
                 case .authorized:
                     done(true,currentStatus)
                 case .notDetermined:
-                    AVCaptureDevice.requestAccess(forMediaType: type, completionHandler: { (authorized:Bool) -> Void in
+                    AVCaptureDevice.requestAccess(for: AVMediaType(rawValue: type), completionHandler: { (authorized:Bool) -> Void in
                         
                         ICanHas.onMain {
-                            done(authorized,AVCaptureDevice.authorizationStatus(forMediaType: type))
+                            done(authorized,AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type)))
                         }
                         
                         

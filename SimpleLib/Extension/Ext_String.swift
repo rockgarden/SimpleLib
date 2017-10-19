@@ -157,7 +157,7 @@ public extension String {
     public subscript(integerRange: Range<Int>) -> String { //等同于 public subscript(range: Range<Int>)
         let start = index(startIndex, offsetBy: integerRange.lowerBound)
         let end = index(startIndex, offsetBy: integerRange.upperBound)
-        return self[start..<end]
+        return String(self[start..<end])
     }
 
     /**
@@ -446,7 +446,7 @@ public extension String {
     public func heightForWidth(width: CGFloat, font: UIFont) -> CGFloat {
         var size = CGSize.zero
         if self.length > 0 {
-            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName : font], context: nil)
+            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil)
             size = CGSize(width:frame.size.width, height:frame.size.height + 1)
         }
         return size.height
@@ -748,7 +748,7 @@ public extension String {
 
     ///EZSE: Returns bold NSAttributedString
     public func bold() -> NSAttributedString {
-        let boldString = NSMutableAttributedString(string: self, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)])
+        let boldString = NSMutableAttributedString(string: self, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)])
         return boldString
     }
 
@@ -756,7 +756,7 @@ public extension String {
 
     ///EZSE: Returns underlined NSAttributedString
     public func underline() -> NSAttributedString {
-        let underlineString = NSAttributedString(string: self, attributes: [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])
+        let underlineString = NSAttributedString(string: self, attributes: [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue])
         return underlineString
     }
 
@@ -764,7 +764,7 @@ public extension String {
 
     ///EZSE: Returns italic NSAttributedString
     public func italic() -> NSAttributedString {
-        let italicString = NSMutableAttributedString(string: self, attributes: [NSFontAttributeName: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)])
+        let italicString = NSMutableAttributedString(string: self, attributes: [NSAttributedStringKey.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)])
         return italicString
     }
 
@@ -774,11 +774,11 @@ public extension String {
 
     ///EZSE: Returns hight of rendered string
     func height(_ width: CGFloat, font: UIFont, lineBreakMode: NSLineBreakMode?) -> CGFloat {
-        var attrib: [String: AnyObject] = [NSFontAttributeName: font]
+        var attrib: [String: AnyObject] = [NSAttributedStringKey.font.rawValue: font]
         if lineBreakMode != nil {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = lineBreakMode!
-            attrib.updateValue(paragraphStyle, forKey: NSParagraphStyleAttributeName)
+            attrib.updateValue(paragraphStyle, forKey: NSAttributedStringKey.paragraphStyle.rawValue)
         }
         let size = CGSize(width: width, height: CGFloat(DBL_MAX))
         return ceil((self as NSString).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes:attrib, context: nil).height)
@@ -788,7 +788,7 @@ public extension String {
 
     ///EZSE: Returns NSAttributedString
     public func color(_ color: UIColor) -> NSAttributedString {
-        let colorString = NSMutableAttributedString(string: self, attributes: [NSForegroundColorAttributeName: color])
+        let colorString = NSMutableAttributedString(string: self, attributes: [NSAttributedStringKey.foregroundColor: color])
         return colorString
     }
 
@@ -807,7 +807,7 @@ public extension String {
         }
         let attrText = NSMutableAttributedString(string: self)
         for range in ranges {
-            attrText.addAttribute(NSForegroundColorAttributeName, value: color, range: range)
+            attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: color, range: range)
         }
         return attrText
     }

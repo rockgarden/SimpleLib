@@ -50,12 +50,8 @@ extension UIViewController {
 		}
 	}
 
-	/**
-	 方法交叉发生在 initialize 类方法调用时
-
-	 - returns: <#return value description#>
-	 */
-	override open class func initialize() { // 也可用 override public static func initialize()
+    /// initialize 类方法不能在swift中调用
+    open class func initializeOC() { // 也可用 override public static func initialize()
 
         // make sure this isn't a subclass
         if self !== UIViewController.self {
@@ -78,7 +74,7 @@ extension UIViewController {
         objc_sync_exit(self)
 	}
 
-	func interactiveViewWillAppear(_ animated: Bool) {
+	@objc func interactiveViewWillAppear(_ animated: Bool) {
 		interactiveViewWillAppear(animated)
 		if let name = self.descriptiveName {
 			debugPrint("viewWillAppear: \(name)")

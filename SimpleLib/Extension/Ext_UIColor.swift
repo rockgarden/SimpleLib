@@ -7,9 +7,15 @@
 //  Copyright © 2016年 Rockgarden. All rights reserved.
 //
 
-import UIKit
+#if os(iOS)
+    import UIKit
+    typealias Color = UIColor
+#else
+    import Cocoa
+    typealias Color = NSColor
+#endif
 
-extension UIColor {
+extension Color {
     /// EZSE: init method with RGB values from 0 to 255, instead of 0 to 1. With alpha(default:1)
     public convenience init(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat = 1) {
         self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a)
@@ -25,6 +31,17 @@ extension UIColor {
     
     /// EZSE: init method with hex string and alpha(default: 1)
     public convenience init?(hexString: String, alpha: CGFloat = 1.0) {
+
+        var cString = hexString.trimmingCharacters(in: .whitespacesAndNewlines as CharacterSet).uppercased()
+
+        // TODO: substring is old
+        if (cString.hasPrefix("#")) {
+            cString = cString.substring(from: cString.characters.index(cString.startIndex, offsetBy: 1))
+        }
+
+        //var hex: UInt32 = 0
+        //Scanner(string: cString).scanHexInt32(&hex)
+
         var formatted = hexString.replacingOccurrences(of: "0x", with: "")
         formatted = formatted.replacingOccurrences(of: "#", with: "")
         if let hex = Int(formatted, radix: 16) {
@@ -82,6 +99,10 @@ extension UIColor {
         return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: alpha)
     }
     
+}
+
+extension Color {
+
 }
 
 private extension CGFloat {

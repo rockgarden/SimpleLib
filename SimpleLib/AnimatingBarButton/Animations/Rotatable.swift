@@ -31,7 +31,7 @@ extension Rotatable {
  }
   
   private func animationFrom(_ from: Double, to: Double, key: String, duration: Double) -> CABasicAnimation {
-    return Init(value: CABasicAnimation(keyPath: key)) {
+    return Init(CABasicAnimation(keyPath: key)) {
       $0.duration            = duration
       $0.fromValue           = from
       $0.toValue             = to

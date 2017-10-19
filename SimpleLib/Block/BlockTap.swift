@@ -33,7 +33,7 @@ public class BlockTap: UITapGestureRecognizer {
             self.addTarget(self, action: #selector(BlockTap.didTap(_:)))
     }
 
-    public func didTap (_ tap: UITapGestureRecognizer) {
+    @objc public func didTap (_ tap: UITapGestureRecognizer) {
         tapAction? (tap)
     }
 }

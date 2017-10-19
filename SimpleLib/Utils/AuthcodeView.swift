@@ -37,7 +37,7 @@ class AuthcodeView: UIView {
 		self.backgroundColor = kRandomColor();
 
 		// 根据要显示的验证码字符串，根据长度，计算每个字符串显示的位置
-		let cSize: CGSize = "A".size(attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 20)])
+		let cSize: CGSize = "A".size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
 
 		let leg = CGFloat((self.authCodeStr?.length)!)
 		let width = rect.size.width / leg - cSize.width
@@ -62,7 +62,7 @@ class AuthcodeView: UIView {
 			point = CGPoint(x: pX, y: pY)
 			let c: unichar = (self.authCodeStr?.character(at: i))!
 			let textC: String = String(describing: UnicodeScalar(c))
-			textC.draw(at: point, withAttributes: [NSFontAttributeName: kFontSize])
+			textC.draw(at: point, withAttributes: [NSAttributedStringKey.font: kFontSize])
 		}
 
 		// 调用drawRect：之前，系统会向栈中压入一个CGContextRef，调用UIGraphicsGetCurrentContext()会取栈顶的CGContextRef

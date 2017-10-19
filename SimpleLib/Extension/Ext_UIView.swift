@@ -214,7 +214,7 @@ public extension UIView {
     ///
     /// - Parameter attributes: <#attributes description#>
     /// - Returns: <#return value description#>
-    func getConstraint(attributes: NSLayoutAttribute) -> NSLayoutConstraint? {
+    func getConstraint(_ attributes: NSLayoutAttribute) -> NSLayoutConstraint? {
         return constraints.filter {
             if $0.firstAttribute == attributes && $0.secondItem == nil {
                 return true

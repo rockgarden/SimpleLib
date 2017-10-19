@@ -21,7 +21,7 @@ public class BlockPan: UIPanGestureRecognizer {
         self.addTarget(self, action: #selector(BlockPan.didPan(_:)))
     }
 
-    public func didPan (_ pan: UIPanGestureRecognizer) {
+    @objc public func didPan (_ pan: UIPanGestureRecognizer) {
         panAction? (pan)
     }
 }

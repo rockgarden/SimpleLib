@@ -280,7 +280,7 @@ open class FoldingCell: UITableViewCell {
      - parameter animated:   Specify true if you want to animate the change in visibility or false if you want immediately.
      - parameter completion: A block object to be executed when the animation sequence ends.
      */
-    open func selectedAnimation(_ isSelected: Bool, animated: Bool, completion: ((Void) -> Void)?) {
+    open func selectedAnimation(_ isSelected: Bool, animated: Bool, completion: (() -> Void)?) {
 
         if isSelected {
 
@@ -322,7 +322,7 @@ open class FoldingCell: UITableViewCell {
         return durations
     }
 
-    func openAnimation(_ completion: ((Void) -> Void)?) {
+    func openAnimation(_ completion: (() -> Void)?) {
 
         removeImageItemsFromAnimationView()
         addImageItemsToAnimationView()
@@ -373,7 +373,7 @@ open class FoldingCell: UITableViewCell {
         })
     }
 
-    func closeAnimation(_ completion: ((Void) -> Void)?) {
+    func closeAnimation(_ completion: (() -> Void)?) {
 
         removeImageItemsFromAnimationView()
         addImageItemsToAnimationView()

@@ -165,7 +165,7 @@ extension TransitionDriver {
     self.leftCell  = nil
     self.rightCell = nil
 
-    if let leftCell = collectionView.cellForItemAtIndexPath(NSIndexPath(forRow: currentIndex - 1, inSection: 0)) {
+    if let leftCell = collectionView.cellForItemAtIndexPath(IndexPath(forRow: currentIndex - 1, inSection: 0)) {
       let step = leftCell.frame.size.width + (leftCell.frame.origin.x - collectionView.contentOffset.x)
       UIView.animateWithDuration(0.2, animations: {
         leftCell.center.x -= step
@@ -174,7 +174,7 @@ extension TransitionDriver {
       self.step     = step
     }
     
-    if let rightCell = collectionView.cellForItemAtIndexPath(NSIndexPath(forRow: currentIndex + 1, inSection: 0)) {
+    if let rightCell = collectionView.cellForItemAtIndexPath(NSIndexPath(forRow: currentIndex + 1, inSection: 0) as IndexPath) {
       let step = collectionView.frame.size.width - (rightCell.frame.origin.x - collectionView.contentOffset.x)
       UIView.animateWithDuration(0.2, animations: {
         rightCell.center.x += step
@@ -191,12 +191,12 @@ extension TransitionDriver {
   
   private func openFrontViewConfigureConstraints(cell: BasePageCollectionCell, height: CGFloat, insets: CGFloat) {
     
-    if let heightConstraint = cell.frontContainerView.getConstraint(.Height) {
+    if let heightConstraint = cell.frontContainerView.getConstraint(.height) {
       frontViewFrame.size.height = heightConstraint.constant
       heightConstraint.constant  = height
     }
     
-    if let widthConstraint = cell.frontContainerView.getConstraint(.Width) {
+    if let widthConstraint = cell.frontContainerView.getConstraint(.width) {
       frontViewFrame.size.width = widthConstraint.constant
       widthConstraint.constant  = view.bounds.size.width
     }
@@ -207,12 +207,12 @@ extension TransitionDriver {
   
   private func openBackViewConfigureConstraints(cell: BasePageCollectionCell, height: CGFloat, insets: CGFloat) {
     
-    if let heightConstraint = cell.backContainerView.getConstraint(.Height) {
+    if let heightConstraint = cell.backContainerView.getConstraint(.height) {
       backViewFrame.size.height = heightConstraint.constant
       heightConstraint.constant = view.bounds.size.height - height
     }
     
-    if let widthConstraint = cell.backContainerView.getConstraint(.Width) {
+    if let widthConstraint = cell.backContainerView.getConstraint(.width) {
       backViewFrame.size.width = widthConstraint.constant
       widthConstraint.constant = view.bounds.size.width
     }

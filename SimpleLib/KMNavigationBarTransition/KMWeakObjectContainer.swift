@@ -13,7 +13,7 @@ class KMWeakObjectContainer: NSObject {
     weak var object: AnyObject?
     let wrapper = KMWeakObjectContainer()
 
-    func km_objc_setAssociatedWeakObject(container: AnyObject, _ key: UnsafePointer<Void>, _ value: AnyObject) {
+    func km_objc_setAssociatedWeakObject(container: AnyObject, _ key: UnsafeRawPointer, _ value: AnyObject) {
         self.object = value
         objc_setAssociatedObject(container, key, wrapper, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
