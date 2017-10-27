@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		442254C41E5EE0CD00A62376 /* SimpleLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442254C31E5EE0CD00A62376 /* SimpleLibTests.swift */; };
-		442254C61E5EE0CD00A62376 /* SimpleLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20B84011D6BFCC600C12286 /* SimpleLib.framework */; };
 		443EB7441E80D00600C76EBF /* Ext_UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443EB7431E80D00600C76EBF /* Ext_UserDefaults.swift */; };
 		446885C91D940ACE004E76E7 /* Ext_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446885C81D940ACE004E76E7 /* Ext_UITextView.swift */; };
 		44A9C4731D96CC8700F09E6A /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */; };
@@ -85,20 +83,7 @@
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		442254C71E5EE0CD00A62376 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C20B83F81D6BFCC600C12286 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C20B84001D6BFCC600C12286;
-			remoteInfo = SimpleLib;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		442254C11E5EE0CD00A62376 /* SimpleLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		442254C31E5EE0CD00A62376 /* SimpleLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLibTests.swift; sourceTree = "<group>"; };
-		442254C51E5EE0CD00A62376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		443EB7431E80D00600C76EBF /* Ext_UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UserDefaults.swift; sourceTree = "<group>"; };
 		446885C81D940ACE004E76E7 /* Ext_UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITextView.swift; sourceTree = "<group>"; };
 		44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
@@ -178,14 +163,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		442254BE1E5EE0CD00A62376 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				442254C61E5EE0CD00A62376 /* SimpleLib.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C20B83FD1D6BFCC600C12286 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,15 +173,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		442254C21E5EE0CD00A62376 /* SimpleLibTests */ = {
-			isa = PBXGroup;
-			children = (
-				442254C31E5EE0CD00A62376 /* SimpleLibTests.swift */,
-				442254C51E5EE0CD00A62376 /* Info.plist */,
-			);
-			path = SimpleLibTests;
-			sourceTree = "<group>";
-		};
 		44BE95361D8A6916004FFDF4 /* Block */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,7 +192,6 @@
 			children = (
 				44E6654F1E65B9A000B6A02F /* readme.rtf */,
 				C20B84031D6BFCC700C12286 /* SimpleLib */,
-				442254C21E5EE0CD00A62376 /* SimpleLibTests */,
 				C20B84021D6BFCC600C12286 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -233,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				C20B84011D6BFCC600C12286 /* SimpleLib.framework */,
-				442254C11E5EE0CD00A62376 /* SimpleLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -495,24 +461,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		442254C01E5EE0CD00A62376 /* SimpleLibTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 442254CB1E5EE0CD00A62376 /* Build configuration list for PBXNativeTarget "SimpleLibTests" */;
-			buildPhases = (
-				442254BD1E5EE0CD00A62376 /* Sources */,
-				442254BE1E5EE0CD00A62376 /* Frameworks */,
-				442254BF1E5EE0CD00A62376 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				442254C81E5EE0CD00A62376 /* PBXTargetDependency */,
-			);
-			name = SimpleLibTests;
-			productName = SimpleLibTests;
-			productReference = 442254C11E5EE0CD00A62376 /* SimpleLibTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		C20B84001D6BFCC600C12286 /* SimpleLib */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C20B84151D6BFCC700C12286 /* Build configuration list for PBXNativeTarget "SimpleLib" */;
@@ -541,12 +489,6 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = rockgarden;
 				TargetAttributes = {
-					442254C01E5EE0CD00A62376 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = W3MH7MTTSB;
-						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
-					};
 					C20B84001D6BFCC600C12286 = {
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 0900;
@@ -566,19 +508,11 @@
 			projectRoot = "";
 			targets = (
 				C20B84001D6BFCC600C12286 /* SimpleLib */,
-				442254C01E5EE0CD00A62376 /* SimpleLibTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		442254BF1E5EE0CD00A62376 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C20B83FF1D6BFCC600C12286 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -590,14 +524,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		442254BD1E5EE0CD00A62376 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				442254C41E5EE0CD00A62376 /* SimpleLibTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C20B83FC1D6BFCC600C12286 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -679,46 +605,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		442254C81E5EE0CD00A62376 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C20B84001D6BFCC600C12286 /* SimpleLib */;
-			targetProxy = 442254C71E5EE0CD00A62376 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		442254C91E5EE0CD00A62376 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = W3MH7MTTSB;
-				INFOPLIST_FILE = SimpleLibTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.-rockgarden.SimpleLibTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		442254CA1E5EE0CD00A62376 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = W3MH7MTTSB;
-				INFOPLIST_FILE = SimpleLibTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.-rockgarden.SimpleLibTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
 		C20B84131D6BFCC700C12286 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -842,7 +729,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -862,7 +749,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockgarden.SimpleLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -870,15 +757,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		442254CB1E5EE0CD00A62376 /* Build configuration list for PBXNativeTarget "SimpleLibTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				442254C91E5EE0CD00A62376 /* Debug */,
-				442254CA1E5EE0CD00A62376 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C20B83FB1D6BFCC600C12286 /* Build configuration list for PBXProject "SimpleLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

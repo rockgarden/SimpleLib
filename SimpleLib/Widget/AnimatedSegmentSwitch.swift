@@ -59,7 +59,7 @@ import UIKit
         }
     }
     
-    @IBInspectable public var cornerRadius: CGFloat! {
+    public var cornerRadius: CGFloat! {
         didSet {
             layer.cornerRadius = cornerRadius
         }
@@ -71,7 +71,7 @@ import UIKit
         }
     }
     
-    @IBInspectable public var thumbCornerRadius: CGFloat! {
+    public var thumbCornerRadius: CGFloat! {
         didSet {
             thumbView.layer.cornerRadius = thumbCornerRadius
         }

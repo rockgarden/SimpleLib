@@ -88,6 +88,31 @@ extension UIViewController {
 	func km_containerViewBackgroundColor() -> UIColor {
 		return UIColor.white
 	}
+    
+    /// 检查UIViewController有否释放
+    ///
+    /// - Parameter delay:
+    public func checkDeallocation(afterDelay delay: TimeInterval = 2.0) {
+        let rvc = rootParentViewController
+
+        if isMovingFromParentViewController || rvc.isBeingDismissed {
+            let disappearanceSource: String = isMovingFromParentViewController ? "removed from its                     parent" : "dismissed"
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: { [weak self] in
+                assert(self == nil, "\(type(of: self)) not deallocated after being \(disappearanceSource)")
+            })
+        }
+    }
+    
+    private var rootParentViewController: UIViewController {
+        var root = self
+        
+        while let parent = root.parent {
+            root = parent
+        }
+        
+        return root
+    }
 
 }
 

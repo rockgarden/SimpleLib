@@ -224,10 +224,10 @@ extension TransitionDriver {
   private func closeBackViewConfigurationConstraints(cell: BasePageCollectionCell?) {
     guard let cell = cell else { return }
     
-    let heightConstraint       = cell.backContainerView.getConstraint(.Height)
+    let heightConstraint       = cell.backContainerView.getConstraint(.height)
     heightConstraint?.constant = backViewFrame.size.height
 
-    let widthConstraint       = cell.backContainerView.getConstraint(.Width)
+    let widthConstraint       = cell.backContainerView.getConstraint(.width)
     widthConstraint?.constant = backViewFrame.size.width
 
     cell.backConstraintY.constant = backViewFrame.origin.y
@@ -236,11 +236,11 @@ extension TransitionDriver {
   private func closeFrontViewConfigurationConstraints(cell: BasePageCollectionCell?) {
     guard let cell = cell else { return }
     
-    if let heightConstraint = cell.frontContainerView.getConstraint(.Height) {
+    if let heightConstraint = cell.frontContainerView.getConstraint(.height) {
       heightConstraint.constant = frontViewFrame.size.height
     }
     
-    if let widthConstraint = cell.frontContainerView.getConstraint(.Width) {
+    if let widthConstraint = cell.frontContainerView.getConstraint(.width) {
       widthConstraint.constant = frontViewFrame.size.width
     }
     
@@ -250,7 +250,7 @@ extension TransitionDriver {
   private func configureCellBeforeClose(cell: BasePageCollectionCell, offset: CGFloat) {
     cell.frontConstraintY.constant -= offset
     cell.backConstraintY.constant  -= offset / 2.0
-    if let heightConstraint = cell.backContainerView.getConstraint(.Height) {
+    if let heightConstraint = cell.backContainerView.getConstraint(.height) {
       heightConstraint.constant += offset
     }
     cell.contentView.layoutIfNeeded()
