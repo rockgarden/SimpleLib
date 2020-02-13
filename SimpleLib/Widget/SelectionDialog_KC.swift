@@ -16,7 +16,7 @@ import UIKit
 
 /// 包含列表选择的对话框
 open class SelectionDialog_KC: UIView {
-    open var items: [KCSelectionDialogItem] = []
+    open var items: [SelectionDialogItem_KC] = []
     
     open var titleHeight: CGFloat = 40
     open var buttonHeight: CGFloat = 40
@@ -94,26 +94,26 @@ open class SelectionDialog_KC: UIView {
     }
     
     open func addItem(item itemTitle: String) {
-        let item = KCSelectionDialogItem(item: itemTitle)
+        let item = SelectionDialogItem_KC(item: itemTitle)
         items.append(item)
     }
     
     open func addItem(item itemTitle: String, icon: UIImage) {
-        let item = KCSelectionDialogItem(item: itemTitle, icon: icon)
+        let item = SelectionDialogItem_KC(item: itemTitle, icon: icon)
         items.append(item)
     }
     
     open func addItem(item itemTitle: String, didTapHandler: @escaping (() -> Void)) {
-        let item = KCSelectionDialogItem(item: itemTitle, didTapHandler: didTapHandler)
+        let item = SelectionDialogItem_KC(item: itemTitle, didTapHandler: didTapHandler)
         items.append(item)
     }
     
     open func addItem(item itemTitle: String, icon: UIImage, didTapHandler: @escaping (() -> Void)) {
-        let item = KCSelectionDialogItem(item: itemTitle, icon: icon, didTapHandler: didTapHandler)
+        let item = SelectionDialogItem_KC(item: itemTitle, icon: icon, didTapHandler: didTapHandler)
         items.append(item)
     }
     
-    open func addItem(_ item: KCSelectionDialogItem) {
+    open func addItem(_ item: SelectionDialogItem_KC) {
         items.append(item)
     }
     
@@ -157,7 +157,7 @@ open class SelectionDialog_KC: UIView {
             itemTitleLabel.textColor = UIColor.black
             itemButton.addSubview(itemTitleLabel)
             itemButton.setBackgroundImage(createImageWithColor(UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)), for: .highlighted)
-            itemButton.addTarget(item, action: #selector(KCSelectionDialogItem.handlerTap), for: .touchUpInside)
+            itemButton.addTarget(item, action: #selector(SelectionDialogItem_KC.handlerTap), for: .touchUpInside)
             
             if item.icon != nil {
                 itemTitleLabel.frame.origin.x = 34 + itemPadding*2

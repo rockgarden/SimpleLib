@@ -1,5 +1,5 @@
 //
-//  KCSelectionDialogItem.swift
+//  SelectionDialogItem_KC.swift
 //  Sample
 //
 //  Created by LeeSunhyoup on 2015. 9. 29..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class KCSelectionDialogItem: NSObject {
+public class SelectionDialogItem_KC: NSObject {
     
     var icon: UIImage?
     var itemTitle: String

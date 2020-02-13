@@ -76,11 +76,11 @@
 		C20B849E1D6BFD2600C12286 /* AnimatedSegmentSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84891D6BFD2600C12286 /* AnimatedSegmentSwitch.swift */; };
 		C20B849F1D6BFD2600C12286 /* FoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848A1D6BFD2600C12286 /* FoldingCell.swift */; };
 		C20B84A01D6BFD2600C12286 /* JTSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848B1D6BFD2600C12286 /* JTSplashView.swift */; };
-		C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */; };
 		C20B84A31D6BFD2600C12286 /* KDInteractiveNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */; };
 		C20B84A41D6BFD2600C12286 /* NavigationBarColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */; };
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
-		C2DB528723F54097006D21DB /* KCSelectionDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB528623F54097006D21DB /* KCSelectionDialog.swift */; };
+		C2DB528723F54097006D21DB /* SelectionDialog_KC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB528623F54097006D21DB /* SelectionDialog_KC.swift */; };
+		C2DB528923F54609006D21DB /* KCSelectionDialogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB528823F54609006D21DB /* KCSelectionDialogItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,11 +155,11 @@
 		C20B84891D6BFD2600C12286 /* AnimatedSegmentSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedSegmentSwitch.swift; sourceTree = "<group>"; };
 		C20B848A1D6BFD2600C12286 /* FoldingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldingCell.swift; sourceTree = "<group>"; };
 		C20B848B1D6BFD2600C12286 /* JTSplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JTSplashView.swift; sourceTree = "<group>"; };
-		C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialogItem.swift; sourceTree = "<group>"; };
 		C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDInteractiveNavigationController.swift; sourceTree = "<group>"; };
 		C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarColorSource.swift; sourceTree = "<group>"; };
 		C22758B21D6C157D008C1F18 /* AppCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommon.swift; sourceTree = "<group>"; };
-		C2DB528623F54097006D21DB /* KCSelectionDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialog.swift; sourceTree = "<group>"; };
+		C2DB528623F54097006D21DB /* SelectionDialog_KC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionDialog_KC.swift; sourceTree = "<group>"; };
+		C2DB528823F54609006D21DB /* KCSelectionDialogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialogItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -433,11 +433,11 @@
 		C20B84881D6BFD2600C12286 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
+				C2DB528823F54609006D21DB /* KCSelectionDialogItem.swift */,
 				C20B84891D6BFD2600C12286 /* AnimatedSegmentSwitch.swift */,
 				C20B848A1D6BFD2600C12286 /* FoldingCell.swift */,
 				C20B848B1D6BFD2600C12286 /* JTSplashView.swift */,
-				C2DB528623F54097006D21DB /* KCSelectionDialog.swift */,
-				C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */,
+				C2DB528623F54097006D21DB /* SelectionDialog_KC.swift */,
 				C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */,
 				C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */,
 				44A9C4721D96CC8700F09E6A /* KDEDateLabel.swift */,
@@ -551,7 +551,7 @@
 				C20B84991D6BFD2600C12286 /* ICanHas.swift in Sources */,
 				44BE95401D8A6916004FFDF4 /* BlockPan.swift in Sources */,
 				C20B84961D6BFD2600C12286 /* MemoryCache.swift in Sources */,
-				C2DB528723F54097006D21DB /* KCSelectionDialog.swift in Sources */,
+				C2DB528723F54097006D21DB /* SelectionDialog_KC.swift in Sources */,
 				C20B84521D6BFD0A00C12286 /* Ext_String.swift in Sources */,
 				44F030F11E5C6C150059B587 /* Ext_UIApplication.swift in Sources */,
 				C20B84971D6BFD2600C12286 /* MultiCache.swift in Sources */,
@@ -564,6 +564,7 @@
 				C20B844F1D6BFD0A00C12286 /* Ext_NSData.swift in Sources */,
 				44BE95431D8A6916004FFDF4 /* BlockTap.swift in Sources */,
 				C20B84561D6BFD0A00C12286 /* Ext_UINavigationBar.swift in Sources */,
+				C2DB528923F54609006D21DB /* KCSelectionDialogItem.swift in Sources */,
 				C20B849C1D6BFD2600C12286 /* PlistUtil.swift in Sources */,
 				C20B84941D6BFD2600C12286 /* Cache.swift in Sources */,
 				C20B849F1D6BFD2600C12286 /* FoldingCell.swift in Sources */,
@@ -582,7 +583,6 @@
 				44F030F51E5C6C250059B587 /* Ext_UIButton.swift in Sources */,
 				44BE95331D8A6104004FFDF4 /* Ext_UILabel.swift in Sources */,
 				44BE953E1D8A6916004FFDF4 /* BlockButton.swift in Sources */,
-				C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */,
 				C20B844B1D6BFD0A00C12286 /* PageCollectionView.swift in Sources */,
 				C20B846E1D6BFD1F00C12286 /* WeakObjectContainer.swift in Sources */,
 				C20B849B1D6BFD2600C12286 /* Location_Func.swift in Sources */,
