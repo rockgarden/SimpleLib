@@ -32,7 +32,7 @@ public class BlockSwipe: UISwipeGestureRecognizer {
             addTarget(self, action: #selector(BlockSwipe.didSwipe(_:)))
     }
 
-    public func didSwipe (_ swipe: UISwipeGestureRecognizer) {
+    @objc public func didSwipe (_ swipe: UISwipeGestureRecognizer) {
         swipeAction? (swipe)
     }
 }

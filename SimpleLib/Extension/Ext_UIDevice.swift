@@ -502,7 +502,7 @@ public extension UIDevice {
      - parameter uniqueIdentifier: The unique identifier to save or update if needed. (Must be NSData or NSString)
      - parameter block:            The execution block that know if the unique identifier is valid and has to be updated. You have to handle the case if it is valid and the update is needed or not
      */
-    public static func updateUniqueIdentifier(uniqueIdentifier: NSObject, block: (_ isValid: Bool, _ hasToUpdateUniqueIdentifier: Bool, _ oldUUID: String?) -> ()) {
+    static func updateUniqueIdentifier(uniqueIdentifier: NSObject, block: (_ isValid: Bool, _ hasToUpdateUniqueIdentifier: Bool, _ oldUUID: String?) -> ()) {
         var userUUID: String = ""
         var savedUUID: String? = nil
         var isValid = false, hasToUpdate = false

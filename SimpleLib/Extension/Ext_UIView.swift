@@ -6,7 +6,7 @@
 //
 //  Copyright (c) 2015 - 2016 Fabrizio Brancati. All rights reserved.
 //
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  Permission is hereby granted, free of charge, to any person @objc obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -38,11 +38,11 @@ extension UIView {
 		).instantiate(withOwner: nil, options: nil)[0] as? UIView
 	}
 	public class func fromNib(nibNameOrNil: String? = nil) -> Self {
-		return fromNib(nibNameOrNil, type: self)
+        return fromNib(nibNameOrNil: nibNameOrNil, type: self)
 	}
 
 	class func fromNib<T : UIView>() -> T {
-		return Bundle.main.loadNibNamed(String(describing: T), owner: nil, options: nil)![0] as! T
+        return Bundle.main.loadNibNamed(String(describing: T()), owner: nil, options: nil)![0] as! T
 	}
 
 	public class func fromNib<T : UIView>(nibNameOrNil: String? = nil, type: T.Type) -> T {
@@ -492,7 +492,7 @@ public extension UIView {
 	/**
 	 Adds a motion effect to the view
 	 */
-	public func applyMotionEffects() {
+    func applyMotionEffects() {
 		let horizontalEffect: UIInterpolatingMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
 		horizontalEffect.minimumRelativeValue = -10.0
 		horizontalEffect.maximumRelativeValue = 10.0
@@ -511,7 +511,7 @@ public extension UIView {
 	 - parameter duration:  Seconds of animation
 	 - parameter direction: Direction of the flip animation
 	 */
-	public func flipWithDuration(duration: TimeInterval, direction: UIViewAnimationFlipDirection) {
+    func flipWithDuration(duration: TimeInterval, direction: UIViewAnimationFlipDirection) {
 		var subtype: String = ""
 
 		switch (direction) {
@@ -547,7 +547,7 @@ public extension UIView {
 	 - parameter repeatAnimation: If the animation must be repeat or no
 	 - parameter startFromEdge:   If the animation must start from the edge
 	 */
-	public func translateAroundTheView(topView: UIView, duration: CGFloat, direction: UIViewAnimationTranslationDirection, repeatAnimation: Bool = true, startFromEdge: Bool = true) {
+    func translateAroundTheView(topView: UIView, duration: CGFloat, direction: UIViewAnimationTranslationDirection, repeatAnimation: Bool = true, startFromEdge: Bool = true) {
 		var startPosition: CGFloat = self.center.x, endPosition: CGFloat
 		switch (direction) {
 		case .FromLeftToRight:

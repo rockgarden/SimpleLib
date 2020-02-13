@@ -33,7 +33,7 @@ private class KDEWeakReferencer<T: NSObject>: NSObject {
         return value?.hash ?? 0
     }
     
-    fileprivate override var hashValue: Int {
+    fileprivate override var hash: Int {
         return value?.hashValue ?? 0
     }
 }

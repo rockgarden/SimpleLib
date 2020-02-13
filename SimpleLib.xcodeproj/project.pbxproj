@@ -56,7 +56,7 @@
 		C20B845F1D6BFD0A00C12286 /* ConstraintsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84411D6BFD0A00C12286 /* ConstraintsHelper.swift */; };
 		C20B84601D6BFD0A00C12286 /* ScreenShotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84431D6BFD0A00C12286 /* ScreenShotHelper.swift */; };
 		C20B84611D6BFD0A00C12286 /* SubviewsForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84451D6BFD0A00C12286 /* SubviewsForEach.swift */; };
-		C20B846E1D6BFD1F00C12286 /* KMWeakObjectContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */; };
+		C20B846E1D6BFD1F00C12286 /* WeakObjectContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84631D6BFD1E00C12286 /* WeakObjectContainer.swift */; };
 		C20B846F1D6BFD1F00C12286 /* MethodSwizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */; };
 		C20B84701D6BFD1F00C12286 /* NavigationBarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84661D6BFD1E00C12286 /* NavigationBarData.swift */; };
 		C20B84901D6BFD2600C12286 /* TransitionDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84781D6BFD2600C12286 /* TransitionDriver.swift */; };
@@ -135,7 +135,7 @@
 		C20B84411D6BFD0A00C12286 /* ConstraintsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsHelper.swift; sourceTree = "<group>"; };
 		C20B84431D6BFD0A00C12286 /* ScreenShotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenShotHelper.swift; sourceTree = "<group>"; };
 		C20B84451D6BFD0A00C12286 /* SubviewsForEach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubviewsForEach.swift; sourceTree = "<group>"; };
-		C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMWeakObjectContainer.swift; sourceTree = "<group>"; };
+		C20B84631D6BFD1E00C12286 /* WeakObjectContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectContainer.swift; sourceTree = "<group>"; };
 		C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSwizzling.swift; sourceTree = "<group>"; };
 		C20B84661D6BFD1E00C12286 /* NavigationBarData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarData.swift; sourceTree = "<group>"; };
 		C20B84781D6BFD2600C12286 /* TransitionDriver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionDriver.swift; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 				C20B84771D6BFD2600C12286 /* TransitionDriver */,
 				C20B84791D6BFD2600C12286 /* Utils */,
 				C20B84881D6BFD2600C12286 /* Widget */,
-				C20B84621D6BFD1E00C12286 /* KMNavigationBarTransition */,
+				C20B84621D6BFD1E00C12286 /* NavigationBarTransition */,
 				C20B84651D6BFD1E00C12286 /* Model */,
 				C20B841B1D6BFD0A00C12286 /* AnimatingBarButton */,
 				C20B841F1D6BFD0A00C12286 /* ExpandingTableViewController */,
@@ -377,13 +377,13 @@
 			path = SubviewsForEach;
 			sourceTree = "<group>";
 		};
-		C20B84621D6BFD1E00C12286 /* KMNavigationBarTransition */ = {
+		C20B84621D6BFD1E00C12286 /* NavigationBarTransition */ = {
 			isa = PBXGroup;
 			children = (
-				C20B84631D6BFD1E00C12286 /* KMWeakObjectContainer.swift */,
+				C20B84631D6BFD1E00C12286 /* WeakObjectContainer.swift */,
 				C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */,
 			);
-			path = KMNavigationBarTransition;
+			path = NavigationBarTransition;
 			sourceTree = "<group>";
 		};
 		C20B84651D6BFD1E00C12286 /* Model */ = {
@@ -486,7 +486,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = rockgarden;
 				TargetAttributes = {
 					C20B84001D6BFCC600C12286 = {
@@ -497,10 +497,11 @@
 			};
 			buildConfigurationList = C20B83FB1D6BFCC600C12286 /* Build configuration list for PBXProject "SimpleLib" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C20B83F71D6BFCC600C12286;
 			productRefGroup = C20B84021D6BFCC600C12286 /* Products */;
@@ -583,7 +584,7 @@
 				44BE953E1D8A6916004FFDF4 /* BlockButton.swift in Sources */,
 				C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */,
 				C20B844B1D6BFD0A00C12286 /* PageCollectionView.swift in Sources */,
-				C20B846E1D6BFD1F00C12286 /* KMWeakObjectContainer.swift in Sources */,
+				C20B846E1D6BFD1F00C12286 /* WeakObjectContainer.swift in Sources */,
 				C20B849B1D6BFD2600C12286 /* Location_Func.swift in Sources */,
 				C20B84901D6BFD2600C12286 /* TransitionDriver.swift in Sources */,
 				C20B84571D6BFD0A00C12286 /* Ext_UINavigationController.swift in Sources */,
@@ -610,6 +611,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -619,12 +621,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -667,6 +671,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -676,12 +681,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

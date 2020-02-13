@@ -273,10 +273,10 @@ extension BasePageCollectionCell {
         copyView.frontContainerView.layer.cornerRadius = frontContainerView.layer.cornerRadius
         
         // copy shadow layer
-        copyShadowFromView(copyView.shadowView!, toView: shadowView)
+        copyShadowFromView(fromView: copyView.shadowView!, toView: shadowView)
         
         for index in 0..<copyView.frontContainerView.subviews.count {
-            copyShadowFromView(copyView.frontContainerView.subviews[index], toView: frontContainerView.subviews[index])
+            copyShadowFromView(fromView: copyView.frontContainerView.subviews[index], toView: frontContainerView.subviews[index])
         }
         return copyView
     }
