@@ -2,11 +2,11 @@
 //  SimpleLib.h
 //  SimpleLib
 //
-//  Created by wangkan on 16/8/23.
-//  Copyright © 2016年 rockgarden. All rights reserved.
+//  Created by 王侃 on 2020/2/13.
+//  Copyright © 2020 rockgarden. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for SimpleLib.
 FOUNDATION_EXPORT double SimpleLibVersionNumber;
