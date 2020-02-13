@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SubviewsForEach {
-    func subviewsForEach(_ f: (UIView) -> Void)
+    func subviewsForEach(f: (UIView) -> Void)
 }
 
 extension SubviewsForEach where Self: UIView {

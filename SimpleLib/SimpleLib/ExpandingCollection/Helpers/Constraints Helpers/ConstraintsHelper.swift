@@ -33,15 +33,15 @@ func >>>- <T: UIView> (left: T, block: (inout ConstraintInfo) -> Void) -> NSLayo
     var info = ConstraintInfo()
     block(&info)
     
-    let constraint = NSLayoutConstraint(item: left.1,
+    let constraint = NSLayoutConstraint(item: left,
                                         attribute: info.attribute,
                                         relatedBy: info.relation,
-                                        toItem: left.0,
+                                        toItem: nil,
                                         attribute: info.secondAttribute,
                                         multiplier: 1,
                                         constant: info.constant)
     constraint.identifier = info.identifier
-    left.0.addConstraint(constraint)
+    left.addConstraint(constraint)
     return constraint
 }
 
@@ -50,15 +50,15 @@ func >>>- <T: UIView> (left: (T, T), block: (inout ConstraintInfo) -> Void) -> N
     var info = ConstraintInfo()
     block(&info)
     info.secondAttribute = info.secondAttribute == .notAnAttribute ? info.attribute : info.secondAttribute
-    let constraint = NSLayoutConstraint(item: left,
+    let constraint = NSLayoutConstraint(item: left.1,
                                         attribute: info.attribute,
                                         relatedBy: info.relation,
-                                        toItem: nil,
+                                        toItem: left.0,
                                         attribute: info.attribute,
                                         multiplier: 1,
                                         constant: info.constant)
     constraint.identifier = info.identifier
-    left.addConstraint(constraint)
+    left.0.addConstraint(constraint)
     return constraint
 }
 
