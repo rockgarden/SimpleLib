@@ -9,9 +9,13 @@
 import UIKit
 
 public class KCSelectionDialogItem: NSObject {
+    
     var icon: UIImage?
     var itemTitle: String
     var handler: (() -> Void)?
+    var font: UIFont?
+    
+    public typealias CompletionBlock = () -> Void
     
     public init(item itemTitle: String) {
         self.itemTitle = itemTitle
@@ -32,7 +36,14 @@ public class KCSelectionDialogItem: NSObject {
         self.icon = icon
         self.handler = didTapHandler
     }
-
+    
+    public init(item itemTitle: String, icon: UIImage, font: UIFont, didTapHandler: @escaping CompletionBlock) {
+        self.itemTitle = itemTitle
+        self.icon = icon
+        self.handler = didTapHandler
+        self.font = font
+    }
+    
     @objc func handlerTap() {
         handler?()
     }

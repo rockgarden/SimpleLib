@@ -76,11 +76,11 @@
 		C20B849E1D6BFD2600C12286 /* AnimatedSegmentSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B84891D6BFD2600C12286 /* AnimatedSegmentSwitch.swift */; };
 		C20B849F1D6BFD2600C12286 /* FoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848A1D6BFD2600C12286 /* FoldingCell.swift */; };
 		C20B84A01D6BFD2600C12286 /* JTSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848B1D6BFD2600C12286 /* JTSplashView.swift */; };
-		C20B84A11D6BFD2600C12286 /* KCSelectionDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848C1D6BFD2600C12286 /* KCSelectionDialog.swift */; };
 		C20B84A21D6BFD2600C12286 /* KCSelectionDialogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */; };
 		C20B84A31D6BFD2600C12286 /* KDInteractiveNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */; };
 		C20B84A41D6BFD2600C12286 /* NavigationBarColorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */; };
 		C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22758B21D6C157D008C1F18 /* AppCommon.swift */; };
+		C2DB528723F54097006D21DB /* KCSelectionDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB528623F54097006D21DB /* KCSelectionDialog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,11 +155,11 @@
 		C20B84891D6BFD2600C12286 /* AnimatedSegmentSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedSegmentSwitch.swift; sourceTree = "<group>"; };
 		C20B848A1D6BFD2600C12286 /* FoldingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldingCell.swift; sourceTree = "<group>"; };
 		C20B848B1D6BFD2600C12286 /* JTSplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JTSplashView.swift; sourceTree = "<group>"; };
-		C20B848C1D6BFD2600C12286 /* KCSelectionDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialog.swift; sourceTree = "<group>"; };
 		C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialogItem.swift; sourceTree = "<group>"; };
 		C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDInteractiveNavigationController.swift; sourceTree = "<group>"; };
 		C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarColorSource.swift; sourceTree = "<group>"; };
 		C22758B21D6C157D008C1F18 /* AppCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommon.swift; sourceTree = "<group>"; };
+		C2DB528623F54097006D21DB /* KCSelectionDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCSelectionDialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,7 +212,7 @@
 				C20B84771D6BFD2600C12286 /* TransitionDriver */,
 				C20B84791D6BFD2600C12286 /* Utils */,
 				C20B84881D6BFD2600C12286 /* Widget */,
-				C20B84621D6BFD1E00C12286 /* NavigationBarTransition */,
+				C20B84621D6BFD1E00C12286 /* MethodSwizzling */,
 				C20B84651D6BFD1E00C12286 /* Model */,
 				C20B841B1D6BFD0A00C12286 /* AnimatingBarButton */,
 				C20B841F1D6BFD0A00C12286 /* ExpandingTableViewController */,
@@ -377,13 +377,13 @@
 			path = SubviewsForEach;
 			sourceTree = "<group>";
 		};
-		C20B84621D6BFD1E00C12286 /* NavigationBarTransition */ = {
+		C20B84621D6BFD1E00C12286 /* MethodSwizzling */ = {
 			isa = PBXGroup;
 			children = (
 				C20B84631D6BFD1E00C12286 /* WeakObjectContainer.swift */,
 				C20B84641D6BFD1E00C12286 /* MethodSwizzling.swift */,
 			);
-			path = NavigationBarTransition;
+			path = MethodSwizzling;
 			sourceTree = "<group>";
 		};
 		C20B84651D6BFD1E00C12286 /* Model */ = {
@@ -436,7 +436,7 @@
 				C20B84891D6BFD2600C12286 /* AnimatedSegmentSwitch.swift */,
 				C20B848A1D6BFD2600C12286 /* FoldingCell.swift */,
 				C20B848B1D6BFD2600C12286 /* JTSplashView.swift */,
-				C20B848C1D6BFD2600C12286 /* KCSelectionDialog.swift */,
+				C2DB528623F54097006D21DB /* KCSelectionDialog.swift */,
 				C20B848D1D6BFD2600C12286 /* KCSelectionDialogItem.swift */,
 				C20B848E1D6BFD2600C12286 /* KDInteractiveNavigationController.swift */,
 				C20B848F1D6BFD2600C12286 /* NavigationBarColorSource.swift */,
@@ -536,7 +536,6 @@
 				C20B849A1D6BFD2600C12286 /* ImageResizingMethods.swift in Sources */,
 				C22758B31D6C157D008C1F18 /* AppCommon.swift in Sources */,
 				C20B845D1D6BFD0A00C12286 /* CornerAnimatable.swift in Sources */,
-				C20B84A11D6BFD2600C12286 /* KCSelectionDialog.swift in Sources */,
 				C20B84A01D6BFD2600C12286 /* JTSplashView.swift in Sources */,
 				44BE95411D8A6916004FFDF4 /* BlockPinch.swift in Sources */,
 				C20B84591D6BFD0A00C12286 /* Ext_UIStoryboard.swift in Sources */,
@@ -552,6 +551,7 @@
 				C20B84991D6BFD2600C12286 /* ICanHas.swift in Sources */,
 				44BE95401D8A6916004FFDF4 /* BlockPan.swift in Sources */,
 				C20B84961D6BFD2600C12286 /* MemoryCache.swift in Sources */,
+				C2DB528723F54097006D21DB /* KCSelectionDialog.swift in Sources */,
 				C20B84521D6BFD0A00C12286 /* Ext_String.swift in Sources */,
 				44F030F11E5C6C150059B587 /* Ext_UIApplication.swift in Sources */,
 				C20B84971D6BFD2600C12286 /* MultiCache.swift in Sources */,
@@ -737,7 +737,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -757,7 +757,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

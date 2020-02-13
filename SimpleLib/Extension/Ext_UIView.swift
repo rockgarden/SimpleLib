@@ -1,6 +1,6 @@
 //
 //  Ext_UIView.swift
-//  BFKit
+//  BFKit+EZSwiftExtensions
 //
 //  The MIT License (MIT)
 //

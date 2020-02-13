@@ -75,8 +75,8 @@ func imageResizeImageIO(_ imageURL: URL, scalingFactor: Double) -> UIImage? {
 }
 
 // create CI Contexts
-let sharedCIContextGPU = CIContext(options: [kCIContextUseSoftwareRenderer: false])
-let sharedCIContextSofware = CIContext(options: [kCIContextUseSoftwareRenderer: true])
+let sharedCIContextGPU = CIContext(options: [CIContextOption.useSoftwareRenderer: false])
+let sharedCIContextSofware = CIContext(options: [CIContextOption.useSoftwareRenderer: true])
 
 private func _imageResizeCoreImage(_ context: CIContext, imageURL: NSURL, scalingFactor: Double) -> UIImage? {
     let image = CIImage(contentsOf: imageURL as URL)
