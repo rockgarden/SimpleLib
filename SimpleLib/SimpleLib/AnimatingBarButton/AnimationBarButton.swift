@@ -45,7 +45,7 @@ extension AnimatingBarButton {
     }
 }
 
-// MARK: Create
+// MARK: - Create -
 
 extension AnimatingBarButton {
 
@@ -68,14 +68,14 @@ extension AnimatingBarButton {
         customView.addSubview(imageView)
 
         // add constraints
-        [(NSLayoutAttribute.centerX, 12), (.centerY, -1)].forEach { info in
+        [(NSLayoutConstraint.Attribute.centerX, 12), (.centerY, -1)].forEach { info in
             _ = (customView, imageView) >>>- {
                 $0.attribute = info.0
                 $0.constant = CGFloat(info.1)
             }
         }
         
-        [NSLayoutAttribute.height, .width].forEach { attribute in
+        [NSLayoutConstraint.Attribute.height, .width].forEach { attribute in
             _ = imageView >>>- {
                 $0.attribute = attribute
                 $0.constant = 20

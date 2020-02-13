@@ -57,16 +57,16 @@ public class BlockButton: UIButton {
     }
 
     private func defaultInit() {
-        addTarget(self, action: #selector(BlockButton.didPressed(_:)), for: UIControlEvents.TouchUpInside)
-        addTarget(self, action: #selector(BlockButton.highlight), for: [UIControlEvents.touchDown, UIControlEvents.touchDragEnter])
+        addTarget(self, action: #selector(BlockButton.didPressed(sender:)), for: UIControl.Event.touchUpInside)
+        addTarget(self, action: #selector(BlockButton.highlight), for: [UIControl.Event.touchDown, UIControl.Event.touchDragEnter])
         addTarget(self, action: #selector(BlockButton.unhighlight), for: [
-            UIControlEvents.touchUpInside,
-            UIControlEvents.touchUpOutside,
-            UIControlEvents.touchCancel,
-            UIControlEvents.touchDragExit
+            UIControl.Event.touchUpInside,
+            UIControl.Event.touchUpOutside,
+            UIControl.Event.touchCancel,
+            UIControl.Event.touchDragExit
         ])
-        setTitleColor(UIColor.black, for: UIControlState.normal)
-        setTitleColor(UIColor.blue, for: UIControlState.selected)
+        setTitleColor(UIColor.black, for: UIControl.State.normal)
+        setTitleColor(UIColor.blue, for: UIControl.State.selected)
     }
 
     public func addAction(action: @escaping BlockButtonAction) {
@@ -75,13 +75,13 @@ public class BlockButton: UIButton {
 
     // MARK: Action
 
-    public func didPressed(sender: BlockButton) {
+    @objc public func didPressed(sender: BlockButton) {
         action?(sender)
     }
 
     // MARK: Highlight
 
-    public func highlight() {
+    @objc public func highlight() {
         if action == nil {
             return
         }
@@ -104,7 +104,7 @@ public class BlockButton: UIButton {
         self.highlightLayer = highlightLayer
     }
 
-    public func unhighlight() {
+    @objc public func unhighlight() {
         if action == nil {
             return
         }

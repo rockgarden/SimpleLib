@@ -23,7 +23,7 @@ import UIKit
 
 class JTSplashView: UIView {
 
-    // MARK: Properties
+    /// MARK: Properties
     static let sharedInstance = JTSplashView()
     static let screenSize = UIScreen.main.bounds.size
 
@@ -63,7 +63,7 @@ class JTSplashView: UIView {
     }
 
     func doInit() {
-        // 1x with mask and above 1x without mask BG
+        /// 1x with mask and above 1x without mask BG
         bgWithMask = createBackgroundWithMask(createMaskCircleLayer())
         bgWithoutMask = createBackgroundWithMask(nil)
 
@@ -71,7 +71,7 @@ class JTSplashView: UIView {
         addSubview(bgWithoutMask)
         createBaseCircle()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(JTSplashView.addToWindow), name: NSNotification.Name.UIWindowDidBecomeVisible, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(JTSplashView.addToWindow), name: UIWindow.didBecomeVisibleNotification, object: nil)
     }
 
     /**
@@ -169,7 +169,7 @@ class JTSplashView: UIView {
         maskPath.addPath(circlePathShrinked.cgPath)
         maskPath.addRect(CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height));
         circleLayer.path = maskPath
-        circleLayer.fillRule = kCAFillRuleEvenOdd
+        circleLayer.fillRule = CAShapeLayerFillRule.evenOdd
         circleLayer.fillColor = circleColor.cgColor
 
         return circleLayer
@@ -177,7 +177,7 @@ class JTSplashView: UIView {
 
     fileprivate func createBaseCircle() {
         baseCircleLayer.path = circlePathInitial.cgPath
-        baseCircleLayer.fillRule = kCAFillRuleEvenOdd
+        baseCircleLayer.fillRule = CAShapeLayerFillRule.evenOdd
         baseCircleLayer.fillColor = UIColor.clear.cgColor
         baseCircleLayer.strokeColor = circleColor.cgColor
         baseCircleLayer.lineWidth = borderWidth
@@ -202,7 +202,7 @@ class JTSplashView: UIView {
 
     // Animations
     @objc fileprivate func zoomIn() {
-        UIView.animate(withDuration: TimeInterval(self.duration * 0.5), delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: TimeInterval(self.duration * 0.5), delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: { () -> Void in
 
             // The rest of the transformation will not be visible due completion block alpha = 0 part. But it will look like it just continued faster
             let cornerCorrection : CGFloat = 1.25
@@ -230,9 +230,9 @@ class JTSplashView: UIView {
         shrinkAnimation.fromValue = circlePathFinal.cgPath
         shrinkAnimation.toValue = circlePathShrinked.cgPath
         shrinkAnimation.duration = duration;
-        shrinkAnimation.fillMode = kCAFillModeForwards
+        shrinkAnimation.fillMode = CAMediaTimingFillMode.forwards
         shrinkAnimation.isRemovedOnCompletion = false
-        shrinkAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        shrinkAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         baseCircleLayer.add(shrinkAnimation, forKey: nil)
 
         Timer.scheduledTimer(timeInterval: shrinkAnimation.duration, target: self, selector: #selector(JTSplashView.fadeOut), userInfo: nil, repeats: false)
@@ -244,7 +244,7 @@ class JTSplashView: UIView {
         enlargeAnimation.fromValue = circlePathInitial.cgPath
         enlargeAnimation.toValue = circlePathFinal.cgPath
         enlargeAnimation.duration = duration;
-        enlargeAnimation.fillMode = kCAFillModeForwards
+        enlargeAnimation.fillMode = CAMediaTimingFillMode.forwards
         enlargeAnimation.isRemovedOnCompletion = false
         baseCircleLayer.add(enlargeAnimation, forKey: nil)
     }
@@ -254,7 +254,7 @@ class JTSplashView: UIView {
         vibration1.fromValue = circlePathFinal.cgPath
         vibration1.toValue = circlePathSqueezeVertical.cgPath
         vibration1.beginTime = 0.0
-        vibration1.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        vibration1.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         vibration1.duration = duration
 
         let vibration2: CABasicAnimation = CABasicAnimation(keyPath: "path")
@@ -262,21 +262,21 @@ class JTSplashView: UIView {
         vibration2.toValue = circlePathSqueezeHorizontal.cgPath
         vibration2.beginTime = duration
         vibration2.duration = duration
-        vibration2.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        vibration2.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 
         let vibration3: CABasicAnimation = CABasicAnimation(keyPath: "path")
         vibration3.fromValue = circlePathSqueezeHorizontal.cgPath
         vibration3.toValue = circlePathSqueezeVertical.cgPath
         vibration3.beginTime = duration * 2
         vibration3.duration = duration
-        vibration3.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        vibration3.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 
         let vibration4: CABasicAnimation = CABasicAnimation(keyPath: "path")
         vibration4.fromValue = circlePathSqueezeVertical.cgPath
         vibration4.toValue = circlePathFinal.cgPath
         vibration4.beginTime = duration * 3
         vibration4.duration = duration
-        vibration4.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        vibration4.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 
         let vibrations: CAAnimationGroup = CAAnimationGroup()
         vibrations.animations = [vibration1, vibration2, vibration3, vibration4]

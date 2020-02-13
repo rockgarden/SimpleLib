@@ -18,15 +18,15 @@ public func showSimpleAlertWithTitle(title: String!, message: String, viewContro
 
 public func zoomToUserLocationInMapView(mapView: MKMapView) {
     if let coordinate = mapView.userLocation.location?.coordinate {
-        let region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
     }
 }
 
 public func zoomToUserLocationInMapView(mapView: MKMapView, locationManager: CLLocationManager) {
     if let coordinate = mapView.userLocation.location?.coordinate {
-        let GCJcood = locationManager.WGSToGCJ(coordinate)
-        let region = MKCoordinateRegionMakeWithDistance(GCJcood, 1000, 1000)
+        let GCJcood = locationManager.WGSToGCJ(wgsLoc: coordinate)
+        let region = MKCoordinateRegion(center: GCJcood, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
     }
 }

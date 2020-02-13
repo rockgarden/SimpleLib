@@ -1,6 +1,6 @@
 //
 //  PageViewController.swift
-//  TestCollectionView
+//  ExpandingCollection
 //
 //  Created by Alex K. on 05/05/16.
 //  Copyright © 2016 Alex K. All rights reserved.
@@ -9,18 +9,18 @@
 import UIKit
 
 /// UIViewController with UICollectionView with custom transition method
-public class ExpandingViewController: UIViewController {
+open class ExpandingViewController: UIViewController {
     
-    /// The default size to use for cells.
-    public var itemSize = CGSize(width: UIScreen.main.bounds.width * 3 / 5, height: UIScreen.main.bounds.height * 3 / 5)
+    /// The default size to use for cells. Height of open cell state
+    open var itemSize = CGSize(width: 256, height: 460)
     
-    /// The collection view object managed by this view controller.
-    public var collectionView: UICollectionView?
+    ///  The collection view object managed by this view controller.
+    open var collectionView: UICollectionView?
     
-    private var transitionDriver: TransitionDriver?
+    fileprivate var transitionDriver: TransitionDriver?
     
     /// Index of current cell
-    public var currentIndex: Int {
+    open var currentIndex: Int {
         guard let collectionView = self.collectionView else { return 0 }
         
         let startOffset = (collectionView.bounds.size.width - itemSize.width) / 2
@@ -29,31 +29,29 @@ public class ExpandingViewController: UIViewController {
         }
         
         let minimumLineSpacing = collectionLayout.minimumLineSpacing
-        return Int((collectionView.contentOffset.x + startOffset + itemSize.width / 2) / (itemSize.width + minimumLineSpacing))
+        let a = collectionView.contentOffset.x + startOffset + itemSize.width / 2
+        let b = itemSize.width + minimumLineSpacing
+        return Int(a / b)
     }
 }
 
-// MARK: - life cicle
-
+// MARK: life cicle
 extension ExpandingViewController {
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         commonInit()
     }
-    
 }
 
 // MARK: Transition
-
 public extension ExpandingViewController {
     
     /**
      Pushes a view controller onto the receiver’s stack and updates the display with custom animation.
-     
      - parameter viewController: The table view controller to push onto the stack.
      */
-    func pushToViewController(viewController: ExpandingTableViewController) {
+    func pushToViewController(_ viewController: ExpandingTableViewController) {
         guard let collectionView = self.collectionView,
             let navigationController = self.navigationController else {
                 return
@@ -77,61 +75,52 @@ public extension ExpandingViewController {
 }
 
 // MARK: create
-
 extension ExpandingViewController {
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         
         let layout = PageCollectionLayout(itemSize: itemSize)
         collectionView = PageCollectionView.createOnView(view,
                                                          layout: layout,
-                                                         //TODO: 确认collectionView Size
-                                                         height: itemSize.height + itemSize.height / 5 * 2,
+                                                         height: itemSize.height,
                                                          dataSource: self,
                                                          delegate: self)
+        if #available(iOS 10.0, *) {
+            collectionView?.isPrefetchingEnabled = false
+        }
         transitionDriver = TransitionDriver(view: view)
     }
 }
 
 // MARK: Helpers
-
 extension ExpandingViewController {
     
-    private func getBackImage(viewController: UIViewController, headerHeight: CGFloat) -> UIImage? {
+    fileprivate func getBackImage(_ viewController: UIViewController, headerHeight: CGFloat) -> UIImage? {
         let imageSize = CGSize(width: viewController.view.bounds.width, height: viewController.view.bounds.height - headerHeight)
         let imageFrame = CGRect(origin: CGPoint(x: 0, y: 0), size: imageSize)
         return viewController.view.takeSnapshot(imageFrame)
     }
-    
 }
 
 // MARK: UICollectionViewDataSource
-
 extension ExpandingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        guard case let cell as BasePageCollectionCell = cell else { return }
+    open func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
+        guard case let cell as BasePageCollectionCell = cell else {
+            return
+        }
         
         cell.configureCellViewConstraintsWithSize(itemSize)
     }
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+    
+    open func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         fatalError("need emplementation in subclass")
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    open func collectionView(_: UICollectionView, cellForItemAt _: IndexPath) -> UICollectionViewCell {
         fatalError("need emplementation in subclass")
     }
 }
-
-// MARK: UIScrollViewDelegate
-
-extension ExpandingViewController {
-    
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        let indexPath = NSIndexPath(forRow: currentIndex, inSection: 0)
-        if case let currentCell as BasePageCollectionCell = collectionView?.cellForItemAtIndexPath(indexPath) {
-            currentCell.configurationCell()
-        }
-    }
-}
-

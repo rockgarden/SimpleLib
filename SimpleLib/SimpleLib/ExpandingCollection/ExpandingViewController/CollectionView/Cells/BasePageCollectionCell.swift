@@ -12,13 +12,9 @@ import UIKit
 /// Base class for UICollectionViewCell
 public class BasePageCollectionCell: UICollectionViewCell {
     
-    // MARK: - Constants -
+    // MARK: - Old Constants -
     
-    /// Animation oposition offset when cell is open
-    @IBInspectable
-    public var yOffset: CGFloat = 40
-    /// A Boolean value that indicates whether the cell is opened.
-    public var isOpened = false
+    /// DEPRECATED! Animation oposition offset when cell is open
     /// frontContainerView open状态 Y轴向上的偏移
     public var open_front_yOffset: CGFloat = 50
     public var open_front_hOffset: CGFloat = 16
@@ -26,6 +22,18 @@ public class BasePageCollectionCell: UICollectionViewCell {
     public var open_back_yOffset: CGFloat = 20
     /// frontContainerView open状态 width 缩小偏移
     public var open_front_wOffset: CGFloat = 30
+    
+    // MARK: - New Constants
+    
+    @IBInspectable open var yOffset: CGFloat = 40
+    /// Spacing between centers of views
+    @IBInspectable open var ySpacing: CGFloat = CGFloat.greatestFiniteMagnitude
+    /// Additional height of back view, when it grows
+    @IBInspectable open var additionalHeight: CGFloat = CGFloat.greatestFiniteMagnitude
+    /// Additional width of back view, when it grows
+    @IBInspectable open var additionalWidth: CGFloat = CGFloat.greatestFiniteMagnitude
+    /// Should front view drow shadow to bottom or not
+    @IBInspectable open var dropShadow: Bool = true
     
     /**
      *  Views Constants for NSCoder
@@ -46,24 +54,32 @@ public class BasePageCollectionCell: UICollectionViewCell {
         static var width: CGFloat = 0.0
     }
     
-    // MARK: - Vars -
-    
+    // MARK: - Vars
+
     /// The view used as the face of the cell must connectid from xib or storyboard.
-    @IBOutlet public weak var frontContainerView: UIView!
-    /// constraints for frontContainerView must connectid from xib or storyboard
-    @IBOutlet weak var frontContainerViewH: NSLayoutConstraint!
-    @IBOutlet weak var frontContainerViewW: NSLayoutConstraint!
-    @IBOutlet public weak var frontConstraintY: NSLayoutConstraint!
+    @IBOutlet open var frontContainerView: UIView!
     /// The view used as the back of the cell must connectid from xib or storyboard.
-    @IBOutlet public weak var backContainerView: UIView!
+    @IBOutlet open var backContainerView: UIView!
+
     /// constraints for backContainerView must connectid from xib or storyboard
+    @IBOutlet open var backConstraintY: NSLayoutConstraint!
+
+    /// constraints for frontContainerView must connectid from xib or storyboard
+    @IBOutlet open var frontConstraintY: NSLayoutConstraint!
+    
+    // MARK: - Old NSLayoutConstraints -
+    /// DEPRECATED!
     @IBOutlet weak var backContainerViewH: NSLayoutConstraint!
     @IBOutlet weak var backContainerViewW: NSLayoutConstraint!
-    @IBOutlet public weak var backConstraintY: NSLayoutConstraint!
-    
+    @IBOutlet weak var frontContainerViewH: NSLayoutConstraint!
+    @IBOutlet weak var frontContainerViewW: NSLayoutConstraint!
+
     var shadowView: UIView?
+
+    /// A Boolean value that indicates whether the cell is opened.
+    open var isOpened = false
     
-    // MARK: - inits -
+    // MARK: - inits
     
     /**
      Initializes a UICollectionViewCell from data in a given unarchiver.
@@ -98,6 +114,7 @@ extension BasePageCollectionCell {
         super.awakeFromNib()
         commonInit()
     }
+    
     private func commonInit() {
         configurationViews()
         shadowView = createShadowViewOnView(frontContainerView)
@@ -116,7 +133,7 @@ extension BasePageCollectionCell {
      - parameter isOpen: Contains the value true if the cell should display open state, if false should display close state.
      - parameter animated: Set to true if the change in selection state is animated.
      */
-    public func cellIsOpen(isOpen: Bool, animated: Bool = true) {
+    public func cellIsOpen_RG(isOpen: Bool, animated: Bool = true) {
         /// 设置open时frontContainerView的width
         let openWidth = itemSize.width - open_front_wOffset
         
@@ -138,12 +155,51 @@ extension BasePageCollectionCell {
         if animated == true {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
                 self.contentView.layoutIfNeeded()
-                }, completion: nil)
+            }, completion: nil)
         } else {
             self.contentView.layoutIfNeeded()
         }
         
         isOpened = isOpen
+    }
+    
+    public func cellIsOpen(_ isOpen: Bool, animated: Bool = true) {
+        if isOpen == isOpened { return }
+
+        /// 根据frontView大小设置shadowView的shadowPath
+        if ySpacing == .greatestFiniteMagnitude {
+            frontConstraintY.constant = isOpen == true ? -frontContainerView.bounds.size.height / 6 : 0
+            backConstraintY.constant = isOpen == true ? frontContainerView.bounds.size.height / 6 - yOffset / 2 : 0
+        } else {
+            frontConstraintY.constant = isOpen == true ? -ySpacing / 2 : 0
+            backConstraintY.constant = isOpen == true ? ySpacing / 2 : 0
+        }
+
+        if let widthConstant = backContainerView.getConstraint(.width) {
+            if additionalWidth == .greatestFiniteMagnitude {
+                widthConstant.constant = isOpen == true ? frontContainerView.bounds.size.width + yOffset : frontContainerView.bounds.size.width
+            } else {
+                widthConstant.constant = isOpen == true ? frontContainerView.bounds.size.width + additionalWidth : frontContainerView.bounds.size.width
+            }
+        }
+
+        if let heightConstant = backContainerView.getConstraint(.height) {
+            if additionalHeight == .greatestFiniteMagnitude {
+                heightConstant.constant = isOpen == true ? frontContainerView.bounds.size.height + yOffset : frontContainerView.bounds.size.height
+            } else {
+                heightConstant.constant = isOpen == true ? frontContainerView.bounds.size.height + additionalHeight : frontContainerView.bounds.size.height
+            }
+        }
+
+        isOpened = isOpen
+
+        if animated == true {
+            UIView.animate(withDuration: 0.3, delay: 0, options: UIView.AnimationOptions(), animations: {
+                self.contentView.layoutIfNeeded()
+            }, completion: nil)
+        } else {
+            contentView.layoutIfNeeded()
+        }
     }
 }
 
@@ -162,41 +218,50 @@ extension BasePageCollectionCell {
     
     /**
      基于xib的size生成frontView的shadowView
-     
-     - parameter view: <#view description#>
-     
-     - returns: <#return value description#>
      */
-    private func createShadowViewOnView(_ view: UIView?) -> UIView? {
+    fileprivate func createShadowViewOnView(_ view: UIView?) -> UIView? {
         guard let view = view else { return nil }
-        
+
         let shadow = Init(UIView(frame: .zero)) {
-            $0.backgroundColor = .clear
+            $0.backgroundColor = UIColor(white: 0, alpha: 0)
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.layer.masksToBounds = false;
-            $0.layer.shadowColor = UIColor.black.cgColor
-            $0.layer.shadowRadius = 10
-            $0.layer.shadowOpacity = 0.3
-            $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+            $0.layer.masksToBounds = false
+            if dropShadow {
+                $0.layer.shadowColor = UIColor.black.cgColor
+                $0.layer.shadowRadius = 10
+                $0.layer.shadowOpacity = 0.3
+                $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+            }
         }
         contentView.insertSubview(shadow, belowSubview: view)
-        
-        // create constraints
-        for info: (attribute: NSLayoutAttribute, scale: CGFloat) in [(NSLayoutAttribute.width, 0.8), (NSLayoutAttribute.height, 0.9)] {
+
+        /// create constraints
+        let sizeConstaints: [(NSLayoutConstraint.Attribute, CGFloat)] = [(NSLayoutConstraint.Attribute.width, 0.8), (NSLayoutConstraint.Attribute.height, 0.9)]
+        for info: (attribute: NSLayoutConstraint.Attribute, scale: CGFloat) in sizeConstaints {
             if let frontViewConstraint = view.getConstraint(info.attribute) {
                 shadow >>>- {
                     $0.attribute = info.attribute
                     $0.constant = frontViewConstraint.constant * info.scale
+                    return
                 }
             }
         }
-        for info: (attribute: NSLayoutAttribute, offset: CGFloat) in [(NSLayoutAttribute.centerX, 0), (NSLayoutAttribute.centerY, 30)] {
+        
+        let centerConstraints: [(NSLayoutConstraint.Attribute, CGFloat)] = [(NSLayoutConstraint.Attribute.centerX, 0), (NSLayoutConstraint.Attribute.centerY, 30)]
+        for info: (attribute: NSLayoutConstraint.Attribute, offset: CGFloat) in centerConstraints {
             (contentView, shadow, view) >>>- {
                 $0.attribute = info.attribute
                 $0.constant = info.offset
+                return
             }
         }
-        
+
+        /// size shadow
+        let width = shadow.getConstraint(.width)?.constant
+        let height = shadow.getConstraint(.height)?.constant
+
+        shadow.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: width!, height: height!), cornerRadius: 0).cgPath
+
         return shadow
     }
     
@@ -204,7 +269,7 @@ extension BasePageCollectionCell {
      重置Cell
      */
     func configurationCell() {
-        // Prevents indefinite growing of the cell issue
+        /// Prevents indefinite growing of the cell issue
         let i: CGFloat = self.isOpened ? 1 : -1
         let superHeight = superview?.frame.size.height ?? 0
         frame.size.height += i * superHeight
@@ -219,11 +284,11 @@ extension BasePageCollectionCell {
             itemSize.width = size.width
         }
         
-        // Opened = false 保持 backContainerView 和 frontContainerView的状态
-        // 没必要判断 && frontContainerView.getConstraint(.Width)?.constant != size.width
+        /// Opened = false 保持 backContainerView 和 frontContainerView的状态
+        /// 没必要判断 && frontContainerView.getConstraint(.width)?.constant != size.width
         guard isOpened == false else { return }
         
-        // Opened = true 时重置 frontContainerView = backContainerView = size
+        /// Opened = true 时重置 frontContainerView = backContainerView = size
         [frontContainerView, backContainerView].forEach {
             let constraintWidth = $0?.getConstraint(.width)
             constraintWidth?.constant = size.width
@@ -231,13 +296,14 @@ extension BasePageCollectionCell {
             constraintHeight?.constant = size.height
         }
     }
+
 }
 
 // MARK: - NSCoding -
 
 extension BasePageCollectionCell {
     
-    private func highlightedImageFalseOnView(_ view: UIView) {
+    fileprivate func highlightedImageFalseOnView(_ view: UIView) {
         for item in view.subviews {
             if case let imageView as UIImageView = item {
                 imageView.isHighlighted = false
@@ -248,7 +314,7 @@ extension BasePageCollectionCell {
         }
     }
     
-    private func copyShadowFromView(fromView: UIView, toView: UIView) {
+    fileprivate func copyShadowFromView(_ fromView: UIView, toView: UIView) {
         fromView.layer.shadowPath = toView.layer.shadowPath
         fromView.layer.masksToBounds = toView.layer.masksToBounds
         fromView.layer.shadowColor = toView.layer.shadowColor
@@ -259,24 +325,25 @@ extension BasePageCollectionCell {
     
     func copyCell() -> BasePageCollectionCell? {
         highlightedImageFalseOnView(contentView)
-        
+
         let data = NSKeyedArchiver.archivedData(withRootObject: self)
         guard case let copyView as BasePageCollectionCell = NSKeyedUnarchiver.unarchiveObject(with: data),
             let shadowView = self.shadowView else {
-                return nil
+            return nil
         }
-        
+
         // configure
         copyView.backContainerView.layer.masksToBounds = backContainerView.layer.masksToBounds
         copyView.backContainerView.layer.cornerRadius = backContainerView.layer.cornerRadius
+
         copyView.frontContainerView.layer.masksToBounds = frontContainerView.layer.masksToBounds
         copyView.frontContainerView.layer.cornerRadius = frontContainerView.layer.cornerRadius
-        
+
         // copy shadow layer
-        copyShadowFromView(fromView: copyView.shadowView!, toView: shadowView)
-        
-        for index in 0..<copyView.frontContainerView.subviews.count {
-            copyShadowFromView(fromView: copyView.frontContainerView.subviews[index], toView: frontContainerView.subviews[index])
+        copyShadowFromView(copyView.shadowView!, toView: shadowView)
+
+        for index in 0 ..< copyView.frontContainerView.subviews.count {
+            copyShadowFromView(copyView.frontContainerView.subviews[index], toView: frontContainerView.subviews[index])
         }
         return copyView
     }
@@ -284,11 +351,11 @@ extension BasePageCollectionCell {
     /**
      encode Constants
      保存CollectionCell中的View
-     
+     swift3to4: encodeWithCoder -> encode
      - parameter coder: NSCoder
      */
-    public override func encodeWithCoder(coder: NSCoder) {
-        super.encodeWithCoder(coder)
+    open override func encode(with coder: NSCoder) {
+        super.encode(with: coder)
         coder.encode(backContainerView, forKey: Constants.backContainer)
         coder.encode(frontContainerView, forKey: Constants.frontContainer)
         coder.encode(frontConstraintY, forKey: Constants.frontContainerY)
@@ -299,10 +366,9 @@ extension BasePageCollectionCell {
     /**
      decode Constants
      恢复CollectionCell中的View
-     
      - parameter coder: NSCoder
      */
-    private func configureOutletFromDecoder(_ coder: NSCoder) {
+    fileprivate func configureOutletFromDecoder(_ coder: NSCoder) {
         if case let shadowView as UIView = coder.decodeObject(forKey: Constants.shadowView) {
             self.shadowView = shadowView
         }

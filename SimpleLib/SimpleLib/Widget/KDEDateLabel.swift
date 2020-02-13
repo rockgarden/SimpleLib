@@ -33,9 +33,6 @@ private class KDEWeakReferencer<T: NSObject>: NSObject {
         return value?.hash ?? 0
     }
     
-    fileprivate override var hash: Int {
-        return value?.hashValue ?? 0
-    }
 }
 
 
@@ -73,7 +70,7 @@ class KDEDateLabelsHolder: NSObject {
                              selector: #selector(KDEDateLabelsHolder.timerTicked(_:)),
                              userInfo: nil,
                              repeats: true)
-        RunLoop.main.add(self.timer!, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(self.timer!, forMode: RunLoop.Mode.common)
     }
     
     

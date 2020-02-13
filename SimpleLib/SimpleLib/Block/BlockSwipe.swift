@@ -16,7 +16,7 @@ public class BlockSwipe: UISwipeGestureRecognizer {
         super.init(target: target, action: action)
     }
 
-    public convenience init (direction: UISwipeGestureRecognizerDirection,
+    public convenience init (direction: UISwipeGestureRecognizer.Direction,
         fingerCount: Int = 1,
         action: ((UISwipeGestureRecognizer) -> Void)?) {
             self.init()

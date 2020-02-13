@@ -1,6 +1,6 @@
 //
 //  ConstraintsHelper.swift
-//  TestCollectionView
+//  ExpandingCollection
 //
 //  Created by Alex K. on 05/05/16.
 //  Copyright © 2016 Alex K. All rights reserved.
@@ -9,29 +9,30 @@
 import UIKit
 
 struct ConstraintInfo {
-    var attribute: NSLayoutAttribute = .left
-    var secondAttribute: NSLayoutAttribute = .notAnAttribute
+    var attribute: NSLayoutConstraint.Attribute = .left
+    var secondAttribute: NSLayoutConstraint.Attribute = .notAnAttribute
     var constant: CGFloat = 0
     var identifier: String?
-    var relation: NSLayoutRelation = .equal
+    var relation: NSLayoutConstraint.Relation = .equal
 }
-/* 警告 
- Operator should no longer be declared with body;use a precedence group instead
- infix operator >>>- { associativity left precedence 150 }
- */
-// 自定义操作符 别名类型
+
+/// 自定义操作符 别名类型
 precedencegroup ConstOp {
     associativity: left
     higherThan: AssignmentPrecedence
 }
+
+/* 警告
+Operator should no longer be declared with body;use a precedence group instead
+infix operator >>>- { associativity left precedence 150 }
+*/
 infix operator >>>- : ConstOp
 
 @discardableResult
-func >>>- <T: UIView> (left: (T, T), block: (inout ConstraintInfo) -> Void) -> NSLayoutConstraint {
+func >>>- <T: UIView> (left: T, block: (inout ConstraintInfo) -> Void) -> NSLayoutConstraint {
     var info = ConstraintInfo()
     block(&info)
-    info.secondAttribute = info.secondAttribute == .notAnAttribute ? info.attribute : info.secondAttribute
-
+    
     let constraint = NSLayoutConstraint(item: left.1,
                                         attribute: info.attribute,
                                         relatedBy: info.relation,
@@ -45,10 +46,10 @@ func >>>- <T: UIView> (left: (T, T), block: (inout ConstraintInfo) -> Void) -> N
 }
 
 @discardableResult
-func >>>- <T: UIView> (left: T, block: (inout ConstraintInfo) -> Void) -> NSLayoutConstraint {
+func >>>- <T: UIView> (left: (T, T), block: (inout ConstraintInfo) -> Void) -> NSLayoutConstraint {
     var info = ConstraintInfo()
     block(&info)
-
+    info.secondAttribute = info.secondAttribute == .notAnAttribute ? info.attribute : info.secondAttribute
     let constraint = NSLayoutConstraint(item: left,
                                         attribute: info.attribute,
                                         relatedBy: info.relation,
@@ -66,7 +67,7 @@ func >>>- <T: UIView> (left: (T, T, T), block: (inout ConstraintInfo) -> Void) -
     var info = ConstraintInfo()
     block(&info)
     info.secondAttribute = info.secondAttribute == .notAnAttribute ? info.attribute : info.secondAttribute
-
+    
     let constraint = NSLayoutConstraint(item: left.1,
                                         attribute: info.attribute,
                                         relatedBy: info.relation,
@@ -79,16 +80,25 @@ func >>>- <T: UIView> (left: (T, T, T), block: (inout ConstraintInfo) -> Void) -
     return constraint
 }
 
-// MARK: UIView
+// MARK: - UIView -
 extension UIView {
-
+    
     func addScaleToFillConstratinsOnView(_ view: UIView) {
-        [NSLayoutAttribute.left, .right, .top, .bottom].forEach { attribute in
+        [NSLayoutConstraint.Attribute.left, .right, .top, .bottom].forEach { attribute in
             (self, view) >>>- {
                 $0.attribute = attribute
                 return
             }
         }
+    }
+    
+    func getConstraint(_ attributes: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
+        return constraints.filter {
+            if $0.firstAttribute == attributes && $0.secondItem == nil {
+                return true
+            }
+            return false
+        }.first
     }
     
 }
