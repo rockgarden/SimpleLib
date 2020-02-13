@@ -110,7 +110,7 @@ extension ExpandingViewController: UICollectionViewDataSource, UICollectionViewD
             return
         }
         
-        cell.configureCellViewConstraintsWithSize(itemSize)
+        cell.configureCellViewConstraintsWithSize(size: itemSize)
     }
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
