@@ -80,6 +80,8 @@
 		C2A9295C23F5638D0060BCDE /* BlockTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C47D023F554B100D7F5AC /* BlockTap.swift */; };
 		C2A9295D23F5638D0060BCDE /* BlockLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C47D123F554B100D7F5AC /* BlockLongPress.swift */; };
 		C2A9295E23F5638D0060BCDE /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C47D223F554B100D7F5AC /* AppCommon.swift */; };
+		C2A9296123F6FF8F0060BCDE /* Ext_CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296023F6FF8F0060BCDE /* Ext_CGFloat.swift */; };
+		C2A9296323F707E40060BCDE /* Ext_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296223F707E40060BCDE /* Ext_data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +160,8 @@
 		C2A9290F23F5633F0060BCDE /* SimpleLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2A9291123F5633F0060BCDE /* SimpleLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleLib.h; sourceTree = "<group>"; };
 		C2A9291223F5633F0060BCDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2A9296023F6FF8F0060BCDE /* Ext_CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_CGFloat.swift; sourceTree = "<group>"; };
+		C2A9296223F707E40060BCDE /* Ext_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +236,8 @@
 				C26C478A23F554B100D7F5AC /* Ext_UIImage.swift */,
 				C26C478B23F554B100D7F5AC /* Ext_DispatchQueue.swift */,
 				C26C478C23F554B100D7F5AC /* Ext_CCLocation.swift */,
+				C2A9296023F6FF8F0060BCDE /* Ext_CGFloat.swift */,
+				C2A9296223F707E40060BCDE /* Ext_data.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -548,6 +554,7 @@
 				C2A9292223F5638D0060BCDE /* EZSwiftFunctions.swift in Sources */,
 				C2A9292323F5638D0060BCDE /* Ext_UITableView.swift in Sources */,
 				C2A9292423F5638D0060BCDE /* Ext_NSDate.swift in Sources */,
+				C2A9296123F6FF8F0060BCDE /* Ext_CGFloat.swift in Sources */,
 				C2A9292523F5638D0060BCDE /* Ext_UIStoryboard.swift in Sources */,
 				C2A9292623F5638D0060BCDE /* Ext_String.swift in Sources */,
 				C2A9292723F5638D0060BCDE /* Ext_NSString.swift in Sources */,
@@ -576,6 +583,7 @@
 				C2A9293E23F5638D0060BCDE /* ICanHas.swift in Sources */,
 				C2A9293F23F5638D0060BCDE /* MemoryCache.swift in Sources */,
 				C2A9294023F5638D0060BCDE /* Box.swift in Sources */,
+				C2A9296323F707E40060BCDE /* Ext_data.swift in Sources */,
 				C2A9294123F5638D0060BCDE /* DiskCache.swift in Sources */,
 				C2A9294223F5638D0060BCDE /* Cache.swift in Sources */,
 				C2A9294323F5638D0060BCDE /* MultiCache.swift in Sources */,

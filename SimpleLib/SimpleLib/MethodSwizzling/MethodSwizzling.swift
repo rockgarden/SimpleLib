@@ -17,13 +17,13 @@ public class MethodSwizzling {
 		let originalMethod = class_getInstanceMethod(cls, originalSelector)
 		let swizzledMethod = class_getInstanceMethod(cls, swizzledSelector)
         guard (swizzledMethod != nil && originalMethod != nil) else {
-            let didAddMethod = class_addMethod(cls, originalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!))
-            if didAddMethod {
-                class_replaceMethod(cls, swizzledSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
-            } else {
-                method_exchangeImplementations(originalMethod!, swizzledMethod!)
-            }
             return
+        }
+        let didAddMethod = class_addMethod(cls, originalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!))
+        if didAddMethod {
+            class_replaceMethod(cls, swizzledSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
+        } else {
+            method_exchangeImplementations(originalMethod!, swizzledMethod!)
         }
 	}
     

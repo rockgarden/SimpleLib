@@ -1,27 +1,12 @@
 //
-// ICanHas.swift
+//  ICanHas.swift
+//  SimpleLib
 //
-// Modified by wangkan on 16/5/8.
+//  Modified by wangkan on 16/5/8.
 //
-// Copyright (c) 21/12/15. Rockgarden Inc.
+//  https://github.com/wircho/ICanHas
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+
 
 import Foundation
 import UIKit
@@ -31,6 +16,35 @@ import Photos
 import AddressBookUI
 import EventKit
 
+public typealias AuthClosure = (_ authorized: Bool) -> Void
+public typealias AuthErrorClosure = (_ authorized: Bool, _ error: Error?) -> Void
+public typealias AuthStatusClosure<Status> = (_ authorized: Bool, _ status: Status) -> Void
+public typealias AuthStatusErrorClosure<Status> = (_ authorized: Bool, _ status: Status, _ error: Error?) -> Void
+
+private typealias _AuthClosure = (Bool) -> Void
+private typealias _AuthErrorClosure = ((Bool, Error?)) -> Void
+private typealias _AuthStatusClosure<Status> = ((Bool, Status)) -> Void
+private typealias _AuthStatusErrorClosure<Status> = ((Bool, Status, Error?)) -> Void
+
+private func complete<P>(_ closures: inout [(P) -> Void], _ flag: inout Bool, _ params: P) {
+    let array = closures
+    closures = []
+    for closure in array { closure(params) }
+    flag = true
+}
+
+private func observeOnce(notificationName: Notification.Name, queue: OperationQueue = .main, using closure: @escaping (Notification) -> Void) {
+    var observerObject: NSObjectProtocol?
+    observerObject = NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: queue) {
+        note in
+        guard let object = observerObject else { return }
+        observerObject = nil
+        NotificationCenter.default.removeObserver(object)
+        closure(note)
+    }
+}
+
+/// 用于简化iOS用户权限请求（location, push notifications, camera, contacts, calendar, photos）
 public class ICanHas {
     
     private class func onMain(closure:()->Void) {
@@ -39,597 +53,257 @@ public class ICanHas {
     
     static var didTryToRegisterForPush = false
     
-    static var isHasingPush = false
-    static var isHasingLocation = false
-    static var isHasingCapture:[String:Bool] = [AVMediaType.audio.rawValue:false,AVMediaType.closedCaption.rawValue:false,AVMediaType.metadata.rawValue:false,AVMediaType.muxed.rawValue:false,AVMediaType.subtitle.rawValue:false,AVMediaType.text.rawValue:false,AVMediaType.timecode.rawValue:false,AVMediaType.video.rawValue:false]
-    static var isHasingPhotos = false
-    static var isHasingContacts = false
-    static var isHasingCalendar:[EKEntityType:Bool] = [EKEntityType.event:false,EKEntityType.reminder:false]
+    static private var isHasingPush = false
+    static private var isHasingLocation = false
+    static private var isHasingCapture: [AVMediaType: Bool] = [:]
+    static private var isHasingPhotos = false
+    static private var isHasingContacts = false
+    static private var isHasingCalendar: [EKEntityType: Bool] = [:]
+    static private var hasPushClosures: [_AuthClosure] = []
+    static private var hasLocationClosures: [_AuthStatusClosure<CLAuthorizationStatus>] = []
+    static private var hasCaptureClosures: [AVMediaType: [_AuthStatusClosure<AVAuthorizationStatus>]] = [:]
+    static private var hasPhotosClosures: [_AuthStatusClosure<PHAuthorizationStatus>] = []
+    static private var hasContactsClosures: [_AuthStatusErrorClosure<ABAuthorizationStatus>] = []
+    static private var hasCalendarClosures: [EKEntityType: [_AuthStatusErrorClosure<EKAuthorizationStatus>]] = [:]
     
-    static var hasPushClosures:[(_ authorized:Bool)->Void] = []
-    static var hasLocationClosures:[(_ authorized:Bool, _ status:CLAuthorizationStatus, _ denied:Bool)->Void] = []
-    static var hasCaptureClosures:[String:[(_ authorized:Bool,_ status:AVAuthorizationStatus)->Void]] = [AVMediaType.audio.rawValue:[],AVMediaType.closedCaption.rawValue:[],AVMediaType.metadata.rawValue:[],AVMediaType.muxed.rawValue:[],AVMediaType.subtitle.rawValue:[],AVMediaType.text.rawValue:[],AVMediaType.timecode.rawValue:[],AVMediaType.video.rawValue:[]]
-    static var hasPhotosClosures:[(_ authorized:Bool,_ status:PHAuthorizationStatus)->Void] = []
-    static var hasContactsClosures:[(_ authorized:Bool,_ status:ABAuthorizationStatus,_ error:CFError?)->Void] = []
-    static var hasCalendarClosures:[EKEntityType:[(_ authorized:Bool,_ error:NSError?)->Void]] = [EKEntityType.event:[],EKEntityType.reminder:[]]
-    
-    public class func CalendarAuthorizationStatus(entityType type:EKEntityType = EKEntityType.event)->EKAuthorizationStatus {
+    open class func calendarAuthorizationStatus(for type: EKEntityType = EKEntityType.event) -> EKAuthorizationStatus {
         return EKEventStore.authorizationStatus(for: type)
     }
     
-    public class func CalendarAuthorization(entityType type:EKEntityType = EKEntityType.event)->Bool {
-        return EKEventStore.authorizationStatus(for: type) == .authorized
+    open class func calendarAuthorization(for type: EKEntityType = EKEntityType.event) -> Bool {
+        return calendarAuthorizationStatus(for: type) == .authorized
     }
     
-    public class func Calendar(store:EKEventStore = EKEventStore(), entityType type:EKEntityType = EKEntityType.event, closure:@escaping (_ authorized:Bool,_ error:NSError?)->Void) {
+    open class func calendar(store: EKEventStore = EKEventStore(), type: EKEntityType = .event, closure: @escaping AuthStatusErrorClosure<EKAuthorizationStatus>) {
         onMain {
-            ICanHas.hasCalendarClosures[type]!.append(closure)
-            if !ICanHas.isHasingCalendar[type]! {
-                ICanHas.isHasingCalendar[type] = true
-                let done = {
-                    (authorized:Bool,error:NSError!)->Void in
-                    let array = ICanHas.hasCalendarClosures[type]!
-                    ICanHas.hasCalendarClosures[type] = []
-                    let _ = array.map{$0(authorized,error)}
-                    ICanHas.isHasingCalendar[type] = false
+            hasCalendarClosures[type, default: []].append(closure)
+            guard !isHasingCalendar[type, default: false] else { return }
+            isHasingCalendar[type] = true
+            let done: AuthStatusErrorClosure<EKAuthorizationStatus> = { authorized, status, error in
+                complete(&hasCalendarClosures[type, default: []], &isHasingCalendar[type, default: false], (authorized, status, error))
+            }
+            let status = calendarAuthorizationStatus(for: type)
+            switch status {
+            case .denied, .restricted: done(false, status, nil)
+            case .authorized: done(true, status, nil)
+            case .notDetermined:
+                store.requestAccess(to: type) { authorized, error in
+                    onMain { done(authorized, calendarAuthorizationStatus(for: type), error) }
                 }
-                
-                store.requestAccess(to: type, completion: { (authorized, error) -> Void in
-                    ICanHas.onMain {
-                        done(authorized, error)
-                    }
-                } as! EKEventStoreRequestAccessCompletionHandler)
             }
         }
     }
     
-    public class func ContactsAuthorizationStatus()->ABAuthorizationStatus {
+    open class func contactsAuthorizationStatus() -> ABAuthorizationStatus {
         return ABAddressBookGetAuthorizationStatus()
     }
     
-    public class func ContactsAuthorization()->Bool {
-        return ABAddressBookGetAuthorizationStatus() == .authorized
+    open class func contactsAuthorization() -> Bool {
+        return contactsAuthorizationStatus() == .authorized
     }
     
-    public class func Contacts(addressBook:ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue(), closure:@escaping (_ authorized:Bool,_ status:ABAuthorizationStatus,_ error:CFError?)->Void) {
-        
+    open class func contacts(book: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue(), closure: @escaping AuthStatusErrorClosure<ABAuthorizationStatus>) {
         onMain {
-            
-            ICanHas.hasContactsClosures.append(closure)
-            
-            if !ICanHas.isHasingContacts {
-                ICanHas.isHasingContacts = true
-                let done = {
-                    (authorized:Bool,status:ABAuthorizationStatus,error:CFError!)->Void in
-                    
-                    let array = ICanHas.hasContactsClosures
-                    ICanHas.hasContactsClosures = []
-                    
-                    let _ = array.map{$0(authorized,status,error)}
-                    
-                    ICanHas.isHasingContacts = false
-                }
-                
-                let currentStatus = ABAddressBookGetAuthorizationStatus()
-                
-                switch currentStatus {
-                case .denied:
-                    done(false,currentStatus,nil)
-                case .restricted:
-                    done(false,currentStatus,nil)
-                case .authorized:
-                    done(true,currentStatus,nil)
-                case .notDetermined:
-                    ABAddressBookRequestAccessWithCompletion(addressBook, { (authorized, error) -> Void in
-                        
-                        ICanHas.onMain {
-                            done(authorized,ABAddressBookGetAuthorizationStatus(),error)
-                        }
-                        
-                    })
-                }
-                
-                
+            hasContactsClosures.append(closure)
+            guard !isHasingContacts else { return }
+            isHasingContacts = true
+            let done: AuthStatusErrorClosure<ABAuthorizationStatus> = { authorized, status, error in
+                complete(&hasContactsClosures, &isHasingContacts, (authorized, status, error))
             }
-            
+            let status = contactsAuthorizationStatus()
+            switch status {
+            case .denied, .restricted: done(false, status, nil)
+            case .authorized: done(true, status, nil)
+            case .notDetermined:
+                ABAddressBookRequestAccessWithCompletion(book) { authorized, error in
+                    onMain { done(authorized, contactsAuthorizationStatus(), error) }
+                }
+            }
         }
-        
     }
     
-    public class func PhotosAuthorizationStatus()->PHAuthorizationStatus {
+    open class func photosAuthorizationStatus() -> PHAuthorizationStatus {
         return PHPhotoLibrary.authorizationStatus()
     }
     
-    public class func PhotosAuthorization()->Bool {
-        return PHPhotoLibrary.authorizationStatus() == .authorized
+    open class func photosAuthorization() -> Bool {
+        return photosAuthorizationStatus() == .authorized
     }
     
-    public class func Photos(closure:@escaping (_ authorized:Bool,_ status:PHAuthorizationStatus)->Void) {
-        
+    open class func photos(closure: @escaping AuthStatusClosure<PHAuthorizationStatus>) {
         onMain {
-            
-            ICanHas.hasPhotosClosures.append(closure)
-            
-            if !ICanHas.isHasingPhotos {
-                ICanHas.isHasingPhotos = true
-                
-                let done = {
-                    (authorized:Bool,status:PHAuthorizationStatus) -> Void in
-                    
-                    let array = ICanHas.hasPhotosClosures
-                    ICanHas.hasPhotosClosures = []
-                    
-                    let _ = array.map{$0(authorized,status)}
-                    
-                    ICanHas.isHasingPhotos = false
-                }
-                
-                let currentStatus = PHPhotoLibrary.authorizationStatus()
-                
-                switch currentStatus {
-                case .denied:
-                    done(false,currentStatus)
-                case .restricted:
-                    done(false,currentStatus)
-                case .authorized:
-                    done(true,currentStatus)
-                case .notDetermined:
-                    PHPhotoLibrary.requestAuthorization({ (status:PHAuthorizationStatus) -> Void in
-                        
-                        ICanHas.onMain {
-                            done(status == PHAuthorizationStatus.authorized, status)
-                        }
-                        
-                        
-                        
-                    })
+            hasPhotosClosures.append(closure)
+            guard !isHasingPhotos else { return }
+            isHasingPhotos = true
+            let done: AuthStatusClosure<PHAuthorizationStatus> = { authorized, status in
+                complete(&hasPhotosClosures, &isHasingPhotos, (authorized, status))
+            }
+            let status = photosAuthorizationStatus()
+            switch status {
+            case .denied, .restricted: done(false, status)
+            case .authorized: done(true, status)
+            case .notDetermined:
+                PHPhotoLibrary.requestAuthorization { status in
+                    onMain { done(status == .authorized, status) }
                 }
             }
-            
-            
-            
-        }
-        
-    }
-    
-    public class func CaptureAuthorizationStatus(type:String = AVMediaType.video)->AVAuthorizationStatus {
-        return AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type))
-    }
-    
-    public class func CaptureAuthorization(type:String = AVMediaType.video)->Bool {
-        return AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type)) == .authorized
-    }
-    
-    public class func Capture(type:String = AVMediaType.video,closure:@escaping (_ authorized:Bool,_ status:AVAuthorizationStatus)->Void) {
-        onMain {
-            
-            ICanHas.hasCaptureClosures[type]!.append(closure)
-            
-            if !ICanHas.isHasingCapture[type]! {
-                ICanHas.isHasingCapture[type] = true
-                
-                let done = {
-                    (authorized:Bool,status:AVAuthorizationStatus) -> Void in
-                    
-                    let array = ICanHas.hasCaptureClosures[type]!
-                    ICanHas.hasCaptureClosures[type] = []
-                    
-                    let _ = array.map{$0(authorized,status)}
-                    
-                    ICanHas.isHasingCapture[type] = false
-                }
-                
-                let currentStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type))
-                
-                switch currentStatus {
-                case .denied:
-                    done(false,currentStatus)
-                case .restricted:
-                    done(false,currentStatus)
-                case .authorized:
-                    done(true,currentStatus)
-                case .notDetermined:
-                    AVCaptureDevice.requestAccess(for: AVMediaType(rawValue: type), completionHandler: { (authorized:Bool) -> Void in
-                        
-                        ICanHas.onMain {
-                            done(authorized,AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: type)))
-                        }
-                        
-                        
-                    })
-                }
-                
-            }
-            
         }
     }
     
-    public class func PushAuthorization()->Bool {
+    open class func captureAuthorizationStatus(for type: AVMediaType = .video) -> AVAuthorizationStatus {
+        return AVCaptureDevice.authorizationStatus(for: type)
+    }
+    
+    open class func captureAuthorization(for type: AVMediaType = .video) -> Bool {
+        return captureAuthorizationStatus(for: type) == .authorized
+    }
+    
+    open class func capture(type: AVMediaType = .video, closure: @escaping AuthStatusClosure<AVAuthorizationStatus>) {
+        onMain {
+            hasCaptureClosures[type, default: []].append(closure)
+            guard !isHasingCapture[type, default: false] else { return }
+            isHasingCapture[type] = true
+            let done: AuthStatusClosure<AVAuthorizationStatus> = { authorized, status in
+                complete(&hasCaptureClosures[type, default: []], &isHasingCapture[type, default:false], (authorized, status))
+            }
+            let status = captureAuthorizationStatus(for: type)
+            switch status {
+            case .denied, .restricted: done(false, status)
+            case .authorized: done(true, status)
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: type) { authorized in
+                    onMain { done(authorized, captureAuthorizationStatus(for: type)) }
+                }
+            }
+        }
+    }
+    
+    open class func pushAuthorization() -> Bool {
         return UIApplication.shared.isRegisteredForRemoteNotifications
     }
     
-    //    private static var pushExchangeDone = false
-    
-    public class func Push(types:UIUserNotificationType = UIUserNotificationType.alert.union(UIUserNotificationType.badge).union(UIUserNotificationType.sound),closure:@escaping (_ authorized:Bool)->Void) {
-        
+    open class func push(types: UIUserNotificationType = [.alert, .badge, .sound], closure: @escaping AuthClosure) {
         onMain {
-            
-            //                if !self.pushExchangeDone {
-            //                    self.pushExchangeDone = true
-            //
-            //                    let appDelegate:NSObject = UIApplication.sharedApplication().delegate! as! NSObject
-            //
-            //                    let appDelegateClass:AnyClass = appDelegate.dynamicType
-            //
-            //                    [
-            //                        ("application:didRegisterForRemoteNotificationsWithDeviceToken:","_ICanHas_application:didRegisterForRemoteNotificationsWithDeviceToken:"),
-            //                        ("application:didFailToRegisterForRemoteNotificationsWithError:","_ICanHas_application:didFailToRegisterForRemoteNotificationsWithError:")
-            //                        ]
-            //                        .map {
-            //
-            //                            (pair:(String,String))->Void in
-            //
-            //                            if String.fromCString(method_getTypeEncoding(class_getInstanceMethod(appDelegateClass, Selector(stringLiteral: pair.0)))) == nil {
-            //
-            //                                let method = class_getInstanceMethod(NSObject.self, Selector(stringLiteral:"_ICanHas_empty_" + pair.0))
-            //
-            //                                class_addMethod(appDelegateClass, Selector(stringLiteral:pair.0), method_getImplementation(method), method_getTypeEncoding(method))
-            //
-            //                            }
-            //
-            //
-            //                            method_exchangeImplementations(
-            //                                class_getInstanceMethod(appDelegateClass,Selector(stringLiteral: pair.0)),
-            //                                class_getInstanceMethod(appDelegateClass,Selector(stringLiteral: pair.1))
-            //                            )
-            //                    }
-            //
-            //                    appDelegate._ich_listener = _ICanHasListener()
-            //                }
-            
-            ICanHas.hasPushClosures.append(closure)
-            
-            if !ICanHas.isHasingPush {
-                ICanHas.isHasingPush = true
-                
-                let done = {
-                    (authorized:Bool) -> Void in
-                    
-                    let array = ICanHas.hasPushClosures
-                    ICanHas.hasPushClosures = []
-                    
-                    let _ = array.map{$0(authorized)}
-                    
-                    ICanHas.isHasingPush = false
-                }
-                
-                let application:UIApplication! = UIApplication.shared
-                
-                if ICanHas.didTryToRegisterForPush {
-                    done(application.isRegisteredForRemoteNotifications)
-                }else {
-                    ICanHas.didTryToRegisterForPush = true
-                    
-                    application.registerUserNotificationSettings(UIUserNotificationSettings(types: types, categories: nil))
-                    
-                    var bgNoteObject:NSObjectProtocol? = nil
-                    var fgNoteObject:NSObjectProtocol? = nil
-                    
-                    var hasTimedOut = false
-
-                    var hasGoneToBG = false
-                    
-                    var shouldWaitForFG = false
-                    
-                    bgNoteObject = bgNoteObject ?? NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: OperationQueue.main) { (note) -> Void in
-                        
-                        hasGoneToBG = true
-                        
-                        if !hasTimedOut {
-                            shouldWaitForFG = true
-                        }
-                        
-                        bgNoteObject = nil
-                    }
-                    
-                    fgNoteObject = fgNoteObject ?? NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main) { (note) -> Void in
-
-                        if shouldWaitForFG {
-                            done(application.isRegisteredForRemoteNotifications)
-                        }
-                        
-                        fgNoteObject = nil
-                    }
-                    //asyncAfter(deadline: DispatchTime, qos: DispatchQoS = default, flags: DispatchWorkItemFlags = default, execute work: @escaping @convention(block) () -> Swift.Void)
-
-                    DispatchQueue.main.asyncAfter(
-                        deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
-                            hasTimedOut = true
-                            if !hasGoneToBG {
-                                done(application.isRegisteredForRemoteNotifications)
-                            }
-                    })
-                    application.registerForRemoteNotifications()
-                }
+            hasPushClosures.append(closure)
+            guard !isHasingPush else { return }
+            isHasingPush = true
+            let done: AuthClosure = { authorized in
+                complete(&hasPushClosures, &isHasingPush, authorized)
             }
+            let application = UIApplication.shared
+            guard !didTryToRegisterForPush else {
+                done(application.isRegisteredForRemoteNotifications)
+                return
+            }
+            didTryToRegisterForPush = true
+            
+            application.registerUserNotificationSettings(UIUserNotificationSettings(types: types, categories: nil))
+            
+            var hasTimedOut = false
+            var hasGoneToBackground = false
+            var waitingForForeground = false
+            
+            observeOnce(notificationName: UIApplication.willResignActiveNotification) { _ in
+                hasGoneToBackground = true
+                waitingForForeground = !hasTimedOut || waitingForForeground
+            }
+            
+            observeOnce(notificationName: UIApplication.didBecomeActiveNotification) { _ in
+                guard waitingForForeground else { return }
+                done(application.isRegisteredForRemoteNotifications)
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                hasTimedOut = true
+                guard !hasGoneToBackground else { return }
+                done(application.isRegisteredForRemoteNotifications)
+            }
+            
+            application.registerForRemoteNotifications()
         }
     }
     
-    private static var locationExchangeDone:[String:Bool] = [:]
-    
-    public class func LocationAuthorizationStatus()->CLAuthorizationStatus {
+    open class func locationAuthorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManager.authorizationStatus()
     }
     
-    public class func LocationAuthorization(background:Bool = false)->Bool {
-        return CLLocationManager.authorizationStatus() == .authorizedAlways || (!background && CLLocationManager.authorizationStatus() == .authorizedWhenInUse)
+    open class func locationAuthorization(background: Bool = false) -> Bool {
+        let status = locationAuthorizationStatus()
+        return status == .authorizedAlways || (!background && status == .authorizedWhenInUse)
     }
     
-    /**
-     检查与申请定位权限
-     
-     - parameter background: 是否允许后台定位
-     - parameter mngr:       CLLocationManager
-     - parameter closure:    是否授权/授权状态/是否允许
-     */
-    public class func Location(background:Bool = false, manager mngr:CLLocationManager? = nil, closure:@escaping (_ authorized:Bool,_ status:CLAuthorizationStatus, _ denied:Bool) -> Void) {
+    /// 检查与申请定位权限
+    /// - Parameters:
+    ///   - background: 是否允许后台定位
+    ///   - defaultManager: CLLocationManager
+    ///   - closure: 是否授权/授权状态/是否允许
+    open class func location(background: Bool = false, manager defaultManager: CLLocationManager? = nil, closure: @escaping AuthStatusClosure<CLAuthorizationStatus>) {
         onMain {
-            ICanHas.hasLocationClosures.append(closure)
-            let currentStatus = CLLocationManager.authorizationStatus()
-            
-            if !ICanHas.isHasingLocation {
-                ICanHas.isHasingLocation = true
-                let done = {
-                    (authorized: Bool, status: CLAuthorizationStatus, denied:Bool) -> Void in
-                    let array = ICanHas.hasLocationClosures
-                    ICanHas.hasLocationClosures = []
-                    let _ = array.map{$0(authorized, status, denied)}
-                    ICanHas.isHasingLocation = false
+            hasLocationClosures.append(closure)
+            guard !isHasingLocation else { return }
+            ICanHas.isHasingLocation = true
+            let done: AuthStatusClosure<CLAuthorizationStatus> = { authorized, status in
+                complete(&hasLocationClosures, &isHasingLocation, (authorized, status))
+            }
+            let status = locationAuthorizationStatus()
+            switch status {
+            case .authorizedAlways: done(true, status)
+            case .denied, .restricted: done(false, status)
+            case .authorizedWhenInUse:
+                guard !background else { fallthrough }
+                done(true, status)
+            case .notDetermined:
+                var manager: CLLocationManager? = defaultManager ?? CLLocationManager()
+                
+                var completed = false
+                var hasTimedOut = false
+                var canTimeOut = true
+                
+                let complete: (Bool) -> Void = {
+                    worked in
+                    guard !completed else { return }
+                    completed = true
+                    manager = nil
+                    done(worked && locationAuthorization(background: background), locationAuthorizationStatus())
                 }
                 
-                let callback = {(authorized:Bool, denied:Bool) -> Void in
-                    done(authorized, currentStatus, denied)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                    guard canTimeOut else { return }
+                    hasTimedOut = true
+                    complete(false)
                 }
                 
-                switch currentStatus {
-                case .authorizedAlways:
-                    callback(true, false)
-                case .denied:
-                    callback(false, true)
-                case .restricted:
-                    callback(false, true )
-                case .authorizedWhenInUse:
-                    if background {
-                        fallthrough
-                    }else {
-                        callback(true, false)
-                    }
-                case .notDetermined:
-                    var manager:CLLocationManager! = mngr ?? CLLocationManager()
-                    
-                    //                    let managerDelegate:CLLocationManagerDelegate
-                    //                    var retainedManagerDelegate:CLLocationManagerDelegate!
-                    
-                    //                    if manager.delegate == nil {
-                    //                        managerDelegate = _ICanHasEmptyLocationDelegate()
-                    //                        manager.delegate = managerDelegate
-                    //                    } else {
-                    //                        managerDelegate = manager.delegate!
-                    //                    }
-                    
-                    //                    retainedManagerDelegate = managerDelegate
-                    
-                    //                    let _ = retainedManagerDelegate
-                    
-                    //                    let managerDelegateClass:AnyClass = (managerDelegate as AnyObject).dynamicType
-                    
-                    //                    let managerDelegateClassName = "\(managerDelegateClass)"
-                    
-                    //                    if !(self.locationExchangeDone[managerDelegateClassName] ?? false) {
-                    //                        self.locationExchangeDone[managerDelegateClassName] = true
-                    //
-                    //                        let pair = ("locationManager:didChangeAuthorizationStatus:","_ICanHas_locationManager:didChangeAuthorizationStatus:")
-                    //
-                    //                        if String.fromCString(method_getTypeEncoding(class_getInstanceMethod(managerDelegateClass, Selector(stringLiteral: pair.0)))) == nil {
-                    //
-                    //                            let method = class_getInstanceMethod(NSObject.self, Selector(stringLiteral:"_ICanHas_empty_" + pair.0))
-                    //
-                    //                            class_addMethod(managerDelegateClass, Selector(stringLiteral:pair.0), method_getImplementation(method), method_getTypeEncoding(method))
-                    //
-                    //                        }
-                    //
-                    //
-                    //                        method_exchangeImplementations(
-                    //                            class_getInstanceMethod(managerDelegateClass,Selector(stringLiteral: pair.0)),
-                    //                            class_getInstanceMethod(managerDelegateClass,Selector(stringLiteral: pair.1))
-                    //                        )
-                    //
-                    //                    }
-                    
-                    //                    var listener:_ICanHasListener! = _ICanHasListener()
-                    //                    var removeListener:(()->Void)! = nil
-                    
-                    var foregroundObject:NSObjectProtocol!
-                    var backgroundObject:NSObjectProtocol!
-                    
-                    var completed = false
-                    var hasTimedOut = false
-                    var canTimeOut = true
-                    
-                    let complete:(Bool)->Void = {
-                        worked in
-                        //                        retainedObjects = nil
-                        //                        listener = nil
-                        if !completed {
-                            completed = true
-                            manager = nil
-                            if let object = foregroundObject {
-                                NotificationCenter.default.removeObserver(object)
-                            }
-                            if let object = backgroundObject {
-                                NotificationCenter.default.removeObserver(object)
-                            }
-                            foregroundObject = nil
-                            backgroundObject = nil
-                            let status = CLLocationManager.authorizationStatus()
-                            if status == .authorizedAlways || (!background && status == .authorizedWhenInUse) {
-                                done(worked && true, status, false)
-                            }else {
-                                done(false, status, false)
-                            }
-                        }
-                    }
-
-                    DispatchQueue.main.asyncAfter(
-                        deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
-                            if canTimeOut {
-                                hasTimedOut = true
-                                if let object = backgroundObject {
-                                    NotificationCenter.default.removeObserver(object)
-                                    backgroundObject = nil
-                                    complete(false)
-                                }
-                            }
-                    })
-                    
-                    backgroundObject = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) {
-                        _ in
-                        canTimeOut = false
-                    }
-                    
-                    foregroundObject = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) {
-                        _ in
-                        if !hasTimedOut {
-                            complete(true)
-                        }
-                    }
-                    
-                    //                    if let delegate = manager.delegate {
-                    //                        var lastDelegate:NSObject = delegate as! NSObject
-                    //                        var retainedObjects:[AnyObject]! = []
-                    //                        retainedObjects.append(lastDelegate)
-                    //                        while lastDelegate._ich_listener != nil {
-                    //                            lastDelegate = lastDelegate._ich_listener
-                    //                            retainedObjects.append(lastDelegate)
-                    //                        }
-                    //                        lastDelegate._ich_listener = listener
-                    //
-                    //                    }else {
-                    //                        manager.delegate = listener
-                    //                        removeListener = {
-                    //                            manager.delegate = nil
-                    //                            listener = nil
-                    //                            manager = nil
-                    //                            removeListener = nil
-                    //                        }
-                    //                    }
-                    
-                    
-                    //                    listener.changedLocationPermissions = {
-                    //                        (status:CLAuthorizationStatus) -> Void in
-                    //
-                    //                        ICanHas.onMain {
-                    //                            if status != .NotDetermined && status != currentStatus {
-                    //
-                    //                                removeListener()
-                    //
-                    //
-                    //                            }
-                    //                        }
-                    //                    }
-                    // 需要WhenInUse/Always权限的用户提示信息
-                    if background {
-                        assert(
-                            Bundle.main.object(
-                                forInfoDictionaryKey: "NSLocationAlwaysUsageDescription"
-                                ) != nil,
-                            "Make sure to add the key 'NSLocationAlwaysUsageDescription' to your info.plist file!"
-                        )
-                        manager.requestAlwaysAuthorization()
-                    } else {
-                        debugPrint("RIGHT NOW REQUESTING!!!!!", terminator: "")
-                        assert(
-                            Bundle.main.object(
-                                forInfoDictionaryKey: "NSLocationWhenInUseUsageDescription"
-                                ) != nil,
-                            "Make sure to add the key 'NSLocationWhenInUseUsageDescription' to your info.plist file!"
-                        )
-                        manager.requestWhenInUseAuthorization()
-                    }
-                }
-            } else if (currentStatus.rawValue == 3) {
+                observeOnce(notificationName: UIApplication.willResignActiveNotification) { _ in canTimeOut = false }
                 
+                observeOnce(notificationName: UIApplication.didBecomeActiveNotification) { _ in
+                    guard !hasTimedOut else { return }
+                    complete(true)
+                }
+                
+                /// 需要WhenInUse/Always权限的用户提示信息
+                if background {
+                    assert(
+                        Bundle.main.object(
+                            forInfoDictionaryKey: "NSLocationAlwaysUsageDescription"
+                            ) != nil,
+                        "Make sure to add the key 'NSLocationAlwaysUsageDescription' to your info.plist file!"
+                    )
+                    manager?.requestAlwaysAuthorization()
+                } else {
+                    debugPrint("RIGHT NOW REQUESTING!!!!!", terminator: "")
+                    assert(
+                        Bundle.main.object(
+                            forInfoDictionaryKey: "NSLocationWhenInUseUsageDescription"
+                            ) != nil,
+                        "Make sure to add the key 'NSLocationWhenInUseUsageDescription' to your info.plist file!"
+                    )
+                    manager?.requestWhenInUseAuthorization()
+                }
             }
         }
     }
-}
-
-private var _ICanHasListenerHandler: UInt8 = 0
-
-extension NSObject {
-    
-    //    private var _ich_listener:_ICanHasListener! {
-    //        set {
-    //
-    //            objc_setAssociatedObject(self, &_ICanHasListenerHandler, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    //        }
-    //        get {
-    //            return objc_getAssociatedObject(self, &_ICanHasListenerHandler) as? _ICanHasListener
-    //        }
-    //    }
-    
-    //    //Empty implementations:
-    //Added implementations
-    //    public func _ICanHas_empty_locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) { }
-    
-    //    public func _ICanHas_empty_application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) { }
-    //
-    //    public func _ICanHas_empty_application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) { }
-    
-    //Added implementations
-    //    public func _ICanHas_locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-    //        self._ich_listener!.locationManager(manager, didChangeAuthorizationStatus: status)
-    //
-    //        print("DID CHANGE BEING CALLED!!!!")
-    //
-    //        self._ICanHas_locationManager(manager, didChangeAuthorizationStatus: status)
-    //    }
-    
-    //    public func _ICanHas_application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    //        self._ich_listener?.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
-    //
-    //        self._ICanHas_application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
-    //    }
-    //    
-    //    public func _ICanHas_application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-    //        self._ich_listener?.application(application, didFailToRegisterForRemoteNotificationsWithError: error)
-    //        
-    //        self._ICanHas_application(application, didFailToRegisterForRemoteNotificationsWithError: error)
-    //    }
     
 }
 
-//public class _ICanHasEmptyLocationDelegate:NSObject, CLLocationManagerDelegate {
-//    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        
-//        print("CHANGED AUTH STATUS")
-//        
-//    }
-//}
 
-//public class _ICanHasListener:NSObject,CLLocationManagerDelegate,UIApplicationDelegate {
-//    var changedLocationPermissions:((CLAuthorizationStatus)->Void)!
-//    var registeredForPush:((NSData)->Void)!
-//    var failedToRegisterForPush:((NSError)->Void)!
-//    
-//    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        self.changedLocationPermissions?(status)
-//    }
-//    
-////    public func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-////        self.registeredForPush?(deviceToken)
-////    }
-////    public func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-////        self.failedToRegisterForPush?(error)
-////    }
-//}
+

@@ -92,13 +92,6 @@ extension UIView {
         }
     }
     
-    func getConstraint(_ attributes: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
-        return constraints.filter {
-            if $0.firstAttribute == attributes && $0.secondItem == nil {
-                return true
-            }
-            return false
-        }.first
-    }
+    /// func getConstraint move to Ext_UIView.swift
     
 }
