@@ -35,7 +35,7 @@ public extension NSData {
      
      - returns: Returns self as UTF8 NSString
      */
-    public func convertToUTF8String() -> String {
+    func convertToUTF8String() -> String {
         return NSData.convertToUTF8String(self)
     }
     
@@ -44,7 +44,7 @@ public extension NSData {
      
      - returns: Returns self as ASCII NSString
      */
-    public func convertToASCIIString() -> String {
+    func convertToASCIIString() -> String {
         return NSData.convertToASCIIString(self)
     }
     
@@ -54,7 +54,7 @@ public extension NSData {
      
      - returns: Returns self as String from UUID
      */
-    public func convertUUIDToString() -> String {
+    func convertUUIDToString() -> String {
         return self.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>")).replacingOccurrences(of: " ", with: "")
     }
 
@@ -67,7 +67,7 @@ public extension NSData {
      
      - returns: Returns the converted NSData as UTF8 String
      */
-    public static func convertToUTF8String(_ data: NSData) -> String {
+    static func convertToUTF8String(_ data: NSData) -> String {
         return NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) as! String
     }
     
@@ -78,7 +78,7 @@ public extension NSData {
      
      - returns: Returns the converted NSData as ASCII String
      */
-    public static func convertToASCIIString(_ data: NSData) -> String {
-        return NSString(data: data as Data, encoding: String.Encoding.ascii.rawValue) as! String
+    static func convertToASCIIString(_ data: NSData) -> String {
+        return NSString(data: data as Data, encoding: String.Encoding.ascii.rawValue)! as String
     }
 }

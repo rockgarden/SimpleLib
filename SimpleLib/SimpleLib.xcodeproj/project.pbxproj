@@ -21,7 +21,6 @@
 		C2A9292123F5638D0060BCDE /* Ext_UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C477E23F554B100D7F5AC /* Ext_UIApplication.swift */; };
 		C2A9292223F5638D0060BCDE /* EZSwiftFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C477F23F554B100D7F5AC /* EZSwiftFunctions.swift */; };
 		C2A9292323F5638D0060BCDE /* Ext_UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C478023F554B100D7F5AC /* Ext_UITableView.swift */; };
-		C2A9292423F5638D0060BCDE /* Ext_NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C478123F554B100D7F5AC /* Ext_NSDate.swift */; };
 		C2A9292523F5638D0060BCDE /* Ext_UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C478223F554B100D7F5AC /* Ext_UIStoryboard.swift */; };
 		C2A9292623F5638D0060BCDE /* Ext_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C478323F554B100D7F5AC /* Ext_String.swift */; };
 		C2A9292723F5638D0060BCDE /* Ext_NSString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C478423F554B100D7F5AC /* Ext_NSString.swift */; };
@@ -81,7 +80,10 @@
 		C2A9295D23F5638D0060BCDE /* BlockLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C47D123F554B100D7F5AC /* BlockLongPress.swift */; };
 		C2A9295E23F5638D0060BCDE /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C47D223F554B100D7F5AC /* AppCommon.swift */; };
 		C2A9296123F6FF8F0060BCDE /* Ext_CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296023F6FF8F0060BCDE /* Ext_CGFloat.swift */; };
-		C2A9296323F707E40060BCDE /* Ext_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296223F707E40060BCDE /* Ext_data.swift */; };
+		C2A9296323F707E40060BCDE /* Ext_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296223F707E40060BCDE /* Ext_Data.swift */; };
+		C2A9296523F7C54E0060BCDE /* Ext_Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296423F7C54E0060BCDE /* Ext_Date.swift */; };
+		C2A9296723F7C6A10060BCDE /* TimePassed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296623F7C6A10060BCDE /* TimePassed.swift */; };
+		C2A9296923F7DB0A0060BCDE /* Ext_UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A9296823F7DB0A0060BCDE /* Ext_UIFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,7 +100,6 @@
 		C26C477E23F554B100D7F5AC /* Ext_UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIApplication.swift; sourceTree = "<group>"; };
 		C26C477F23F554B100D7F5AC /* EZSwiftFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZSwiftFunctions.swift; sourceTree = "<group>"; };
 		C26C478023F554B100D7F5AC /* Ext_UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UITableView.swift; sourceTree = "<group>"; };
-		C26C478123F554B100D7F5AC /* Ext_NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_NSDate.swift; sourceTree = "<group>"; };
 		C26C478223F554B100D7F5AC /* Ext_UIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_UIStoryboard.swift; sourceTree = "<group>"; };
 		C26C478323F554B100D7F5AC /* Ext_String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_String.swift; sourceTree = "<group>"; };
 		C26C478423F554B100D7F5AC /* Ext_NSString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext_NSString.swift; sourceTree = "<group>"; };
@@ -161,7 +162,10 @@
 		C2A9291123F5633F0060BCDE /* SimpleLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleLib.h; sourceTree = "<group>"; };
 		C2A9291223F5633F0060BCDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2A9296023F6FF8F0060BCDE /* Ext_CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_CGFloat.swift; sourceTree = "<group>"; };
-		C2A9296223F707E40060BCDE /* Ext_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_data.swift; sourceTree = "<group>"; };
+		C2A9296223F707E40060BCDE /* Ext_Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Data.swift; sourceTree = "<group>"; };
+		C2A9296423F7C54E0060BCDE /* Ext_Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Date.swift; sourceTree = "<group>"; };
+		C2A9296623F7C6A10060BCDE /* TimePassed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePassed.swift; sourceTree = "<group>"; };
+		C2A9296823F7DB0A0060BCDE /* Ext_UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_UIFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +228,6 @@
 				C26C477E23F554B100D7F5AC /* Ext_UIApplication.swift */,
 				C26C477F23F554B100D7F5AC /* EZSwiftFunctions.swift */,
 				C26C478023F554B100D7F5AC /* Ext_UITableView.swift */,
-				C26C478123F554B100D7F5AC /* Ext_NSDate.swift */,
 				C26C478223F554B100D7F5AC /* Ext_UIStoryboard.swift */,
 				C26C478323F554B100D7F5AC /* Ext_String.swift */,
 				C26C478423F554B100D7F5AC /* Ext_NSString.swift */,
@@ -237,7 +240,10 @@
 				C26C478B23F554B100D7F5AC /* Ext_DispatchQueue.swift */,
 				C26C478C23F554B100D7F5AC /* Ext_CCLocation.swift */,
 				C2A9296023F6FF8F0060BCDE /* Ext_CGFloat.swift */,
-				C2A9296223F707E40060BCDE /* Ext_data.swift */,
+				C2A9296223F707E40060BCDE /* Ext_Data.swift */,
+				C2A9296423F7C54E0060BCDE /* Ext_Date.swift */,
+				C2A9296623F7C6A10060BCDE /* TimePassed.swift */,
+				C2A9296823F7DB0A0060BCDE /* Ext_UIFont.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -548,12 +554,12 @@
 				C2A9291C23F5638D0060BCDE /* Ext_UIButton.swift in Sources */,
 				C2A9291D23F5638D0060BCDE /* Ext_UIViewController.swift in Sources */,
 				C2A9291E23F5638D0060BCDE /* Ext_example.swift in Sources */,
+				C2A9296723F7C6A10060BCDE /* TimePassed.swift in Sources */,
 				C2A9291F23F5638D0060BCDE /* Ext_UIScreen.swift in Sources */,
 				C2A9292023F5638D0060BCDE /* Ext_UIColor.swift in Sources */,
 				C2A9292123F5638D0060BCDE /* Ext_UIApplication.swift in Sources */,
 				C2A9292223F5638D0060BCDE /* EZSwiftFunctions.swift in Sources */,
 				C2A9292323F5638D0060BCDE /* Ext_UITableView.swift in Sources */,
-				C2A9292423F5638D0060BCDE /* Ext_NSDate.swift in Sources */,
 				C2A9296123F6FF8F0060BCDE /* Ext_CGFloat.swift in Sources */,
 				C2A9292523F5638D0060BCDE /* Ext_UIStoryboard.swift in Sources */,
 				C2A9292623F5638D0060BCDE /* Ext_String.swift in Sources */,
@@ -564,6 +570,7 @@
 				C2A9292B23F5638D0060BCDE /* Ext_UserDefaults.swift in Sources */,
 				C2A9292C23F5638D0060BCDE /* Ext_UINavigationBar.swift in Sources */,
 				C2A9292D23F5638D0060BCDE /* Ext_UIImage.swift in Sources */,
+				C2A9296923F7DB0A0060BCDE /* Ext_UIFont.swift in Sources */,
 				C2A9292E23F5638D0060BCDE /* Ext_DispatchQueue.swift in Sources */,
 				C2A9292F23F5638D0060BCDE /* Ext_CCLocation.swift in Sources */,
 				C2A9293023F5638D0060BCDE /* BasePageCollectionCell.swift in Sources */,
@@ -583,7 +590,7 @@
 				C2A9293E23F5638D0060BCDE /* ICanHas.swift in Sources */,
 				C2A9293F23F5638D0060BCDE /* MemoryCache.swift in Sources */,
 				C2A9294023F5638D0060BCDE /* Box.swift in Sources */,
-				C2A9296323F707E40060BCDE /* Ext_data.swift in Sources */,
+				C2A9296323F707E40060BCDE /* Ext_Data.swift in Sources */,
 				C2A9294123F5638D0060BCDE /* DiskCache.swift in Sources */,
 				C2A9294223F5638D0060BCDE /* Cache.swift in Sources */,
 				C2A9294323F5638D0060BCDE /* MultiCache.swift in Sources */,
@@ -594,6 +601,7 @@
 				C2A9294823F5638D0060BCDE /* PlistUtil.swift in Sources */,
 				C2A9294923F5638D0060BCDE /* Duration.swift in Sources */,
 				C2A9294A23F5638D0060BCDE /* AuthcodeView.swift in Sources */,
+				C2A9296523F7C54E0060BCDE /* Ext_Date.swift in Sources */,
 				C2A9294B23F5638D0060BCDE /* ExpandingTableViewController.swift in Sources */,
 				C2A9294C23F5638D0060BCDE /* AnimationBarButton.swift in Sources */,
 				C2A9294D23F5638D0060BCDE /* Rotatable.swift in Sources */,

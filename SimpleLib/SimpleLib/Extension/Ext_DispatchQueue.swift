@@ -7,16 +7,16 @@
 //  解决dispatch_once方法在swift 3.0中不起作用: 'dispatch_once' is unavailable in Swift: Use lazily initialized globals instead
 //  
 
-public extension DispatchQueue {
+extension DispatchQueue {
 
     private static var _onceTracker = [String]()
-    private static var _onceToken: String {
+    public static var _onceToken: String {
         get {
             return NSUUID().uuidString
         }
     }
 
-    public class func once(file: String = #file, function: String = #function, line: Int = #line, block:(Void)->Void) {
+    public class func once(file: String = #file, function: String = #function, line: Int = #line, block:()->Void) {
         let token = file + ":" + function + ":" + String(line)
         once(token: token, block: block)
     }
@@ -28,7 +28,7 @@ public extension DispatchQueue {
      - parameter token: A unique reverse DNS style name such as com.vectorform.<name> or a GUID
      - parameter block: Block to execute once
      */
-    public class func once(token: String = _onceToken, block:(Void)->Void) { //block:@noescape(Void)->Void
+    public class func once(token: String = _onceToken, block:()->Void) { //block:@noescape(Void)->Void
         objc_sync_enter(self)
         defer { objc_sync_exit(self) }
 
@@ -46,7 +46,7 @@ public extension DispatchQueue {
 public struct DispatchOnce {
     private var lock: OSSpinLock = OS_SPINLOCK_INIT
     private var isInitialized = false
-    public /* mutating */ mutating func perform(block: (Void) -> Void) {
+    public /* mutating */ mutating func perform(block: () -> Void) {
         OSSpinLockLock(&lock)
         if !isInitialized {
             block()
@@ -59,7 +59,7 @@ public struct DispatchOnce {
 public final class DispatchOnceC {
     private var lock: OSSpinLock = OS_SPINLOCK_INIT
     private var isInitialized = false
-    public /* mutating */ func perform(block: (Void) -> Void) {
+    public /* mutating */ func perform(block: () -> Void) {
         OSSpinLockLock(&lock)
         if !isInitialized {
             block()

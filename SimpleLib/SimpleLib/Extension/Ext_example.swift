@@ -6,6 +6,8 @@
 //  Copyright © 2017年 rockgarden. All rights reserved.
 //
 
+import UIKit
+
 // Auto是一个接受一个泛型类型的结构体
 public struct Auto<Base> {
     // 定义该泛型类型属性
@@ -23,7 +25,7 @@ public protocol UIViewConstratinsHelper {
 
 public extension UIViewConstratinsHelper {
     // 指定泛型类型为自身，自身是协议 谁实现了此协议就是谁了
-    public var ch: Auto<Self> {
+    var ch: Auto<Self> {
         get { return Auto(self) } // 初始化 传入自己
         set { }
     }

@@ -1,5 +1,6 @@
 //
 //  Ext_NSString.swift
+//  EZSwiftExtensions
 //
 //  Modified by rockgarden 2016/2/22
 //
@@ -29,7 +30,7 @@ import Foundation
 import UIKit
 
 /// This extension adds some useful functions to NSString
-public extension NSString {
+extension NSString {
     // MARK: - Instance functions -
     
     /**
@@ -204,7 +205,7 @@ public extension NSString {
     public func heightForWidth(width: CGFloat, font: UIFont) -> CGFloat {
         var size = CGSize.zero
         if self.length > 0 {
-            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil)
+            let frame: CGRect = self.boundingRect(with: CGSize(width: width, height: 999999), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : font], context: nil)
             size = CGSize(width:frame.size.width, height:frame.size.height + 1)
         }
         return size.height

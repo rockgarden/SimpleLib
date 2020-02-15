@@ -1,5 +1,4 @@
 //
-//  ExtKIT
 //  Ext_UIImage.swift
 //
 //  Created by wangkan on 16/6/5.
@@ -8,7 +7,7 @@
 
 import UIKit
 
-public extension UIImage {
+extension UIImage {
 
 	convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
 		let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
@@ -29,15 +28,20 @@ public extension UIImage {
 		UIGraphicsEndImageContext()
 		self.init(cgImage: (image?.cgImage!)!)
 	}
+    
+    /// EZSE: Returns base64 string
+    public var base64: String {
+        return self.jpegData(compressionQuality: 1.0)!.base64EncodedString()
+    }
 
 	/// EZSE: Returns compressed image to rate from 0 to 1
 	public func compressImage(rate: CGFloat) -> NSData? {
-		return UIImageJPEGRepresentation(self, rate) as NSData?
+        return self.jpegData(compressionQuality: rate) as NSData?
 	}
 
 	/// EZSE: Returns Image size in Bytes
 	public func getSizeAsBytes() -> Int {
-		return UIImageJPEGRepresentation(self, 1)?.count ?? 0
+        return self.jpegData(compressionQuality: 1)?.count ?? 0
 	}
 
 	/// EZSE: Returns Image size in Kylobites
@@ -102,43 +106,43 @@ public extension UIImage {
 		}
 		let scaledBounds: CGRect = CGRect(x: bound.maxX * self.scale, y: bound.maxY * self.scale, width: bound.width * self.scale, height: bound.height * self.scale)
 		let imageRef = self.cgImage!.cropping(to: scaledBounds)
-		let croppedImage: UIImage = UIImage(cgImage: imageRef!, scale: self.scale, orientation: UIImageOrientation.up)
+        let croppedImage: UIImage = UIImage(cgImage: imageRef!, scale: self.scale, orientation: UIImage.Orientation.up)
 		return croppedImage
 	}
+    
+    /// EZSE: Use current image for pattern of color
+    public func withColor(_ tintColor: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
 
-	/// EZSE: Use current image for pattern of color
-	public func withColor(tintColor: UIColor) -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-
-		let context = UIGraphicsGetCurrentContext()
-		context!.translateBy(x: 0, y: self.size.height)
-		context!.scaleBy(x: 1.0, y: -1.0);
-		context!.setBlendMode(CGBlendMode.normal)
+        let context = UIGraphicsGetCurrentContext()
+        context?.translateBy(x: 0, y: self.size.height)
+        context?.scaleBy(x: 1.0, y: -1.0)
+        context?.setBlendMode(CGBlendMode.normal)
 
         let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height) as CGRect
-		context!.clip(to: rect, mask: self.cgImage!)
-		tintColor.setFill()
-		context!.fill(rect)
+        context?.clip(to: rect, mask: self.cgImage!)
+        tintColor.setFill()
+        context?.fill(rect)
 
-		let newImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
-		UIGraphicsEndImageContext()
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
+        UIGraphicsEndImageContext()
 
-		return newImage
-	}
-
-	/// EZSE: Returns the image associated with the URL
-	public convenience init?(urlString: String) {
-		guard let url = NSURL(string: urlString) else {
-			self.init(data: NSData() as Data)
-			return
-		}
-		guard let data = NSData(contentsOf: url as URL) else {
-			print("EZSE: No image in URL \(urlString)")
-			self.init(data: NSData() as Data)
-			return
-		}
-		self.init(data: data as Data)
-	}
+        return newImage
+    }
+    
+    ///EZSE: Returns the image associated with the URL
+    public convenience init?(urlString: String) {
+        guard let url = URL(string: urlString) else {
+            self.init(data: Data())
+            return
+        }
+        guard let data = try? Data(contentsOf: url) else {
+            debugPrint("EZSE: No image in URL \(urlString)")
+            self.init(data: Data())
+            return
+        }
+        self.init(data: data)
+    }
 
 	/// EZSE: Returns an empty image //TODO: Add to readme
 	public class func blankImage() -> UIImage {
@@ -148,7 +152,7 @@ public extension UIImage {
 		return image!
 	}
 
-	class func createImageWithColor(_ color: UIColor) -> UIImage {
+	public class func createImageWithColor(_ color: UIColor) -> UIImage {
 		let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
 		UIGraphicsBeginImageContext(rect.size);
 		let context = UIGraphicsGetCurrentContext()
