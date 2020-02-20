@@ -159,4 +159,79 @@ public class AppCommon {
             return false
         }
     }
+    
+    static private var indicator : UIActivityIndicatorView!
+    
+    public static func showTopWait(){
+        let frame = CGRect(x: 0, y: 0, width: 78, height: 78)
+        let window = UIWindow()
+        let rv = UIApplication.shared.keyWindow?.subviews.first
+        window.backgroundColor = UIColor.clear
+        indicator = UIActivityIndicatorView(frame: frame)
+        let mainView = UIView()
+        mainView.layer.cornerRadius = 12
+        mainView.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 0.8)
+        window.frame = frame
+        mainView.frame = frame
+        window.center = rv!.center
+    }
+    
+    static func setFontWithStroke(_ control:UIView?, fontSize: CGFloat, fontName: String, fontColor: UIColor, strokeColor: UIColor = UIColor.black, strokeWidth: CGFloat = -2.0, alignment: NSTextAlignment = .center) {
+        if control == nil { return }
+        
+        let textAtts = [NSAttributedString.Key.font.rawValue: UIFont(name: fontName, size: fontSize)!,
+                        NSAttributedString.Key.foregroundColor: fontColor,
+                        NSAttributedString.Key.strokeColor: strokeColor,
+                        NSAttributedString.Key.strokeWidth: strokeWidth ] as! [NSAttributedString.Key : Any]
+        
+        switch control {
+        case is UITextField:
+            let tf = control as! UITextField
+            tf.defaultTextAttributes = textAtts
+            tf.textAlignment = alignment
+            
+        case is UILabel:
+            let lbl = control as! UILabel
+            lbl.attributedText = NSAttributedString(string: lbl.text!, attributes: textAtts)
+            lbl.textAlignment = alignment
+            
+        default:
+            print("Ooops, unhandled control type")
+        }
+    }
+    
+    static func listAvailableFonts() {
+        let familyNames = UIFont.familyNames
+        for familyName in familyNames {
+            let fontNames = UIFont.fontNames(forFamilyName: familyName)
+            for font in fontNames { print(font) }
+        }
+    }
+    
+    //MARK: - Images
+    ///NOTE:getNSURLUserFilePathForFileName has been updated to Swift 3 but is untested.
+    ///     In particular, what is not known is whether there should be a slash btw dirPath and fileName in path string variable
+    static func getNSURLUserFilePathForFileName(_ fileName: String) -> URL? {
+        //BUILD file path and READY session
+        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let path = "\(dirPath)\(fileName)"
+        
+        return URL(fileURLWithPath: path)
+    }
+    
+    
+    static func getImageFromMainBundle(_ imageNameAndExtension: String) -> UIImage {
+        if let image = UIImage(named: imageNameAndExtension, in: Bundle.main, compatibleWith: nil) {
+            return image
+        }
+        else {
+            //RETURN empty image if no image found
+            return UIImage()
+        }
+    }
+    
+    static func writeImageToCameraRoll(_ image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    }
+    
 }

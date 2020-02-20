@@ -11,6 +11,10 @@ import Foundation
 extension Date {
     
     public static let minutesInAWeek = 24 * 60 * 7
+    public static let dateFormatLongTemplate   = "EEE M/dd/yy, h:mm:ssa"
+    public static let dateFormatMediumTemplate = "EEE MMM dd h:mma'"
+    public static let dateFormatShortTemplate  = "MM/dd, h:mma'"
+    public static let dateFormatISO8601Template  = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 
     /// EZSE: Initializes Date from string and format
     public init?(fromString string: String,

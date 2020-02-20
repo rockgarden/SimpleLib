@@ -1,83 +1,82 @@
 //
 //  AnimatedSegmentSwitch.swift
-//  AnimatedSegmentSwitch
 //
 //  Created by Tobias Schmid on 09/18/2015.
 //  Copyright (c) 2015 Tobias Schmid. All rights reserved.
 //
-//  Modify by Wangkan on 07/01/2016
+//  https://github.com/toashd/AnimatedSegmentSwitch
+//
+//  Modify by Wangkan on 02/17/2020
 //
 
 import UIKit
 
-// MARK: - AnimatedSegmentSwitch
-
-@IBDesignable public class AnimatedSegmentSwitch: UIControl {
+/// Configurable multi-segment switch control.
+@IBDesignable open class AnimatedSegmentSwitch: UIControl {
     
     // MARK: - Public Properties
     
-    public var items: [String] = ["Item 1", "Item 2", "Item 3"] {
+    @objc open var items: [String] = ["Item 1", "Item 2", "Item 3"] {
         didSet {
             setupLabels()
         }
     }
     
-    public private(set) var selectedIndex: Int = 0
-    
-    public func setSelectedIndex(_ index: Int, animated: Bool) {
-        selectedIndex = index
-        displayNewSelectedIndex(animated: animated)
+    @objc open var selectedIndex: Int = 0 {
+        didSet {
+            displayNewSelectedIndex()
+        }
     }
     
-    public var animationDuration: TimeInterval = 0.5
-    public var animationSpringDamping: CGFloat = 0.6
-    public var animationInitialSpringVelocity: CGFloat = 0.8
+    @objc open var animationDuration: TimeInterval = 0.5
+    @objc open var animationSpringDamping: CGFloat = 0.6
+    @objc open var animationInitialSpringVelocity: CGFloat = 0.8
     
     // MARK: - IBInspectable Properties
     
-    @IBInspectable public var selectedTitleColor: UIColor = UIColor.black {
+    @IBInspectable open var selectedTitleColor: UIColor = UIColor.black {
         didSet {
             setSelectedColors()
         }
     }
     
-    @IBInspectable public var titleColor: UIColor = UIColor.white {
+    @IBInspectable open var titleColor: UIColor = UIColor.white {
         didSet {
             setSelectedColors()
         }
     }
     
-    @IBInspectable public var font: UIFont! = UIFont.systemFont(ofSize: 12) {
+    @IBInspectable open var font: UIFont! = UIFont.systemFont(ofSize: 12) {
         didSet {
             setFont()
         }
     }
     
-    @IBInspectable public var borderColor: UIColor = UIColor.white {
+    @IBInspectable open var borderColor: UIColor = UIColor.white {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
     }
     
-    public var cornerRadius: CGFloat! {
+    @IBInspectable open var cornerRadius: CGFloat = 0.0 {
         didSet {
             layer.cornerRadius = cornerRadius
         }
     }
     
-    @IBInspectable public var thumbColor: UIColor = UIColor.white {
+    @IBInspectable open var thumbColor: UIColor = UIColor.white {
         didSet {
             setSelectedColors()
         }
     }
     
-    public var thumbCornerRadius: CGFloat! {
+    @IBInspectable open var thumbCornerRadius: CGFloat = 0.0 {
         didSet {
             thumbView.layer.cornerRadius = thumbCornerRadius
         }
     }
     
-    @IBInspectable public var thumbInset: CGFloat = 2.0 {
+    @IBInspectable open var thumbInset: CGFloat = 2.0 {
         didSet {
             setNeedsLayout()
         }
@@ -86,7 +85,11 @@ import UIKit
     // MARK: - Private Properties
     
     fileprivate var labels = [UILabel]()
+    fileprivate var selectedlabels = [UILabel]()
+    fileprivate var titleLabelsContentView = UIView()
+    fileprivate var selectedTitleLabelsContentView = UIView()
     fileprivate var thumbView = UIView()
+    fileprivate var thumbViewMask = UIView()
     fileprivate var selectedThumbViewFrame: CGRect?
     fileprivate var panGesture: UIPanGestureRecognizer!
     fileprivate var tapGesture: UITapGestureRecognizer!
@@ -103,12 +106,27 @@ import UIKit
         setupView()
     }
     
-    private func setupView() {
+    fileprivate func setupView(){
         backgroundColor = .clear
+        
+        addSubview(thumbView)
+        /// insertSubview(thumbView, at: 0)
+        
+        titleLabelsContentView.frame = bounds
+        addSubview(titleLabelsContentView)
+        
+        selectedTitleLabelsContentView.frame = bounds
+        addSubview(selectedTitleLabelsContentView)
+        
+        addSubview(thumbViewMask)
+        
+        selectedTitleLabelsContentView.layer.mask = thumbViewMask.layer
         
         setupLabels()
         
-        insertSubview(thumbView, at: 0)
+        titleLabelsContentView.isUserInteractionEnabled = false
+        selectedTitleLabelsContentView.isUserInteractionEnabled = false
+        thumbViewMask.isUserInteractionEnabled = false
         
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(AnimatedSegmentSwitch.pan(_:)))
         panGesture.delegate = self
@@ -122,12 +140,17 @@ import UIKit
         panGesture.require(toFail: tapGesture)
     }
     
-    private func setupLabels() {
+    fileprivate func setupLabels() {
         for label in labels {
             label.removeFromSuperview()
         }
         
+        for label in selectedlabels {
+            label.removeFromSuperview()
+        }
+        
         labels.removeAll(keepingCapacity: true)
+        selectedlabels.removeAll(keepingCapacity: true)
         
         for index in 1...items.count {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 70, height: 40))
@@ -135,42 +158,36 @@ import UIKit
             label.backgroundColor = .clear
             label.textAlignment = .center
             label.font = font
-            label.textColor = index == 1 ? selectedTitleColor : titleColor
+            label.textColor = titleColor
             label.translatesAutoresizingMaskIntoConstraints = false
             
-            self.addSubview(label)
+            let selectedLabel = UILabel(frame: label.frame)
+            selectedLabel.text = label.text
+            selectedLabel.backgroundColor = .clear
+            selectedLabel.textAlignment = .center
+            selectedLabel.font = font
+            selectedLabel.textColor = selectedTitleColor
+            selectedLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            titleLabelsContentView.addSubview(label)
+            selectedTitleLabelsContentView.addSubview(selectedLabel)
             labels.append(label)
+            selectedlabels.append(selectedLabel)
         }
         
         addIndividualItemConstraints(labels, mainView: self, padding: thumbInset)
+        addIndividualItemConstraints(selectedlabels, mainView: self, padding: thumbInset)
     }
     
     // MARK: - Touch Events
     
-    override public func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+    override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let location = touch.location(in: self)
         if let index = indexAtLocation(location) {
-            setSelectedIndex(index, animated: true)
+            selectedIndex = index
             sendActions(for: .valueChanged)
         }
         return false
-    }
-    
-    public override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        let location = touch.location(in: self)
-        if let index = indexAtLocation(location) {
-            setSelectedIndex(index, animated: true)
-            sendActions(for: .touchDown)
-        }
-        return false
-    }
-    
-    override public func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        let location = touch!.location(in: self)
-        if let index = indexAtLocation(location) {
-            setSelectedIndex(index, animated: true)
-            sendActions(for: .touchDown)
-        }
     }
     
     @objc func pan(_ gesture: UIPanGestureRecognizer!) {
@@ -179,13 +196,32 @@ import UIKit
         } else if gesture.state == .changed {
             var frame = selectedThumbViewFrame!
             frame.origin.x += gesture.translation(in: self).x
-            frame.origin.x = min(frame.origin.x, bounds.width - frame.width)
+            frame.origin.x = max(min(frame.origin.x, bounds.width - frame.width - thumbInset), thumbInset)
             thumbView.frame = frame
+            thumbViewMask.frame = frame
         } else if gesture.state == .ended || gesture.state == .failed || gesture.state == .cancelled {
             let location = gesture.location(in: self)
-            let index = nearestIndexAtLocation(location)
-            setSelectedIndex(index, animated: true)
-            sendActions(for: .valueChanged)
+            if let index = nearestIndexAtLocation(location: location) {
+                selectedIndex = index
+                sendActions(for: .valueChanged)
+            }
+        }
+    }
+    
+    override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let location = touch.location(in: self)
+        if let index = indexAtLocation(location) {
+            selectedIndex = index
+            sendActions(for: .touchDown)
+        }
+        return false
+    }
+    
+    override public func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        let location = touch!.location(in: self)
+        if let index = indexAtLocation(location) {
+            selectedIndex = index
+            sendActions(for: .touchDown)
         }
     }
     
@@ -195,28 +231,32 @@ import UIKit
     
     // MARK: - Layout
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
-        layer.cornerRadius = cornerRadius ?? frame.height / 2
+        layer.cornerRadius = (cornerRadius == 0.0) ? frame.height / 2 : cornerRadius
         layer.borderColor = UIColor(white: 1.0, alpha: 0.0).cgColor
         layer.borderWidth = 1
         layer.masksToBounds = true
         
         var selectFrame = self.bounds
         let newWidth = selectFrame.width / CGFloat(items.count)
-        selectFrame.size.width = newWidth
+        selectFrame.size.width = newWidth - thumbInset * 2
+        selectFrame.size.height = selectFrame.height - thumbInset * 2
+        selectFrame.origin.x = thumbInset
+        selectFrame.origin.y = thumbInset
         
         thumbView.frame = selectFrame
         thumbView.backgroundColor = thumbColor
-        thumbView.layer.cornerRadius = (thumbCornerRadius ?? thumbView.frame.height / 2) - thumbInset
+        thumbView.layer.cornerRadius = (thumbCornerRadius == 0.0) ? thumbView.frame.height / 2 : thumbCornerRadius
         
-        displayNewSelectedIndex(animated: false)
+        thumbViewMask.frame = thumbView.frame
+        thumbViewMask.backgroundColor = UIColor.white
+        thumbViewMask.layer.cornerRadius = thumbView.layer.cornerRadius
     }
     
     // MARK: - Private - Helpers
-    
-    private func displayNewSelectedIndex(animated: Bool) {
+    fileprivate func displayNewSelectedIndex(animated: Bool = true) {
         for (_, item) in labels.enumerated() {
             item.textColor = titleColor
         }
@@ -226,18 +266,22 @@ import UIKit
         
         if animated {
             UIView.animate(withDuration: animationDuration,
-                                       delay: 0.0,
-                                       usingSpringWithDamping: animationSpringDamping,
-                                       initialSpringVelocity: animationInitialSpringVelocity,
-                                       options: [],
-                                       animations: { self.thumbView.frame = label.frame },
-                                       completion: nil)
+                           delay: 0.0,
+                           usingSpringWithDamping: animationSpringDamping,
+                           initialSpringVelocity: animationInitialSpringVelocity,
+                           options: [],
+                           animations: {
+                            self.thumbView.frame = label.frame
+                            self.thumbViewMask.frame = label.frame
+            },
+                           completion: nil)
         } else {
             self.thumbView.frame = label.frame
+            self.thumbViewMask.frame = label.frame
         }
     }
     
-    private func setSelectedColors() {
+    fileprivate func setSelectedColors() {
         for item in labels {
             item.textColor = titleColor
         }
@@ -249,13 +293,16 @@ import UIKit
         thumbView.backgroundColor = thumbColor
     }
     
-    private func setFont() {
+    fileprivate func setFont() {
         for item in labels {
+            item.font = font
+        }
+        for item in selectedlabels {
             item.font = font
         }
     }
     
-    private func indexAtLocation(_ location: CGPoint) -> Int? {
+    fileprivate func indexAtLocation(_ location: CGPoint) -> Int? {
         var calculatedIndex: Int?
         for (index, item) in labels.enumerated() {
             if item.frame.contains(location) {
@@ -266,8 +313,8 @@ import UIKit
         return calculatedIndex
     }
     
-    private func nearestIndexAtLocation(_ location: CGPoint) -> Int {
-        var calculatedDistances: [CGFloat] = []
+    fileprivate func nearestIndexAtLocation(location: CGPoint) -> Int? {
+        var calculatedDistances : [CGFloat] = []
         for (index, item) in labels.enumerated() {
             let distance = sqrt(pow(location.x - item.center.x, 2) + pow(location.y - item.center.y, 2))
             calculatedDistances.insert(distance, at: index)
@@ -275,7 +322,7 @@ import UIKit
         return calculatedDistances.index(of: calculatedDistances.min()!)!
     }
     
-    private func addIndividualItemConstraints(_ items: [UIView], mainView: UIView, padding: CGFloat) {
+    fileprivate func addIndividualItemConstraints(_ items: [UIView], mainView: UIView, padding: CGFloat) {
         for (index, button) in items.enumerated() {
             let topConstraint = NSLayoutConstraint(item: button,
                                                    attribute: NSLayoutConstraint.Attribute.top,
@@ -293,7 +340,7 @@ import UIKit
                                                       multiplier: 1.0,
                                                       constant: -padding)
             
-            var rightConstraint: NSLayoutConstraint!
+            var rightConstraint : NSLayoutConstraint!
             if index == items.count - 1 {
                 rightConstraint = NSLayoutConstraint(item: button,
                                                      attribute: NSLayoutConstraint.Attribute.right,
@@ -303,7 +350,7 @@ import UIKit
                                                      multiplier: 1.0,
                                                      constant: -padding)
             } else {
-                let nextButton = items[index + 1]
+                let nextButton = items[index+1]
                 rightConstraint = NSLayoutConstraint(item: button,
                                                      attribute: NSLayoutConstraint.Attribute.right,
                                                      relatedBy: NSLayoutConstraint.Relation.equal,
@@ -312,8 +359,7 @@ import UIKit
                                                      multiplier: 1.0,
                                                      constant: -padding)
             }
-            
-            var leftConstraint: NSLayoutConstraint!
+            var leftConstraint : NSLayoutConstraint!
             if index == 0 {
                 leftConstraint = NSLayoutConstraint(item: button,
                                                     attribute: NSLayoutConstraint.Attribute.left,
@@ -323,7 +369,7 @@ import UIKit
                                                     multiplier: 1.0,
                                                     constant: padding)
             } else {
-                let prevButton = items[index - 1]
+                let prevButton = items[index-1]
                 leftConstraint = NSLayoutConstraint(item: button,
                                                     attribute: NSLayoutConstraint.Attribute.left,
                                                     relatedBy: NSLayoutConstraint.Relation.equal,
@@ -347,6 +393,7 @@ import UIKit
             mainView.addConstraints([topConstraint, bottomConstraint, rightConstraint, leftConstraint])
         }
     }
+    
 }
 
 // MARK: - UIGestureRecognizer Delegate
@@ -358,7 +405,6 @@ extension AnimatedSegmentSwitch: UIGestureRecognizerDelegate {
      -如果返回YES　则继续识别触摸序列,如传给super
      
      - parameter gestureRecognizer: 传入的手势
-
      - returns: 手势判断的结果
      */
     override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -367,9 +413,9 @@ extension AnimatedSegmentSwitch: UIGestureRecognizerDelegate {
         }
         return super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
-
+    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
+    
 }
